@@ -1,0 +1,52 @@
+<div class="container mt-5 mb-3">
+    <div class="row" *ngFor="let post of posts">
+        <div class="col-12">
+            <div class="card p-4 mb-2 white second-bg">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                        <div class="userPhoto"> <img [src]="post.userCard.userPhoto" alt=""> </div>
+                        <div class="ms-2 c-details">
+                            <h6 class="mb-0">{{ post.userCard.userName }}</h6> <span>{{ post.date }}</span>
+                        </div>
+                    </div>
+                    <p-badge [value]="post.isLikedByMe === true ? 'Liked' : 'Like'"></p-badge>
+                </div>
+                <div class="mt-5">
+                    <p>{{ post.description }}</p>
+                    <div class="mt-5">
+                        <img [src]="post.photo" alt="" class="postImage">
+                        <div class="mt-3"> 
+                            <span class="text1">{{ post.likesCount}} likes, </span>
+                            <span class="text2"  (click)="expandComments(post.postId)">2 comments</span> 
+                        </div>
+                        <div class="mt-2" *ngIf="commentsExpanded">
+                            <div *ngFor="let comment of comments">
+                                <div class="d-flex flex-row mt-4"> 
+                                    <img [src]="comment.userCard.userPhoto" width="40" height="40" class="commentUserPhoto ">
+                                    <div class="ml-2 w-100">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="d-flex flex-row align-items-center"> 
+                                                <span class="name">
+                                                    <h6>{{ comment.userCard.userName }}</h6> 
+                                                </span> 
+                                                <small class="text-muted time-text"> {{ comment.date }}</small>
+                                            </div> 
+                                        </div>
+                                        <p class="user-comment-text text-justify">{{ comment.content }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-row mt-4">
+                                <img [src]="post.userCard.userPhoto" width="40" height="40" class="commentUserPhoto ">
+                                <span class="p-input-icon-right">
+                                    <i class="pi pi-send"></i>
+                                    <input type="text" pInputText/>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
