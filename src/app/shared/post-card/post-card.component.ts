@@ -28,7 +28,7 @@ export class PostCardComponent implements OnInit {
     likesCount: 10,
     comments: [],
     description: 'Lorem ipsum sit amet lorem ipsum sit sit ameta How are you today? I am ;ost',
-    photo: 'assets/images/Volume.png'
+    photo: 'assets/images/science.png'
 
   }
 

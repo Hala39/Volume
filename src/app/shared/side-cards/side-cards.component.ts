@@ -13,6 +13,10 @@ export class SideCardsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  trends: string[] = [
+    'AspNetCore', 'C#', 'Angular12', 'UI/UX', 'Programming', 'React', 'Ionic5', 'PrimeNg', 'Bootstrap'
+  ];
+
   users: UserCard[] = [
     {
       userId: '1',

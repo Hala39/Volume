@@ -1,0 +1,39 @@
+<div class="row fixed-bottom px-5">
+    <div class="col-3 pb-0">
+        <p-card *ngIf="chatsExpanded">
+            <p-toolbar>
+                <div class="p-toolbar-group-left">
+                    <div class="d-flex flex-row">
+                        <p-avatar image="assets/images/me.jpg" shape="circle"></p-avatar>
+                        <div class="ml-3 pt-2">
+                            Messaging
+                        </div>
+                    </div>
+                </div>
+                <div class="p-toolbar-group-right">
+                    <i class="pi pi-ellipsis-h pt-3 mr-2"></i>
+                    <i class="pi pi-angle-down pt-3 mr-2" (click)="expandChats()"></i>
+                </div>
+            </p-toolbar>                
+        </p-card>
+        <p-card *ngIf="chatsExpanded">
+            <app-chats></app-chats>
+        </p-card>
+        <p-card>
+            <p-toolbar *ngIf="!chatsExpanded">
+                <div class="p-toolbar-group-left">
+                    <div class="d-flex flex-row">
+                        <p-avatar image="assets/images/me.jpg" shape="circle"></p-avatar>
+                        <div class="ml-3 pt-2">
+                            Messaging
+                        </div>
+                    </div>
+                </div>
+                <div class="p-toolbar-group-right">
+                    <i class="pi pi-ellipsis-h pt-3 mr-2"></i>
+                    <i class="pi pi-angle-up pt-3 mr-2" (click)="expandChats()"></i>
+                </div>
+            </p-toolbar>                
+        </p-card>
+    </div>
+</div>

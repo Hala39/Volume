@@ -1,17 +1,16 @@
 <p-card header="Trending">
-    <p-tag>#AspNetCore</p-tag>
-    <p-tag>#Angular</p-tag>
-    <p-tag>#C#</p-tag>
-    <p-tag>#Programming</p-tag>
-    <p-tag>#PrimeNg</p-tag>
-    <p-tag>#SignalR</p-tag>
-    <p-tag>#Stack</p-tag>
-    <p-tag>#Bootstrap</p-tag>
-    <p-tag>#UI/UX</p-tag>
-    <p-tag>#Mobile</p-tag>
+    <p-tag *ngFor="let trend of trends">#{{ trend }}</p-tag>
 </p-card>
 
 <p-card header="People You May Know">
+    <p-avatarGroup styleClass="p-mb-3">
+        <p-avatar image="assets/images/luna.jpg" size="large" shape="circle"></p-avatar>
+        <p-avatar image="assets/images/me.jpg" size="large" shape="circle"></p-avatar>
+        <p-avatar image="assets/images/jimmy.jpg" size="large" shape="circle"></p-avatar>
+        <p-avatar image="assets/images/mira.jpg" size="large" shape="circle"></p-avatar>
+        <p-avatar image="assets/images/samaj.jpg" size="large" shape="circle"></p-avatar>
+        <p-avatar label="+2" shape="circle" size="large" [style]="{'background-color':'#9c27b0', 'color': '#ffffff'}"></p-avatar>
+    </p-avatarGroup>
     <p-listbox [options]="users">
         <ng-template let-user pTemplate="item">
             <div class="row" style="width: 100%;">

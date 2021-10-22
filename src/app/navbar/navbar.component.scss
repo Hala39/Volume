@@ -1,9 +1,14 @@
+.pi-link, p-avatar, img {
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
 .pi-ellipsis-h {
     display: none;
 }
 
 @media screen and (max-width: 600px) {
-    .right-icons,p-avatar {
+    .right-icons, p-avatar {
         display: none;
     }
 
