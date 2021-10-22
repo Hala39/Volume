@@ -58,7 +58,7 @@ export class PostCardComponent implements OnInit {
   comments: Comment[] = [this.comment1, this.comment2];
 
   expandComments(postId: number) {
-    this.commentsExpanded = true;
+    this.commentsExpanded = !this.commentsExpanded;
   }
 
 }
