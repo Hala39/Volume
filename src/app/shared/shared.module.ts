@@ -1,3 +1,5 @@
+import { ButtonModule } from 'primeng/button';
+import { ToolbarModule } from 'primeng/toolbar';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PostCardComponent } from './post-card/post-card.component';
@@ -12,7 +14,12 @@ import { InputTextModule } from 'primeng/inputtext';
   imports: [
     CommonModule,
     BadgeModule,
-    InputTextModule
+    InputTextModule,
+    ToolbarModule,
+    ButtonModule
+  ],
+  exports: [
+    PostCardComponent
   ]
 })
 export class SharedModule { }

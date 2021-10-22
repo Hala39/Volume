@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PrimeNGConfig } from 'primeng/api';
+import { PrimeNGConfig, MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
@@ -8,10 +8,29 @@ import { PrimeNGConfig } from 'primeng/api';
 })
 export class AppComponent {
   title = 'Volume';
+  
   constructor(private primengConfig: PrimeNGConfig) {}
 
-    ngOnInit() {
-        this.primengConfig.ripple = true;
+  ngOnInit() {
+    this.primengConfig.ripple = true;
+  }
+
+  items: MenuItem[] = [
+    {
+      icon: 'pi pi-pencil',
+    },
+    {
+      icon: 'pi pi-refresh',
+    },
+    {
+      icon: 'pi pi-trash',
+    },
+    {
+      icon: 'pi pi-upload'
+    },
+    {
+      icon: 'pi pi-external-link'
     }
+  ];
 
 }

@@ -1,1 +1,5 @@
-<router-outlet></router-outlet>
+<app-navbar></app-navbar>
+<div class="container-fluid mx-3">
+    <router-outlet></router-outlet>
+    <p-speedDial [model]="items" [radius]="80" direction="left" type="semi-circle"></p-speedDial>  
+</div>    

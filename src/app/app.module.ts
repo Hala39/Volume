@@ -8,11 +8,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 
-import {RippleModule} from 'primeng/ripple';
+import { RippleModule } from 'primeng/ripple';
+
+import { SpeedDialModule } from 'primeng/speeddial';
+import { MenubarModule } from 'primeng/menubar';
+import { NavbarComponent } from './navbar/navbar.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NavbarComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -21,7 +28,9 @@ import {RippleModule} from 'primeng/ripple';
     HttpClientModule,
     SharedModule,
     HomeModule,
-    RippleModule
+    RippleModule,
+    SpeedDialModule,
+    MenubarModule
   ],
   exports: [
     SharedModule,

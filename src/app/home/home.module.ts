@@ -12,6 +12,7 @@ import {ToolbarModule} from 'primeng/toolbar';
 import {EditorModule} from 'primeng/editor';
 import {FileUploadModule} from 'primeng/fileupload';
 import {ToggleButtonModule} from 'primeng/togglebutton';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import {ToggleButtonModule} from 'primeng/togglebutton';
   ],
   imports: [
     CommonModule,
+    SharedModule,
     ButtonModule,
     CardModule,
     InputTextModule,
