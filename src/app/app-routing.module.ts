@@ -1,9 +1,9 @@
-import { PostCardComponent } from './shared/post-card/post-card.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './home/home/home.component';
 
 const routes: Routes = [
-  {path: '', component: PostCardComponent}
+  {path: '', component: HomeComponent}
 ];
 
 @NgModule({
