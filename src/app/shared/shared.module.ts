@@ -13,6 +13,7 @@ import { TagModule } from 'primeng/tag';
 import {ListboxModule} from 'primeng/listbox';
 import { ChatPopupComponent } from './chat-popup/chat-popup.component';
 import { ChatsComponent } from './chats/chats.component';
+import { ChatRoomComponent } from './chat-room/chat-room.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { ChatsComponent } from './chats/chats.component';
     PostCardComponent,
     SideCardsComponent,
     ChatPopupComponent,
-    ChatsComponent
+    ChatsComponent,
+    ChatRoomComponent
   ],
   imports: [
     CommonModule,

@@ -15,7 +15,6 @@ import { RippleModule } from 'primeng/ripple';
 
 import { MenubarModule } from 'primeng/menubar';
 import { NavbarComponent } from './navbar/navbar.component';
-import { FooterComponent } from './footer/footer.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {MenuModule} from 'primeng/menu';
 import { WebcamModule } from 'ngx-webcam';
@@ -24,8 +23,7 @@ import {AvatarModule} from 'primeng/avatar';
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
-    FooterComponent
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
