@@ -8,17 +8,6 @@
     font-size: 13px
 }
 
-.userPhoto img {
-    width: 50px;
-    height: 50px;
-    background-color: #eee;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 39px
-}
-
 .postImage {
     width: 100%;
     max-height: 400px;
@@ -32,11 +21,6 @@
 .text2 {
     color: #a5aec0;
     cursor: pointer;
-}
-
-.commentUserPhoto {
-    border-radius: 15px; 
-    margin-right: 10px;
 }
 
 .time-text {

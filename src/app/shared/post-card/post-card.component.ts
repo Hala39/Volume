@@ -20,8 +20,8 @@ export class PostCardComponent implements OnInit {
     postId: 1,
     userCard: {
       userId: '1',
-      userPhoto: 'assets/images/Volume.png',
-      userName: 'Dima Awada'
+      userPhoto: 'assets/images/jimmy.jpg',
+      userName: 'Jimmy Los'
     },
     date: '1 Year ago',
     isLikedByMe: true,
