@@ -1,12 +1,22 @@
-<div class="container-fluid px-0">
-    <p-menubar [model]="items">
-        <ng-template pTemplate="start">
-            <img src="assets/images/Volume.png" height="30">
-        </ng-template>
-        <ng-template pTemplate="end">
-            <i class="pi pi-envelope" pBadge></i>
-            <i class="pi pi-bell" pBadge></i>
-            <img src="assets/images/me.jpg" class="profile pt-0 mt-0">
-        </ng-template>
-    </p-menubar>
+
+
+<p-toolbar>
+    <div class="p-toolbar-group-left">
+        <img src="assets/images/Volume.png" height="30">
+        <span class="p-input-icon-left ml-3">
+            <i class="pi pi-search"></i>
+            <input type="text" pInputText placeholder="Search"/>
+        </span>
+    </div>
+    
+    <div class="p-toolbar-group-right">
+        <i style="font-size: 1.5rem" class="right-icons pi pi-bell mr-3"></i>
+        <i style="font-size: 1.5rem" class="right-icons pi pi-envelope mr-3"></i>
+        <p-avatar image="assets/images/me.jpg" styleClass="p-mr-2" size="large" shape="circle"></p-avatar>
+        <i style="font-size: 1.5rem; cursor: pointer;" class="pi pi-ellipsis-h" (click)="expandMenu()"></i>
+    </div>
+</p-toolbar>
+
+<div *ngIf="menuExpanded">
+    <p-menu [model]="items"></p-menu>
 </div>

@@ -12,4 +12,10 @@ export class FooterComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  displayFooter: boolean = true;
+
+  hideFooter() {
+    this.displayFooter = false;
+  }
+
 }

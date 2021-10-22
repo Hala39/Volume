@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PrimeNGConfig, MenuItem } from 'primeng/api';
+import { PrimeNGConfig } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
@@ -13,24 +13,7 @@ export class AppComponent {
 
   ngOnInit() {
     this.primengConfig.ripple = true;
+    window.scrollTo(0,0);
   }
-
-  items: MenuItem[] = [
-    {
-      icon: 'pi pi-pencil',
-    },
-    {
-      icon: 'pi pi-refresh',
-    },
-    {
-      icon: 'pi pi-trash',
-    },
-    {
-      icon: 'pi pi-upload'
-    },
-    {
-      icon: 'pi pi-external-link'
-    }
-  ];
 
 }

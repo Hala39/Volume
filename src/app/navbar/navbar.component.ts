@@ -13,9 +13,15 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  
-  items: MenuItem[] = [
-    {label: 'Search', icon: 'pi pi-fw pi-search'},
-  ];
+  menuExpanded: boolean;
 
+  expandMenu() {
+    this.menuExpanded = !this.menuExpanded;
+  }
+
+  items: MenuItem[] = [
+    {label: 'Messages', icon: 'pi pi-fw pi-envelope'},
+    {label: 'Notifications', icon: 'pi pi-fw pi-bell'},
+    {label: 'Search', icon: 'pi pi-fw pi-search'}
+  ];
 }
