@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChatRoomComponent } from './chat-room.component';
+import { CameraAccessComponent } from './camera-access.component';
 
-describe('ChatRoomComponent', () => {
-  let component: ChatRoomComponent;
-  let fixture: ComponentFixture<ChatRoomComponent>;
+describe('CameraAccessComponent', () => {
+  let component: CameraAccessComponent;
+  let fixture: ComponentFixture<CameraAccessComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChatRoomComponent ]
+      declarations: [ CameraAccessComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ChatRoomComponent);
+    fixture = TestBed.createComponent(CameraAccessComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

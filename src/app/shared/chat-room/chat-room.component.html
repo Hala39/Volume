@@ -1,1 +1,21 @@
-<p>chat-room works!</p>
+<div class="container-fluid">
+    <div class="row fixed-bottom">
+        <div class="d-flex hustify-content-end col-12 pb-0 px-3">
+                <app-emoji *ngIf="emojiExpanded" (emojiEmitter)="select($event)"></app-emoji>
+            </div>
+        <p-toolbar>
+            <div class="col-12 pl-0">
+                <form [formGroup]="inputForm">
+                    <input type="text" pInputText placeholder='Press "Enter" to send message ..' formControlName="message"> 
+                </form>
+            </div>
+            <div class="col-12">
+                <i class="pi pi-images mr-4"></i>
+                <i class="pi pi-camera mr-4"></i>
+                <i class="pi pi-pencil mr-4"></i>
+                <fa-icon *ngIf="!emojiExpanded" [icon]="faGrinAlt" style="font-size: 1.8rem;" class="mr-4" (click)="expandEmoji()"></fa-icon>
+                <fa-icon *ngIf="emojiExpanded" [icon]="faTimes" style="font-size: 1.8rem;" class="mr-4" (click)="expandEmoji()"></fa-icon>
+            </div>
+        </p-toolbar>
+    </div>
+</div>

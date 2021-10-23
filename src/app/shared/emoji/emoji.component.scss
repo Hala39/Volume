@@ -1,0 +1,17 @@
+:host ::ng-deep {
+    .emoji-mart-dark {
+        background-color: #17212f;
+        border-color: #304562;
+        width: 100% !important;
+    }
+    .emoji-mart-dark .emoji-mart-category-label span {
+      background-color: #17212f;
+      color: rgba(255, 255, 255, 0.87);
+      margin-top: 10px;
+    }
+  
+    .emoji-mart-dark .emoji-mart-search input {
+      background-color: #1f2d40 !important;
+      border-color: #304562;
+    }
+}

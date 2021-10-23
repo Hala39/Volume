@@ -19,7 +19,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {MenuModule} from 'primeng/menu';
 import { WebcamModule } from 'ngx-webcam';
 import { ButtonModule } from 'primeng/button';
-import {AvatarModule} from 'primeng/avatar';
+import { AvatarModule } from 'primeng/avatar';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +43,9 @@ import {AvatarModule} from 'primeng/avatar';
     ToolbarModule,
     InputTextModule,
     MenubarModule,
-    WebcamModule
+    WebcamModule,
+    EmojiModule,
+    PickerModule
   ],
   exports: [
     SharedModule,
