@@ -1,10 +1,13 @@
+import { Routes, RouterModule } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
-import { SharedModule } from 'primeng/api';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RoomComponent } from './room/room.component';
+import { SharedModule } from '../shared/shared.module';
 
-
+const routes: Routes = [
+  {path: '', component: RoomComponent}
+]
 
 @NgModule({
   declarations: [
@@ -13,7 +16,8 @@ import { RoomComponent } from './room/room.component';
   imports: [
     CommonModule,
     SharedModule,
-    InputTextModule
+    InputTextModule,
+    RouterModule.forChild(routes)
   ]
 })
 export class MessagingModule { }

@@ -1,4 +1,5 @@
-<p-listbox [options]="chats" [metaKeySelection]="false" [checkbox]="true" [filter]="true" optionLabel="sender.userName" [listStyle]="{'max-height':'450px'}">
+<p-listbox [options]="chats" [metaKeySelection]="false" [checkbox]="true" [filter]="filter" optionLabel="sender.userName" 
+[listStyle]="listStyle" [multiple]="selectionMode" (onClick)="expandChatRoom()">
     <ng-template let-chat pTemplate="item">
         <div class="d-flex flex-row mt-1"> 
             <p-avatar [image]="chat.sender.userPhoto" styleClass="p-mr-2" size="large" shape="circle"></p-avatar>

@@ -1,8 +1,21 @@
-:host ::ng-deep { 
-    .p-inputtext {
-        width: 100% !important;
-        margin-left: 15px;
-        border-radius: 50px;
-        padding-left: 20px;
+
+app-chat-room.size1 {
+    padding-top: 0%;
+    padding-bottom: 0%;
+    margin-bottom: 0%;
+}
+
+.size1 {
+    display: none;
+}
+
+@media screen and (max-width: 1200px) {
+
+    .size2 {
+        display: none;
+    }
+
+    .size1 {
+        display: block;
     }
 }

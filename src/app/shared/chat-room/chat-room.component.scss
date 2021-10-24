@@ -1,24 +1,52 @@
-.row {
-    padding: 0 15%;
-}
 
 i {
     font-size: 1.5rem;
+    cursor: pointer;
+}
+
+fa-icon {
+    cursor: pointer;
+}
+
+.pi-arrow-left {
+    display: none;
 }
 
 :host ::ng-deep {
     .p-inputtext {
-        width: 92%;
+        width: 100%;
+    }
+
+    .p-card {
+        padding: 0%;
+        margin-top: 0%;
+        border: none;
+        margin-bottom: 0%;
+    }
+
+    .p-card-content {
+        padding: 0%;
+    }
+
+    .p-card-body {
+        padding: 1% 1%;
     }
 
     .p-toolbar {
-        padding: 1%;
-        margin-top: 0%;
+        border: none;
     }
 }
 
-@media screen and (max-width: 600px) {
-    .row {
-        padding: 0%;
+@media screen and (max-width: 1200px) {
+    .row.fixed-bottom {
+        padding: 0;
+    }
+
+    app-chat-popup {
+        display: none;
+    }
+
+    .pi-arrow-left {
+        display: block;
     }
 }

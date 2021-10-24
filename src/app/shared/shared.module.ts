@@ -12,6 +12,7 @@ import { SideCardsComponent } from './side-cards/side-cards.component';
 import { CardModule } from 'primeng/card';
 import { TagModule } from 'primeng/tag';
 import { ListboxModule } from 'primeng/listbox';
+import { MenuModule } from 'primeng/menu';
 import { ChatPopupComponent } from './chat-popup/chat-popup.component';
 import { ChatsComponent } from './chats/chats.component';
 import { ChatRoomComponent } from './chat-room/chat-room.component';
@@ -38,6 +39,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BadgeModule,
     InputTextModule,
     ListboxModule,
+    MenuModule,
     CardModule,
     TagModule,
     ToolbarModule,
@@ -53,6 +55,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     PostCardComponent,
     SideCardsComponent,
     ChatPopupComponent,
+    ChatRoomComponent,
     ChatsComponent
   ]
 })

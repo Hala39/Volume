@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Chat } from 'src/app/models/chat';
 
 @Component({
@@ -11,6 +11,16 @@ export class ChatsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  @Input() filter: boolean = true;
+  @Input() listStyle = { 'height': '700px'};
+  @Input() selectionMode: boolean = false;
+  @Output() expandChatRoomEmitter = new EventEmitter<boolean>();
+  chatRoomExpanded: boolean = false;
+
+  expandChatRoom() {
+    this.expandChatRoomEmitter.emit(true)
   }
 
   chats: Chat[] = [

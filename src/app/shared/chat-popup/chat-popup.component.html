@@ -1,39 +1,40 @@
-<div class="row fixed-bottom pr-5 pl-4 mr-5">
-    <div class="col-3 pb-0">
+<div [class]="containerClass">
+    <div [class]="popupClass">
         <p-card *ngIf="chatsExpanded">
             <p-toolbar>
                 <div class="p-toolbar-group-left">
                     <div class="d-flex flex-row">
-                        <p-avatar image="assets/images/me.jpg" shape="circle"></p-avatar>
+                        <p-avatar image="assets/images/me.jpg" shape="circle" size="large"></p-avatar>
                         <div class="ml-3 pt-2">
-                            Messaging
+                            <h5>{{ title }}</h5>
                         </div>
                     </div>
                 </div>
                 <div class="p-toolbar-group-right">
-                    <i class="pi pi-ellipsis-h pt-3 mr-3"></i>
-                    <i class="pi pi-angle-down pt-3 mr-2" (click)="expandChats()"></i>
+                    <i class="pi pi-ellipsis-h pt-3 mr-3" (click)="menu.toggle($event)"></i>
+                    <i class="pi pi-angle-down pt-3 mr-2" (click)="expandChats()" *ngIf="!fullScreen"></i>
                 </div>
             </p-toolbar>                
         </p-card>
         <p-card *ngIf="chatsExpanded">
-            <app-chats></app-chats>
+            <app-chats (expandChatRoomEmitter)="expandChatRoom($event)" [listStyle]="listStyle"></app-chats>
         </p-card>
         <p-card>
             <p-toolbar *ngIf="!chatsExpanded">
                 <div class="p-toolbar-group-left">
                     <div class="d-flex flex-row">
-                        <p-avatar image="assets/images/me.jpg" shape="circle"></p-avatar>
+                        <p-avatar image="assets/images/me.jpg" shape="circle" size="large"></p-avatar>
                         <div class="ml-3 pt-2">
-                            Messaging
+                            <h5>{{ title }}</h5>
                         </div>
                     </div>
                 </div>
                 <div class="p-toolbar-group-right">
-                    <i class="pi pi-ellipsis-h pt-3 mr-3"></i>
+                    <i class="pi pi-ellipsis-h pt-3 mr-3" (click)="menu.toggle($event)"></i>
                     <i class="pi pi-angle-up pt-3 mr-2" (click)="expandChats()"></i>
                 </div>
             </p-toolbar>                
         </p-card>
     </div>
 </div>
+<p-menu #menu [popup]="true" [baseZIndex]="1000" [model]="items"></p-menu>

@@ -12,4 +12,20 @@ export class RoomComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  chatRoomExpanded: boolean = false;
+
+  expandChatRoom($event: boolean) {
+    this.chatRoomExpanded = $event;
+  }
+
+  backToContacts($event: boolean) {
+    this.chatRoomExpanded = !$event;
+  }
+
+  chatRoomListStyle1 = { 'height': '640px'};
+  chatRoomListStyle2 = { 'height': '600px'};
+  popupListStyle1 = { 'height': '700px'};
+
+  visible = false;
+
 }

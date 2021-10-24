@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faGrinAlt } from '@fortawesome/free-regular-svg-icons';
 import { EmojiData, EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
@@ -20,19 +20,27 @@ export class ChatRoomComponent implements OnInit {
   faGrinAlt = faGrinAlt;
   faTimes = faTimes;
 
+  @Input() listStyle = { 'height': '600px'};
+  @Input() chatRoomClass = '';
+
+  @Output() backToContactsEmitter = new EventEmitter<boolean>();
+
   emojiExpanded: boolean;
+
+  selectionMode: boolean = false;
+
+  backToContacts() {
+    this.backToContactsEmitter.emit(true);
+  }
 
   expandEmoji() {
     this.emojiExpanded = !this.emojiExpanded;
   }
 
-  selectedEmoji: EmojiData;
-
-  select($event: any) {
-    this.selectedEmoji = $event;
+  select($event: EmojiData) {
     let data = this.inputForm.get('message').value;
     if (!data)  data = '';
-    this.inputForm.patchValue({"message": data + this.selectedEmoji.native});
+    this.inputForm.patchValue({"message": data + $event.native});
   }
 
   message: FormControl;

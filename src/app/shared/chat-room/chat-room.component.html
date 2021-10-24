@@ -1,21 +1,41 @@
-<div class="container-fluid">
-    <div class="row fixed-bottom">
-        <div class="d-flex hustify-content-end col-12 pb-0 px-3">
-                <app-emoji *ngIf="emojiExpanded" (emojiEmitter)="select($event)"></app-emoji>
-            </div>
+<div [class]="chatRoomClass">
+    <p-card>
         <p-toolbar>
-            <div class="col-12 pl-0">
-                <form [formGroup]="inputForm">
+            <div class="p-toolbar-group-left">
+                <div class="d-flex flex-row">
+                    <i class="pi pi-arrow-left pt-2 mr-4" (click)="backToContacts()"></i>
+                    <p-avatar image="assets/images/jimmy.jpg" shape="circle" size="large"></p-avatar>
+                    <div class="ml-3">
+                        <h5>Jimmy Los</h5>
+                        Online
+                    </div>
+                </div>
+            </div>
+            <div class="p-toolbar-group-right">
+                <i class="pi pi-ellipsis-h pt-3 mr-3"></i>
+            </div>
+        </p-toolbar>
+        <hr>
+        <app-chats [filter]="false" [selectionMode]="selectionMode" [listStyle]="listStyle"></app-chats>
+    </p-card>
+    <div class="typing-box">
+        <div class="d-flex hustify-content-end col-12 pb-0 px-3">
+            <app-emoji *ngIf="emojiExpanded" (emojiEmitter)="select($event)"></app-emoji>
+        </div>
+        <p-card>
+            <div class="col-12">
+                <form [formGroup]="inputForm" class="d-flex justify-content-end">
                     <input type="text" pInputText placeholder='Press "Enter" to send message ..' formControlName="message"> 
                 </form>
             </div>
-            <div class="col-12">
-                <i class="pi pi-images mr-4"></i>
-                <i class="pi pi-camera mr-4"></i>
-                <i class="pi pi-pencil mr-4"></i>
-                <fa-icon *ngIf="!emojiExpanded" [icon]="faGrinAlt" style="font-size: 1.8rem;" class="mr-4" (click)="expandEmoji()"></fa-icon>
+            <div class="col-12 d-flex justify-content-end">
+                <i class="pi pi-images mr-4 mt-2"></i>
+                <i class="pi pi-camera mr-4 mt-2"></i>
+                <i class="pi pi-pencil mr-4 mt-2"></i>
+                <fa-icon *ngIf="!emojiExpanded" [icon]="faGrinAlt" style="font-size: 1.7rem;" class="mr-4" (click)="expandEmoji()"></fa-icon>
                 <fa-icon *ngIf="emojiExpanded" [icon]="faTimes" style="font-size: 1.8rem;" class="mr-4" (click)="expandEmoji()"></fa-icon>
             </div>
-        </p-toolbar>
+        </p-card>
     </div>
 </div>
+        
