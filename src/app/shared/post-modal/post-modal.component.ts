@@ -12,4 +12,10 @@ export class PostModalComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  display: boolean = false;
+
+  showDialog() {
+    this.display = true;
+  }
+
 }

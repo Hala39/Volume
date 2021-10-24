@@ -21,8 +21,10 @@ import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { EmojiComponent } from './emoji/emoji.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { DialogModule } from 'primeng/dialog';
+import { WebcamModule } from 'ngx-webcam';
 
-import {OverlayPanelModule} from 'primeng/overlaypanel';
 import { PostModalComponent } from './post-modal/post-modal.component';
 
 
@@ -42,6 +44,7 @@ import { PostModalComponent } from './post-modal/post-modal.component';
     ReactiveFormsModule,
     OverlayPanelModule,
     BadgeModule,
+    WebcamModule,
     InputTextModule,
     ListboxModule,
     MenuModule,
@@ -52,6 +55,7 @@ import { PostModalComponent } from './post-modal/post-modal.component';
     AvatarModule,
     AvatarGroupModule,
     FontAwesomeModule,
+    DialogModule,
     FormsModule,
     EmojiModule,
     PickerModule
@@ -61,7 +65,8 @@ import { PostModalComponent } from './post-modal/post-modal.component';
     SideCardsComponent,
     ChatPopupComponent,
     ChatRoomComponent,
-    ChatsComponent
+    ChatsComponent,
+    CameraAccessComponent
   ]
 })
 export class SharedModule { }

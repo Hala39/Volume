@@ -16,7 +16,7 @@ import { RippleModule } from 'primeng/ripple';
 import { MenubarModule } from 'primeng/menubar';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import {MenuModule} from 'primeng/menu';
+import { MenuModule } from 'primeng/menu';
 import { WebcamModule } from 'ngx-webcam';
 import { ButtonModule } from 'primeng/button';
 import { AvatarModule } from 'primeng/avatar';

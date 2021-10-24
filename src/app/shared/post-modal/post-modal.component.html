@@ -1,1 +1,6 @@
-<p>post-modal works!</p>
+
+<p-dialog header="Title" [(visible)]="display">
+    Content
+</p-dialog>
+
+<button type="button" (click)="showDialog()" icon="pi pi-info-circle" label="Show"></button>

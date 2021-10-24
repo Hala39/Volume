@@ -14,8 +14,6 @@ import {EditorModule} from 'primeng/editor';
 import {FileUploadModule} from 'primeng/fileupload';
 import {ToggleButtonModule} from 'primeng/togglebutton';
 import { SharedModule } from '../shared/shared.module';
-import {DialogModule} from 'primeng/dialog';
-import { WebcamModule } from 'ngx-webcam';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
@@ -27,7 +25,6 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     SharedModule,
     ButtonModule,
-    DialogModule,
     CardModule,
     InputTextModule,
     FontAwesomeModule,
@@ -39,7 +36,6 @@ import { FormsModule } from '@angular/forms';
     FileUploadModule,
     ToggleButtonModule,
     FormsModule,
-    WebcamModule
   ]
 })
 export class HomeModule { }
