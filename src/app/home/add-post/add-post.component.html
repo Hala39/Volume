@@ -8,22 +8,38 @@
     <!-- Action Buttons -->
     <div>
         <p-toolbar [style]="{'margin-top': '15px'}">   
+
             <button pButton pRipple type="button" styleClass="p-button-lg" label="Photos" 
-            [icon]="uploaderExpanded? 'pi pi-times' : 'pi pi-images'" (click)="expandUploader()"
+            [icon]="photoUploaderExpanded? 'pi pi-times' : 'pi pi-images'" (click)="expandPhotoUploader()"
             class="p-button-rounded p-button-warning p-button-text"></button>
-            <button pButton pRipple type="button" styleClass="p-button-lg" label="Camera" 
-            [icon]="cameraExpanded? 'pi pi-times' : 'pi pi-camera'" (click)="expandCamera()"
+
+            <button pButton pRipple type="button" styleClass="p-button-lg" label="Files" 
+            [icon]="fileUploaderExpanded? 'pi pi-times' : 'pi pi-paperclip'"  (click)="expandFileUploader()"
             class="p-button-rounded p-button-help p-button-text"></button>
+
             <button pButton pRipple type="button" styleClass="p-button-lg" label="Editor" 
             [icon]="editorExpanded? 'pi pi-times' : 'pi pi-pencil'" (click)="expandEditor()"
             class="p-button-rounded p-button-danger p-button-text"></button>
+
         </p-toolbar>
     </div>
 
-    <!-- Uploader -->
-    <div *ngIf="uploaderExpanded"> 
-        <p-fileUpload name="demo[]" url="./upload.php" (onUpload)="onUpload($event)"
+    <!-- Photo Uploader -->
+    <div *ngIf="photoUploaderExpanded"> 
+        <p-fileUpload name="demo[]" url="./upload.php" (onUpload)="onPhotoUpload($event)"
             [multiple]=true accept="image/*" [maxFileSize]="1000000">
+            <ng-template pTemplate="content">
+                <ul *ngIf="uploadedPhotos.length">
+                    <li *ngFor="let file of uploadedPhotos">{{file.name}} - {{file.size}} bytes</li>
+                </ul>
+            </ng-template>
+        </p-fileUpload>
+    </div>
+    
+    <!-- File Uploader -->
+    <div *ngIf="fileUploaderExpanded"> 
+        <p-fileUpload name="demo[]" url="./upload.php" (onUpload)="onFileUpload($event)"
+            [multiple]=true accept="application/*" [maxFileSize]="1000000">
             <ng-template pTemplate="content">
                 <ul *ngIf="uploadedFiles.length">
                     <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
@@ -31,16 +47,11 @@
             </ng-template>
         </p-fileUpload>
     </div>
-    
+
     <!-- Editor -->
     <div *ngIf="editorExpanded"> 
         <p-editor [style]="{'height':'320px'}"></p-editor>
     </div>
-
-    <!-- Camera -->
-    <app-camera-access *ngIf="cameraExpanded" [cameraExpanded]="cameraExpanded" 
-    [displayBasic]="cameraExpanded" (hideCameraEmitter)="expandCamera()">
-    </app-camera-access>
 
     
 </p-card>

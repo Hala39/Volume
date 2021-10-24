@@ -16,7 +16,6 @@ import { MenuModule } from 'primeng/menu';
 import { ChatPopupComponent } from './chat-popup/chat-popup.component';
 import { ChatsComponent } from './chats/chats.component';
 import { ChatRoomComponent } from './chat-room/chat-room.component';
-import { CameraAccessComponent } from './camera-access/camera-access.component';
 import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { EmojiComponent } from './emoji/emoji.component';
@@ -35,7 +34,6 @@ import { PostModalComponent } from './post-modal/post-modal.component';
     ChatPopupComponent,
     ChatsComponent,
     ChatRoomComponent,
-    CameraAccessComponent,
     EmojiComponent,
     PostModalComponent
   ],
@@ -66,7 +64,6 @@ import { PostModalComponent } from './post-modal/post-modal.component';
     ChatPopupComponent,
     ChatRoomComponent,
     ChatsComponent,
-    CameraAccessComponent
   ]
 })
 export class SharedModule { }

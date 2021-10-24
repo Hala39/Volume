@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 
 @Component({
@@ -19,36 +19,40 @@ export class AddPostComponent implements OnInit {
   editorExpanded: boolean = false;
 
   expandEditor() {
-    this.uploaderExpanded = false;
-    this.cameraExpanded = false;
+    this.fileUploaderExpanded = false;
     this.editorExpanded = !this.editorExpanded;
   }
 
 
-  // Uploader
-  uploaderExpanded: boolean = false;
+  // Files Uploader
+  fileUploaderExpanded: boolean = false;
   uploadedFiles: any[] = [];
 
-  expandUploader() {
+  expandFileUploader() {
     this.editorExpanded = false;
-    this.cameraExpanded = false;
-    this.uploaderExpanded = !this.uploaderExpanded;
+    this.fileUploaderExpanded = !this.fileUploaderExpanded;
   }
 
-  onUpload(event: any) {
+  onFileUpload(event: any) {
       for(let file of event.files) {
           this.uploadedFiles.push(file);
       }
   }
 
-  // Camera
-  cameraExpanded: boolean = false;
+  
+  // Photos Uploader
+  photoUploaderExpanded: boolean = false;
+  uploadedPhotos: any[] = [];
 
-  expandCamera() {
-    this.uploaderExpanded = false;
+  expandPhotoUploader() {
     this.editorExpanded = false;
-    this.cameraExpanded = !this.cameraExpanded;
+    this.photoUploaderExpanded = !this.photoUploaderExpanded;
   }
 
+  onPhotoUpload(event: any) {
+      for(let file of event.files) {
+          this.uploadedFiles.push(file);
+      }
+  }
 
 }
