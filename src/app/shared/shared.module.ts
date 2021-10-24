@@ -23,6 +23,7 @@ import { EmojiComponent } from './emoji/emoji.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {OverlayPanelModule} from 'primeng/overlaypanel';
+import { PostModalComponent } from './post-modal/post-modal.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import {OverlayPanelModule} from 'primeng/overlaypanel';
     ChatsComponent,
     ChatRoomComponent,
     CameraAccessComponent,
-    EmojiComponent
+    EmojiComponent,
+    PostModalComponent
   ],
   imports: [
     CommonModule,

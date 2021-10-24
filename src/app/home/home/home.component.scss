@@ -1,0 +1,17 @@
+.core {
+    padding: 0 5% 0 10%;
+}
+
+@media screen and (max-width: 950px) {
+    .core {
+        padding: 0 0;
+    }
+
+    .secondary {
+        display: none;
+    }
+
+    .col-sm-8 {
+        width: 100%;
+    }
+}
