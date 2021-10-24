@@ -22,6 +22,8 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { EmojiComponent } from './emoji/emoji.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import {OverlayPanelModule} from 'primeng/overlaypanel';
+
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    OverlayPanelModule,
     BadgeModule,
     InputTextModule,
     ListboxModule,

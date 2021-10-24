@@ -18,24 +18,27 @@
         <hr>
         <app-chats [filter]="false" [selectionMode]="selectionMode" [listStyle]="listStyle"></app-chats>
     </p-card>
-    <div class="typing-box">
-        <div class="d-flex hustify-content-end col-12 pb-0 px-3">
-            <app-emoji *ngIf="emojiExpanded" (emojiEmitter)="select($event)"></app-emoji>
+    
+    <p-overlayPanel #op (onShow)="expandEmoji()" (onHide)="expandEmoji()">
+        <ng-template pTemplate>
+            <app-emoji (emojiEmitter)="select($event)"></app-emoji>
+        </ng-template>
+    </p-overlayPanel>
+
+    <p-card>
+        <div class="col-12 d-flex justify-content-end">
+            <i class="pi pi-images mr-4 mt-2"></i>
+            <i class="pi pi-camera mr-4 mt-2"></i>
+            <i class="pi pi-pencil mr-4 mt-2"></i>
+            <fa-icon *ngIf="!emojiExpanded" [icon]="faGrinAlt" class="mr-4" (click)="op.toggle($event)"></fa-icon>
+            <fa-icon *ngIf="emojiExpanded" [icon]="faTimes" class="mr-4"></fa-icon>
         </div>
-        <p-card>
-            <div class="col-12">
-                <form [formGroup]="inputForm" class="d-flex justify-content-end">
-                    <input type="text" pInputText placeholder='Press "Enter" to send message ..' formControlName="message"> 
-                </form>
-            </div>
-            <div class="col-12 d-flex justify-content-end">
-                <i class="pi pi-images mr-4 mt-2"></i>
-                <i class="pi pi-camera mr-4 mt-2"></i>
-                <i class="pi pi-pencil mr-4 mt-2"></i>
-                <fa-icon *ngIf="!emojiExpanded" [icon]="faGrinAlt" style="font-size: 1.7rem;" class="mr-4" (click)="expandEmoji()"></fa-icon>
-                <fa-icon *ngIf="emojiExpanded" [icon]="faTimes" style="font-size: 1.8rem;" class="mr-4" (click)="expandEmoji()"></fa-icon>
-            </div>
-        </p-card>
-    </div>
+        <div class="col-12">
+            <form [formGroup]="inputForm" class="d-flex justify-content-end">
+                <input type="text" pInputText placeholder='Press "Enter" to send message ..' formControlName="message"> 
+            </form>
+        </div>  
+    </p-card>
+    
 </div>
         
