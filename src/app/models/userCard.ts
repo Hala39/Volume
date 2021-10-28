@@ -1,6 +1,7 @@
 export interface UserCard {
     userId: string;
-    userPhoto: string;
-    userName: string;
-    role?: string;
-}
+    userProfilePhoto: string;
+    userDisplayName: string;
+    title?: string;
+    token?: string;
+} 

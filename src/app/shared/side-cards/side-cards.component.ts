@@ -20,21 +20,21 @@ export class SideCardsComponent implements OnInit {
   users: UserCard[] = [
     {
       userId: '1',
-      userPhoto: 'assets/images/jimmy.jpg',
-      userName: 'Jimmy Los',
-      role: 'CEO'
+      userProfilePhoto: 'assets/images/jimmy.jpg',
+      userDisplayName: 'Jimmy Los',
+      title: 'CEO'
     },
     {
       userId: '2',
-      userPhoto: 'assets/images/me.jpg',
-      userName: 'Hala Taleb',
-      role: 'Web Developer'
+      userProfilePhoto: 'assets/images/me.jpg',
+      userDisplayName: 'Hala Taleb',
+      title: 'Web Developer'
     },
     {
       userId: '3',
-      userPhoto: 'assets/images/luna.jpg',
-      userName: 'Luna Bader',
-      role: 'Manager'
+      userProfilePhoto: 'assets/images/luna.jpg',
+      userDisplayName: 'Luna Bader',
+      title: 'Manager'
     },
   ]
 }

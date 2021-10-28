@@ -28,8 +28,6 @@ import { FormsModule } from '@angular/forms';
     CardModule,
     InputTextModule,
     FontAwesomeModule,
-    BadgeModule,
-    MenubarModule,
     AvatarModule,
     ToolbarModule,
     EditorModule,

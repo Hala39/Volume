@@ -24,4 +24,5 @@ export class NavbarComponent implements OnInit {
     {label: 'Notifications', icon: 'pi pi-fw pi-bell'},
     {label: 'Search', icon: 'pi pi-fw pi-search'}
   ];
+  
 }

@@ -20,8 +20,8 @@ export class PostCardComponent implements OnInit {
     postId: 1,
     userCard: {
       userId: '1',
-      userPhoto: 'assets/images/jimmy.jpg',
-      userName: 'Jimmy Los'
+      userProfilePhoto: 'assets/images/jimmy.jpg',
+      userDisplayName: 'Jimmy Los'
     },
     date: '1 Year ago',
     isLikedByMe: true,
@@ -36,8 +36,8 @@ export class PostCardComponent implements OnInit {
     postId: 1,
     userCard: {
       userId: '2',
-      userPhoto: 'assets/images/me.jpg',
-      userName: 'Hala Taleb'
+      userProfilePhoto: 'assets/images/me.jpg',
+      userDisplayName: 'Hala Taleb'
     },
     content: 'May Allah keep you safe my Daughter!',
     date: '@2:00 pm'
@@ -47,8 +47,8 @@ export class PostCardComponent implements OnInit {
     postId: 1,
     userCard: {
       userId: '3',
-      userPhoto: 'assets/images/Volume.png',
-      userName: 'Yasin Awada'
+      userProfilePhoto: 'assets/images/Volume.png',
+      userDisplayName: 'Yasin Awada'
     },
     content: 'I Love you baby! Take care of yourself',
     date: '@2:30 pm'

@@ -27,8 +27,8 @@ export class ChatsComponent implements OnInit {
     {
       sender: {
         userId: '1',
-        userPhoto: 'assets/images/jimmy.jpg',
-        userName: 'Jimmy Los'
+        userProfilePhoto: 'assets/images/jimmy.jpg',
+        userDisplayName: 'Jimmy Los'
       },
       content: 'Thank you! Take care.',
       date: 'Oct 5.'
@@ -36,8 +36,8 @@ export class ChatsComponent implements OnInit {
     {
       sender: {
         userId: '2',
-        userPhoto: 'assets/images/luna.jpg',
-        userName: 'Luna Bader'
+        userProfilePhoto: 'assets/images/luna.jpg',
+        userDisplayName: 'Luna Bader'
       },
       content: 'Hello sweetie, How is going?',
       date: '@2:am'
@@ -45,8 +45,8 @@ export class ChatsComponent implements OnInit {
     {
       sender: {
         userId: '1',
-        userPhoto: 'assets/images/jimmy.jpg',
-        userName: 'Jimmy Los'
+        userProfilePhoto: 'assets/images/jimmy.jpg',
+        userDisplayName: 'Jimmy Los'
       },
       content: 'Thank you! Take care.',
       date: 'Oct 5.'
@@ -54,8 +54,8 @@ export class ChatsComponent implements OnInit {
     {
       sender: {
         userId: '2',
-        userPhoto: 'assets/images/luna.jpg',
-        userName: 'Luna Bader'
+        userProfilePhoto: 'assets/images/luna.jpg',
+        userDisplayName: 'Luna Bader'
       },
       content: 'Hello sweetie, How is going?',
       date: '@2:am'
@@ -63,8 +63,8 @@ export class ChatsComponent implements OnInit {
     {
       sender: {
         userId: '1',
-        userPhoto: 'assets/images/jimmy.jpg',
-        userName: 'Jimmy Los'
+        userProfilePhoto: 'assets/images/jimmy.jpg',
+        userDisplayName: 'Jimmy Los'
       },
       content: 'Thank you! Take care.',
       date: 'Oct 5.'
@@ -72,8 +72,8 @@ export class ChatsComponent implements OnInit {
     {
       sender: {
         userId: '2',
-        userPhoto: 'assets/images/luna.jpg',
-        userName: 'Luna Bader'
+        userProfilePhoto: 'assets/images/luna.jpg',
+        userDisplayName: 'Luna Bader'
       },
       content: 'Hello sweetie, How is going?',
       date: '@2:am'
@@ -81,8 +81,8 @@ export class ChatsComponent implements OnInit {
     {
       sender: {
         userId: '1',
-        userPhoto: 'assets/images/jimmy.jpg',
-        userName: 'Jimmy Los'
+        userProfilePhoto: 'assets/images/jimmy.jpg',
+        userDisplayName: 'Jimmy Los'
       },
       content: 'Thank you! Take care.',
       date: 'Oct 5.'
@@ -90,8 +90,8 @@ export class ChatsComponent implements OnInit {
     {
       sender: {
         userId: '2',
-        userPhoto: 'assets/images/luna.jpg',
-        userName: 'Luna Bader'
+        userProfilePhoto: 'assets/images/luna.jpg',
+        userDisplayName: 'Luna Bader'
       },
       content: 'Hello sweetie, How is going?',
       date: '@2:am'
@@ -99,8 +99,8 @@ export class ChatsComponent implements OnInit {
     {
       sender: {
         userId: '1',
-        userPhoto: 'assets/images/jimmy.jpg',
-        userName: 'Jimmy Los'
+        userProfilePhoto: 'assets/images/jimmy.jpg',
+        userDisplayName: 'Jimmy Los'
       },
       content: 'Thank you! Take care.',
       date: 'Oct 5.'
@@ -108,8 +108,8 @@ export class ChatsComponent implements OnInit {
     {
       sender: {
         userId: '2',
-        userPhoto: 'assets/images/luna.jpg',
-        userName: 'Luna Bader'
+        userProfilePhoto: 'assets/images/luna.jpg',
+        userDisplayName: 'Luna Bader'
       },
       content: 'Hello sweetie, How is going?',
       date: '@2:am'
@@ -117,8 +117,8 @@ export class ChatsComponent implements OnInit {
     {
       sender: {
         userId: '1',
-        userPhoto: 'assets/images/jimmy.jpg',
-        userName: 'Jimmy Los'
+        userProfilePhoto: 'assets/images/jimmy.jpg',
+        userDisplayName: 'Jimmy Los'
       },
       content: 'Thank you! Take care.',
       date: 'Oct 5.'
@@ -126,8 +126,8 @@ export class ChatsComponent implements OnInit {
     {
       sender: {
         userId: '2',
-        userPhoto: 'assets/images/luna.jpg',
-        userName: 'Luna Bader'
+        userProfilePhoto: 'assets/images/luna.jpg',
+        userDisplayName: 'Luna Bader'
       },
       content: 'Hello sweetie, How is going?',
       date: '@2:am'
@@ -135,8 +135,8 @@ export class ChatsComponent implements OnInit {
     {
       sender: {
         userId: '1',
-        userPhoto: 'assets/images/jimmy.jpg',
-        userName: 'Jimmy Los'
+        userProfilePhoto: 'assets/images/jimmy.jpg',
+        userDisplayName: 'Jimmy Los'
       },
       content: 'Thank you! Take care.',
       date: 'Oct 5.'
@@ -144,8 +144,8 @@ export class ChatsComponent implements OnInit {
     {
       sender: {
         userId: '2',
-        userPhoto: 'assets/images/luna.jpg',
-        userName: 'Luna Bader'
+        userProfilePhoto: 'assets/images/luna.jpg',
+        userDisplayName: 'Luna Bader'
       },
       content: 'Hello sweetie, How is going?',
       date: '@2:am'

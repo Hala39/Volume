@@ -25,6 +25,7 @@ import { DialogModule } from 'primeng/dialog';
 import { WebcamModule } from 'ngx-webcam';
 
 import { PostModalComponent } from './post-modal/post-modal.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { PostModalComponent } from './post-modal/post-modal.component';
     ChatsComponent,
     ChatRoomComponent,
     EmojiComponent,
-    PostModalComponent
+    PostModalComponent,
+    NavbarComponent
   ],
   imports: [
     CommonModule,
@@ -54,6 +56,8 @@ import { PostModalComponent } from './post-modal/post-modal.component';
     AvatarGroupModule,
     FontAwesomeModule,
     DialogModule,
+    ToolbarModule,
+    MenuModule,
     FormsModule,
     EmojiModule,
     PickerModule
@@ -64,6 +68,7 @@ import { PostModalComponent } from './post-modal/post-modal.component';
     ChatPopupComponent,
     ChatRoomComponent,
     ChatsComponent,
+    NavbarComponent
   ]
 })
 export class SharedModule { }
