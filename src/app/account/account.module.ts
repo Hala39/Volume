@@ -1,3 +1,6 @@
+import { CardModule } from 'primeng/card';
+import { AvatarModule } from 'primeng/avatar';
+import { StepsModule } from 'primeng/steps';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -26,6 +29,9 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
+    AvatarModule,
+    StepsModule,
+    CardModule,
     RouterModule.forChild(routes)
   ]
 })

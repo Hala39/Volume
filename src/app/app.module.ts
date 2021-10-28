@@ -1,3 +1,4 @@
+import { AccountModule } from './account/account.module';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToolbarModule } from 'primeng/toolbar';
 import { CardModule } from 'primeng/card';
@@ -38,6 +39,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     SharedModule,
     HomeModule,
     RippleModule,
+    AccountModule,
     AvatarModule,
     CardModule,
     ButtonModule,

@@ -1,0 +1,15 @@
+.container-fluid {
+    padding: 10% 25%;
+}
+
+:host ::ng-deep .p-steps-item {
+    padding-bottom: 15px;
+}
+
+:host ::ng-deep .p-steps ul {
+  display: block;
+}
+
+:host ::ng-deep .p-steps .p-steps-item:before {
+  content: none;
+}
