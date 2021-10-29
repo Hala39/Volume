@@ -1,18 +1,49 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-2">
-            <p-card [ngSwitch]="activeIndex">
-                <p-steps [model]="items" [readonly]="false" [(activeIndex)]="activeIndex"></p-steps>         
-            </p-card>
-        </div>
-        <div class="col-10">
-            <!-- <div *ngSwitchCase="PageNames.form">
-                hi
-            </div>
-            <div *ngSwitchCase="PageNames.verification">
-                bye
-            </div> -->
-        </div>
 
+<p-card>
+  <div class="row">
+    <div class="col-6">
+      <div class="intro">
+        <h1 class="p-ml-5 p-mb-5">Join Today and Discover</h1>
+      <h4 class="p-ml-5"><i class="pi pi-check p-mx-2"></i>2,000,000+ daily active user</h4>
+      <h4 class="p-ml-5"><i class="pi pi-check p-mx-2"></i>1 billion+ uploaded image</h4>
+      <h4 class="p-ml-5"><i class="pi pi-check p-mx-2"></i>Tons of learn and fun!</h4> 
+      </div>
     </div>
-</div>
+    <div class="col-6" style="text-align: end;">
+      <button pButton pRipple type="button" label="Skip to login" class="p-button-text"></button>
+    </div>
+  </div>
+  <div class="p-grid">
+    <div class="p-col-5 p-d-flex p-ai-center p-jc-center">
+          <p-button
+            label="Sign up with Google"
+            icon="pi pi-user-plus"
+            styleClass="p-button-success">
+          </p-button>
+    </div>  
+    <div class="p-col-2 p-py-5">
+      <p-divider layout="vertical">
+        <b>OR</b>
+      </p-divider>
+    </div>
+    <div class="p-col-5  p-d-flex justify-content-center">
+      <div class="p-fluid">
+        <div class="p-field">
+          <input pInputText placeholder="Full Name" type="text" />
+        </div>
+        <div class="p-field">
+          <input pInputText placeholder="Email" type="text" />
+        </div>
+        <div class="p-field">
+          <input pInputText placeholder="Password" type="password" />
+        </div>
+        <div class="p-field">
+          <p-button label="Register" (click)="switch()"></p-button>
+        </div>
+        <div class="p-field">
+          By registering you agree to Volume Privacy and Policy.
+        </div>
+      </div>
+    </div>
+  </div>
+</p-card>

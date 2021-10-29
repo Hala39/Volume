@@ -47,7 +47,7 @@ export class PostCardComponent implements OnInit {
     postId: 1,
     userCard: {
       userId: '3',
-      userProfilePhoto: 'assets/images/Volume.png',
+      userProfilePhoto: 'assets/images/volume-light.png',
       userDisplayName: 'Yasin Awada'
     },
     content: 'I Love you baby! Take care of yourself',

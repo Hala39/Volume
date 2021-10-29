@@ -1,1 +1,63 @@
-<p>edit-profile works!</p>
+<div>
+    <div class="row" style="position: relative;">
+        <div style="position: absolute; top: 0px; left:0px;">
+            <p-avatar label="Cover Photo" size="xlarge" pTooltip="Add a cover photo" (click)="show()" styleClass="cover"></p-avatar>
+        </div>
+        <div  style="position: relative; top: 80px; left:60px; z-index: 2;">
+            <p-avatar icon="pi pi-user" size="xlarge" shape="circle" (click)="show()" pTooltip="Add a profile photo"></p-avatar>
+        </div>
+    </div>
+</div>
+<p-card style="position: relative;">
+    <div class="row">
+        <div class="col-12">
+            <div class="row mt-5">
+                <div class="col-12 col-sm-6">
+                    <span class="p-input-icon-right">
+                        <i class="pi pi-pencil"></i>
+                        <input type="text" pInputText placeholder="Name" pKeyFilter="alpha">
+                    </span>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <span class="p-input-icon-right">
+                        <i class="pi pi-pencil"></i>
+                        <input type="text" pInputText placeholder="Title" pKeyFilter="alpha">
+                    </span>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-12 col-sm-6">
+                    <p-calendar [(ngModel)]="dob" [showButtonBar]="true" [touchUI]="true"
+                    placeholder="Date Of Birth" icon="pi pi-pencil" [showIcon]="true"></p-calendar>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <span class="p-input-icon-right">
+                        <i class="pi pi-pencil"></i>
+                        <input type="text" pInputText placeholder="Phone Number" pKeyFilter="num" >
+                    </span>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-12 col-sm-6">
+                    <span class="p-input-icon-right">
+                        <i class="pi pi-pencil"></i>
+                        <input type="text" pInputText placeholder="Hometown">
+                    </span>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <p-dropdown [options]="genders" [(ngModel)]="selectedGender" optionLabel="name" optionDisabled="inactive"></p-dropdown>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <div class="p-grid p-nogutter p-justify-end mb-3">
+            <button pRipple pButton label="Save changes" (click)="switch()"></button>
+        </div>
+    </ng-template>
+</p-card>
+
+<p-dialog header="Header" [(visible)]="displayDialog" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}"
+    [draggable]="false" [resizable]="false">
+        <p-fileUpload name="myfile[]" [customUpload]="true" [multiple]="false" accept="image/*" [maxFileSize]="1000000" (uploadHandler)="myUploader($event)"></p-fileUpload>
+</p-dialog>

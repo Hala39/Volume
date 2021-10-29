@@ -26,6 +26,7 @@ import { WebcamModule } from 'ngx-webcam';
 
 import { PostModalComponent } from './post-modal/post-modal.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { SuggestionsComponent } from './suggestions/suggestions.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     ChatRoomComponent,
     EmojiComponent,
     PostModalComponent,
-    NavbarComponent
+    NavbarComponent,
+    SuggestionsComponent
   ],
   imports: [
     CommonModule,
@@ -68,7 +70,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     ChatPopupComponent,
     ChatRoomComponent,
     ChatsComponent,
-    NavbarComponent
+    NavbarComponent,
+    SuggestionsComponent
   ]
 })
 export class SharedModule { }

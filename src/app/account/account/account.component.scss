@@ -1,0 +1,53 @@
+.core {
+    padding: 5%;
+}
+
+.marker-unchecked {
+    border: 2px solid #FFD54F;
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+    background-color: #1f2d40;
+}
+
+.marker-checked {
+    border: 10px solid #FFD54F;
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+    background-color: #1f2d40;
+}
+
+::ng-deep {
+    .p-timeline {
+        padding-left: 10%;
+    }
+
+    .p-timeline-event-content,
+    .p-timeline-event-opposite {
+        line-height: 1;
+    }
+  
+    .p-timeline-event-opposite {
+        display: none;
+    }
+
+    .p-card {
+        padding: 2%;
+    }
+
+}
+
+@media screen and (max-width: 960px) {
+    ::ng-deep {
+        .customized-timeline {
+            .p-timeline-event:nth-child(even) {
+                flex-direction: row !important;
+                
+                .p-timeline-event-content {
+                    text-align: left !important;
+                }
+            }
+        }
+    }
+}

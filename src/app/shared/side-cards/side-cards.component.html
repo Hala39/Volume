@@ -3,7 +3,7 @@
 </p-card>
 
 <p-card header="People You May Know">
-    <p-avatarGroup styleClass="p-mb-3">
+    <p-avatarGroup styleClass="p-mb-3 p-ml-5">
         <p-avatar image="assets/images/luna.jpg" size="large" shape="circle"></p-avatar>
         <p-avatar image="assets/images/me.jpg" size="large" shape="circle"></p-avatar>
         <p-avatar image="assets/images/jimmy.jpg" size="large" shape="circle"></p-avatar>
@@ -11,22 +11,5 @@
         <p-avatar image="assets/images/samaj.jpg" size="large" shape="circle"></p-avatar>
         <p-avatar label="+2" shape="circle" size="large" [style]="{'background-color':'#9c27b0', 'color': '#ffffff'}"></p-avatar>
     </p-avatarGroup>
-    <p-listbox [options]="users">
-        <ng-template let-user pTemplate="item">
-            <div class="row" style="width: 100%;">
-                <div class="col-7">
-                    <div class="d-flex flex-row mt-4">
-                        <p-avatar [image]="user.userProfilePhoto" styleClass="p-mr-2" size="large" shape="circle"></p-avatar>
-                        <div class="ml-4">
-                            <div class="row">{{ user.userDisplayName }}</div>
-                            <div class="row">{{ user.title }}</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-5 mt-3">
-                    <button pButton pRipple type="button" label="Follow" class="p-button-outlined p-button-rounded p-button-secondary p-button-sm ml-5"></button>
-                </div>
-            </div>           
-        </ng-template>
-    </p-listbox>
+    <app-suggestions [users]="users"></app-suggestions>
 </p-card>

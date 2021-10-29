@@ -1,24 +1,11 @@
 :host ::ng-deep {
     .p-card {
         margin: 5% 10% 10% 0%;
-        padding-left: 3%;
+        padding: 15px;
     }
 
     .p-tag {
         margin: 2%;
-    }
-
-    .p-listbox {
-        border: none;
-    }
-
-    .p-listbox-item {
-        cursor: default;
-    }
-    
-    .p-toolbar {
-        border: none;
-        width: 100%;
     }
 
 }

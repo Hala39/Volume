@@ -1,0 +1,37 @@
+<div class="container-fluid">
+    <div class="d-flex flex-row pt-5" style="padding-left: 3%;">
+        <img src="assets/images/volume-dark.png" alt="" height="40">
+        <h3 class="pt-1">Volume</h3>
+    </div>
+    <div class="row core"  [ngSwitch]="activeIndex">
+        <div class="col-2 pt-5">
+            <p-timeline [value]="events" align="left" styleClass="customized-timeline">
+                <ng-template pTemplate="marker" let-event>
+                    <span [ngClass]="event.isChecked? 'marker-checked' : 'marker-unchecked'" [style.backgroundColor]="event.color">
+                        <i [ngClass]="event.icon"></i>
+                    </span>
+                </ng-template>
+                <ng-template pTemplate="content" let-event>
+                    {{event.status}}
+                </ng-template>
+            </p-timeline>     
+        </div>
+        <div class="col-10">
+            <div *ngSwitchCase="PageNames.registration">
+                <app-register (activeIndexEmitter)="setActiveIndex($event)"></app-register>
+            </div>
+            <div *ngSwitchCase="PageNames.verification">
+                <app-verify-email (activeIndexEmitter)="setActiveIndex($event)"></app-verify-email>
+            </div>
+            <div *ngSwitchCase="PageNames.profile">
+                <app-edit-profile (activeIndexEmitter)="setActiveIndex($event)"></app-edit-profile>
+            </div>
+            <div *ngSwitchCase="PageNames.network">
+                <app-network></app-network>
+            </div>
+            <div *ngSwitchCase="PageNames.done">
+                Done
+            </div>
+        </div>
+    </div>
+</div>

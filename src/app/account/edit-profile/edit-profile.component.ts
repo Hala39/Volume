@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-edit-profile',
@@ -12,4 +12,30 @@ export class EditProfileComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  @Output() activeIndexEmitter = new EventEmitter<number>();
+
+  switch() {
+    this.activeIndexEmitter.emit(3);
+  }
+
+  dob: Date;
+
+  displayDialog: boolean = false;
+  show() {
+    this.displayDialog = true;
+  }
+
+
+  myUploader($event: any) {
+
+  }
+
+  genders = [
+    {name: 'Gender', inactive: true},
+    {name: 'Male'},
+    {name: 'Female'},
+    {name: 'Unspecified'}
+  ];
+
+  selectedGender: any;
 }

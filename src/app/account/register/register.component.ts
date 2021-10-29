@@ -1,12 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-export enum PageNames {
-  form,
-  verification,
-  profile,
-  suggestions,
-  success
-}
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -19,27 +11,11 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  items: MenuItem[] = [{
-    label: 'Registration'
-  },
-  {
-    label: 'Verification'
-  },
-  {
-    label: 'Profile set-up'
-  },
-  {
-    label: 'Following suggestions'
-  },
-  {
-    label: 'Done!'
+  @Output() activeIndexEmitter = new EventEmitter<number>();
+
+  switch() {
+    this.activeIndexEmitter.emit(1);
   }
-];
 
-
-  PageNames = PageNames;
-
-  activeIndex = PageNames.form;
-
-
+  checked: boolean = true;
 }
