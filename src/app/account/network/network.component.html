@@ -1,16 +1,23 @@
 <p-card>
-    <div class="container-fluid">
-        <div class="row">
-            <h3>Build your network</h3>
-            <p class="top">Start adding people to your timeline</p>
-        </div>
-        <div class="row d-flex justify-content-center">
-            <div class="col-12 mb-2">
-                <app-suggestions></app-suggestions>
+    <ng-template pTemplate="header">
+        <p-toolbar>
+            <div class="p-toolbar-group-left">
+                <b>Step 4</b>
             </div>
-            <div class="col-12 mb-2">
-                <app-suggestions [users]="users"></app-suggestions>
+            <div class="p-toolbar-group-right">
+                <span pButton pRipple type="button" label="Skip" class="p-button-text" (click)="switch()"></span>
             </div>
+        </p-toolbar>
+    </ng-template>
+    <h2 class="p-mb-5">Network</h2>
+    <p>Start adding to your feed</p>
+        <div class="row pt-5">
+            <app-suggestions [users]="users"></app-suggestions>
         </div>
-    </div>
+
+    <ng-template pTemplate="footer">
+        <div class="p-grid p-nogutter p-justify-end mt-5">
+            <button pRipple pButton label="Done" (click)="switch()"></button>
+        </div>
+    </ng-template>
 </p-card>

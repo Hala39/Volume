@@ -1,18 +1,9 @@
 :host ::ng-deep {
-    .p-avatar {
-        border: 1px solid #17212f;
 
-    }
     .p-avatar.p-avatar-xl {
         width: 8rem;
         height: 8rem;
         font-size: 4rem;
-    }
-
-    .p-avatar.cover {
-        width: 100%;
-        height: 12rem;
-        font-size: 1.5rem;
     }
 
     .p-inputtext {
@@ -44,24 +35,12 @@
         background-color: transparent;
     }
 
-    .p-button.p-button-icon-only:focus {
+    .p-button.p-button-icon-only:focus, .p-button.p-button-icon-only:hover {
+        box-shadow: none;
         border-color: #FFD54F;
     }
 
-    .p-input-icon-right, .p-calendar {
-        width: 80%;
-    }
-
-    .p-card {
-        position: inherit;
-        padding: 5% 0 2% 5%;
-    }
-
-    .p-card-footer {
-        padding: 5% 10%;
-    }
-
     .p-dropdown {
-        width: 80%;
+        width: 45%;
     }
 }

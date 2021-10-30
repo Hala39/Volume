@@ -1,6 +1,7 @@
-.core {
+.card-content {
     padding: 5%;
 }
+
 
 .marker-unchecked {
     border: 2px solid #FFD54F;
@@ -36,6 +37,15 @@
         padding: 2%;
     }
 
+    .p-toolbar {
+        border: none;
+        padding: 0;
+    }
+
+    .p-button.p-button-text {
+        padding: 0%;
+    }
+
 }
 
 @media screen and (max-width: 960px) {
@@ -51,3 +61,4 @@
         }
     }
 }
+

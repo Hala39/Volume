@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { UserCard } from 'src/app/models/userCard';
 
 @Component({
@@ -11,6 +11,12 @@ export class NetworkComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  @Output() activeIndexEmitter = new EventEmitter<number>();
+
+  switch() {
+    this.activeIndexEmitter.emit(4);
   }
 
   users: UserCard[] = [

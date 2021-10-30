@@ -29,6 +29,7 @@ import {DropdownModule} from 'primeng/dropdown';
 import { ListboxModule } from 'primeng/listbox';
 import {BadgeModule} from 'primeng/badge';
 import {ToolbarModule} from 'primeng/toolbar';
+import {CheckboxModule} from 'primeng/checkbox';
 
 import { HttpClientModule } from '@angular/common/http';
 import { NetworkComponent } from './network/network.component';
@@ -55,6 +56,7 @@ const routes: Routes = [
     CommonModule,
     SharedModule,
     DropdownModule,
+    CheckboxModule,
     ToolbarModule,
     BadgeModule,
     ListboxModule,

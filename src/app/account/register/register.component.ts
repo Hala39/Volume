@@ -17,5 +17,6 @@ export class RegisterComponent implements OnInit {
     this.activeIndexEmitter.emit(1);
   }
 
-  checked: boolean = true;
+  value: boolean = true;
+
 }
