@@ -24,6 +24,13 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { JwtModule } from '@auth0/angular-jwt';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+
+export function tokenGetter() {
+  return localStorage.getItem("access_token");
+}
 // import { BusyInterceptor } from './interceptors/busy.interceptor';
 @NgModule({
   declarations: [
@@ -34,6 +41,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     AppRoutingModule,
     BrowserAnimationsModule,
     MenuModule,
+    ToastModule,
     FontAwesomeModule,
     HttpClientModule,
     SharedModule,
@@ -48,7 +56,14 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     MenubarModule,
     WebcamModule,
     EmojiModule,
-    PickerModule
+    PickerModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ["example.com"],
+        disallowedRoutes: ["http://example.com/examplebadroute/"],
+      },
+    }),
   ],
   exports: [
     SharedModule,
@@ -57,6 +72,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    MessageService
     // {provide: HTTP_INTERCEPTORS, useClass: BusyInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]

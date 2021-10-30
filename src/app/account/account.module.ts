@@ -1,5 +1,5 @@
 import { DialogModule } from 'primeng/dialog';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { TimelineModule } from 'primeng/timeline';
@@ -32,8 +32,8 @@ import {ToolbarModule} from 'primeng/toolbar';
 import {CheckboxModule} from 'primeng/checkbox';
 
 import { HttpClientModule } from '@angular/common/http';
-import { NetworkComponent } from './network/network.component';
 import { SharedModule } from '../shared/shared.module';
+import { NetworkComponent } from './network/network.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -77,6 +77,7 @@ const routes: Routes = [
     DividerModule,
     TimelineModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule.forChild(routes)
   ]
 })

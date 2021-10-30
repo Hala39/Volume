@@ -1,10 +1,10 @@
+import { UserRegister } from './../models/userRegister';
 import { UserCard } from './../models/userCard';
 import { environment } from './../../environments/environment';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
 import { AppUser } from '../models/appUser';
 import { map } from 'rxjs/operators';
 
@@ -15,8 +15,7 @@ export class UserService {
 
   baseUrl = environment.apiUrl;
   constructor(private apiCaller: HttpClient, private jwtHelper: JwtHelperService, 
-    private router: Router, private messageService: MessageService,
-    private location: Location) { }
+    private router: Router) { }
 
   logIn(appUser: AppUser) {
     return this.apiCaller.post<UserCard>(this.baseUrl + 'login', appUser).pipe(
@@ -28,8 +27,8 @@ export class UserService {
     )
   }
 
-  signUp(appUser: AppUser) {
-    return this.apiCaller.post<UserCard>(this.baseUrl + 'register', appUser).pipe(
+  signUp(userRegister: UserRegister) {
+    return this.apiCaller.post<UserCard>(this.baseUrl + 'register', userRegister).pipe(
       map(response => {
         if (response) {
           this.setUserToken(response.token);

@@ -1,22 +1,22 @@
-<div class="container-fluid">
-    <div class="d-flex flex-row pt-5 p-d-none p-d-md-inline-flex" style="padding-left: 3%;">
-        <img src="assets/images/volume-dark.png" alt="" height="40">
-        <h3 class="pt-1">Volume</h3>
+<div class="d-flex flex-row pt-4" style="padding-left: 3%;">
+    <img src="assets/images/volume-dark.png">
+    <h3 class="pt-1">Volume</h3>
+</div>
+<div class="row mx-0 py-1" [ngSwitch]="activeIndex">
+    <div class="col-md-3 timeline pt-5">
+        <p-timeline [value]="events" align="left" styleClass="customized-timeline">
+            <ng-template pTemplate="marker" let-event>
+                <span [ngClass]="event.isChecked? 'marker-checked' : 'marker-unchecked'" [style.backgroundColor]="event.color">
+                    <i [ngClass]="event.icon"></i>
+                </span>
+            </ng-template>
+            <ng-template pTemplate="content" let-event>
+                {{event.status}}
+            </ng-template>
+        </p-timeline>  
     </div>
-    <div class="row card-content" [ngSwitch]="activeIndex">
-        <div class="col-2 timeline">
-            <p-timeline [value]="events" align="left" styleClass="customized-timeline">
-                <ng-template pTemplate="marker" let-event>
-                    <span [ngClass]="event.isChecked? 'marker-checked' : 'marker-unchecked'" [style.backgroundColor]="event.color">
-                        <i [ngClass]="event.icon"></i>
-                    </span>
-                </ng-template>
-                <ng-template pTemplate="content" let-event>
-                    {{event.status}}
-                </ng-template>
-            </p-timeline>     
-        </div>
-        <div class="col-12 col-sm-8">
+    <div class="col-md-9 pt-3">
+        <div class="col-sm-12 col-md-12 col-lg-8">
             <div *ngSwitchCase="PageNames.registration">
                 <app-register (activeIndexEmitter)="setActiveIndex($event)"></app-register>
             </div>
@@ -30,7 +30,7 @@
                 <app-network (activeIndexEmitter)="setActiveIndex($event)"></app-network>
             </div>
             <div *ngSwitchCase="PageNames.done">
-                Done
+                <app-success></app-success>
             </div>
         </div>
     </div>

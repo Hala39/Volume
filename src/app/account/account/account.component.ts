@@ -25,10 +25,10 @@ export class AccountComponent implements OnInit {
 
   events: any[]= [
     {index: 0, status: 'Registration', isChecked: true},
-    {index: 1, status: 'Verification', isChecked: false},
-    {index: 2, status: 'Profile', isChecked: false},
-    {index: 3, status: 'Network', isChecked: false},
-    {index: 4, status: 'Done', isChecked: false}
+    {index: 1, status: 'Verification'},
+    {index: 2, status: 'Profile'},
+    {index: 3, status: 'Network'},
+    {index: 4, status: 'Done'}
 
   ];
 

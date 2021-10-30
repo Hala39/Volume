@@ -8,20 +8,22 @@
         <div class="p-field p-pb-3">
           <h2>Registration</h2>
         </div>
-        <div class="p-field">
-          <input pInputText placeholder="Full Name" type="text" />
-        </div>
-        <div class="p-field">
-          <input pInputText placeholder="Email" type="text" />
-        </div>
-        <div class="p-field">
-          <input pInputText placeholder="Password" type="password" />
-        </div>
+        <form [formGroup]="registrationForm">
+          <div class="p-field">
+            <input pInputText placeholder="Display Name" type="text" formControlName="displayName"/>
+          </div>
+          <div class="p-field">
+            <input pInputText placeholder="Email" type="text" formControlName="email"/>
+          </div>
+          <div class="p-field">
+            <input pInputText placeholder="Password" type="password" formControlName="password"/>
+          </div>
+        </form>
         <div class="p-field">  
-          <p-checkbox [(ngModel)]="value" [binary]="true" label="I agree to Volume privacy and policy."></p-checkbox>
+          <p-checkbox [(ngModel)]="checkbox" [binary]="true" label="I agree to Volume privacy and policy."></p-checkbox>
         </div>
         <div class="p-field p-pt-3">
-          <p-button label="Register" (click)="switch()"></p-button>
+          <p-button label="Register" (click)="register()"></p-button>
         </div>
       </div>
     </div>
@@ -30,7 +32,7 @@
         <b>OR</b>
       </p-divider>
     </div>
-    <div class="col-12 col-sm-5 p-d-flex p-ai-center p-jc-center">
+    <div class="col-12 col-sm-5 p-d-flex p-ai-center p-jc-center p-pt-4">
       <div class="p-fluid">
         <div class="p-field">
           <p-button
