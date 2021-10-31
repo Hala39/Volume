@@ -1,0 +1,19 @@
+img {
+    width: 40px;
+    height: 40px;
+}
+
+.container-fluid {
+    padding: 10% 15%;
+}
+
+p {
+    text-align: center; 
+    font-size: small;
+}
+
+:host ::ng-deep {
+    .p-card {
+        padding: 1% 10%;
+    }
+}

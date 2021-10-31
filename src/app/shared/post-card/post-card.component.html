@@ -1,14 +1,14 @@
 <div class="container mt-5 mb-3">
-    <div class="row" *ngFor="let post of posts">
+    <div class="row">
         <div class="col-12">
             <div class="card p-4 mb-2 white second-bg">
                 <div class="d-flex justify-content-between">
                     <div class="d-flex flex-row align-items-center">
-                        <div class="userProfilePhoto"> 
-                            <p-avatar [image]="post.userCard.userProfilePhoto" styleClass="p-mr-2" size="large" shape="circle"></p-avatar>
+                        <div class="profilePhotoUrl"> 
+                            <p-avatar [image]="post.userCard.profilePhotoUrl" styleClass="p-mr-2" size="large" shape="circle"></p-avatar>
                         </div>
                         <div class="ms-2 c-details">
-                            <h6 class="mb-0">{{ post.userCard.userDisplayName }}</h6> <span>{{ post.date }}</span>
+                            <h6 class="mb-0">{{ post.userCard.displayName }}</h6> <span>{{ post.date }}</span>
                         </div>
                     </div>
                     <p-badge [value]="post.isLikedByMe === true ? 'Liked' : 'Like'"></p-badge>
@@ -39,14 +39,14 @@
 
                         <!-- Comments -->
                         <div class="mt-2" *ngIf="commentsExpanded">
-                            <div *ngFor="let comment of comments">
+                            <div *ngFor="let comment of post.comments">
                                 <div class="d-flex flex-row mt-4"> 
-                                    <p-avatar [image]="comment.userCard.userProfilePhoto" styleClass="p-mr-2" size="large" shape="circle"></p-avatar>
+                                    <p-avatar [image]="comment.userCard.profilePhotoUrl" styleClass="p-mr-2" size="large" shape="circle"></p-avatar>
                                     <div class="ml-2 w-100">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="d-flex flex-row align-items-center"> 
                                                 <span class="name">
-                                                    <h6>{{ comment.userCard.userDisplayName }}</h6> 
+                                                    <h6>{{ comment.userCard.displayName }}</h6> 
                                                 </span> 
                                                 <small class="text-muted time-text"> {{ comment.date }}</small>
                                             </div> 
@@ -56,7 +56,7 @@
                                 </div>
                             </div>
                             <div class="d-flex flex-row mt-4">
-                                <p-avatar [image]="post.userCard.userProfilePhoto" styleClass="p-mr-2" size="large" shape="circle"></p-avatar>
+                                <p-avatar [image]="post.userCard.profilePhotoUrl" styleClass="p-mr-2" size="large" shape="circle"></p-avatar>
                                 <input type="text" placeholder="Your comment .." pInputText/>
                             </div>
                         </div>

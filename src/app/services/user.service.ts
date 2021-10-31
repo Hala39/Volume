@@ -3,46 +3,50 @@ import { UserCard } from './../models/userCard';
 import { environment } from './../../environments/environment';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppUser } from '../models/appUser';
 import { map } from 'rxjs/operators';
+import { UserLogin } from '../models/userLogin';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  baseUrl = environment.apiUrl;
   constructor(private apiCaller: HttpClient, private jwtHelper: JwtHelperService, 
     private router: Router) { }
+    
+  baseUrl = environment.apiUrl + 'account/';
 
-  logIn(appUser: AppUser) {
-    return this.apiCaller.post<UserCard>(this.baseUrl + 'login', appUser).pipe(
+  login(userLogin: UserLogin) {
+    return this.apiCaller.post<UserCard>(this.baseUrl + 'login', userLogin).pipe(
       map(response => {
         if (response) {
-          this.setUserToken(response.token);
+          this.setUserCard(response);
+          this.router.navigateByUrl("/home");
         }
       })
     )
   }
 
-  signUp(userRegister: UserRegister) {
+  signup(userRegister: UserRegister) {
     return this.apiCaller.post<UserCard>(this.baseUrl + 'register', userRegister).pipe(
       map(response => {
         if (response) {
-          this.setUserToken(response.token);
+          this.setUserCard(response);
         } 
       })
     );
   }
 
-  setUserToken(token: string) {
-    localStorage.setItem('access_token', token);
-    localStorage.setItem('expirationDate', JSON.stringify(this.jwtHelper.getTokenExpirationDate(token)));
-    this.refreshPage();
-
+  setUserCard(userCard: UserCard) {
+    localStorage.setItem('userCard', JSON.stringify(userCard));
+    localStorage.setItem('access_token', userCard.token);
+    localStorage.setItem('expirationDate', 
+    JSON.stringify(this.jwtHelper.getTokenExpirationDate(userCard.token)));
   }
+
 
   public get loggedIn(): boolean{
     return localStorage.getItem('access_token') !==  null;
@@ -50,8 +54,7 @@ export class UserService {
 
   logout() {
     localStorage.clear();
-    this.refreshPage();
-    window.location.reload();
+    this.router.navigateByUrl("/");
   }
   
   getExpiration() {

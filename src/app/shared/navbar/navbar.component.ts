@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { UserCard } from './../../models/userCard';
+import { Component, Input, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
 @Component({
@@ -18,6 +19,8 @@ export class NavbarComponent implements OnInit {
   expandMenu() {
     this.menuExpanded = !this.menuExpanded;
   }
+
+  @Input() user: UserCard;
 
   items: MenuItem[] = [
     {label: 'Messages', icon: 'pi pi-fw pi-envelope'},

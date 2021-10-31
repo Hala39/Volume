@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BadgeModule } from 'primeng/badge';
 import { NgModule } from '@angular/core';
@@ -15,11 +16,13 @@ import {FileUploadModule} from 'primeng/fileupload';
 import {ToggleButtonModule} from 'primeng/togglebutton';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 @NgModule({
   declarations: [
     HomeComponent,
-    AddPostComponent
+    AddPostComponent,
+    WelcomeComponent
   ],
   imports: [
     CommonModule,
@@ -34,6 +37,7 @@ import { FormsModule } from '@angular/forms';
     FileUploadModule,
     ToggleButtonModule,
     FormsModule,
+    RouterModule
   ]
 })
 export class HomeModule { }

@@ -26,126 +26,126 @@ export class ChatsComponent implements OnInit {
   chats: Chat[] = [
     {
       sender: {
-        userId: '1',
-        userProfilePhoto: 'assets/images/jimmy.jpg',
-        userDisplayName: 'Jimmy Los'
+        id: '1',
+        profilePhotoUrl: 'assets/images/jimmy.jpg',
+        displayName: 'Jimmy Los'
       },
       content: 'Thank you! Take care.',
       date: 'Oct 5.'
     },
     {
       sender: {
-        userId: '2',
-        userProfilePhoto: 'assets/images/luna.jpg',
-        userDisplayName: 'Luna Bader'
+        id: '2',
+        profilePhotoUrl: 'assets/images/luna.jpg',
+        displayName: 'Luna Bader'
       },
       content: 'Hello sweetie, How is going?',
       date: '@2:am'
     },
     {
       sender: {
-        userId: '1',
-        userProfilePhoto: 'assets/images/jimmy.jpg',
-        userDisplayName: 'Jimmy Los'
+        id: '1',
+        profilePhotoUrl: 'assets/images/jimmy.jpg',
+        displayName: 'Jimmy Los'
       },
       content: 'Thank you! Take care.',
       date: 'Oct 5.'
     },
     {
       sender: {
-        userId: '2',
-        userProfilePhoto: 'assets/images/luna.jpg',
-        userDisplayName: 'Luna Bader'
+        id: '2',
+        profilePhotoUrl: 'assets/images/luna.jpg',
+        displayName: 'Luna Bader'
       },
       content: 'Hello sweetie, How is going?',
       date: '@2:am'
     },
     {
       sender: {
-        userId: '1',
-        userProfilePhoto: 'assets/images/jimmy.jpg',
-        userDisplayName: 'Jimmy Los'
+        id: '1',
+        profilePhotoUrl: 'assets/images/jimmy.jpg',
+        displayName: 'Jimmy Los'
       },
       content: 'Thank you! Take care.',
       date: 'Oct 5.'
     },
     {
       sender: {
-        userId: '2',
-        userProfilePhoto: 'assets/images/luna.jpg',
-        userDisplayName: 'Luna Bader'
+        id: '2',
+        profilePhotoUrl: 'assets/images/luna.jpg',
+        displayName: 'Luna Bader'
       },
       content: 'Hello sweetie, How is going?',
       date: '@2:am'
     },
     {
       sender: {
-        userId: '1',
-        userProfilePhoto: 'assets/images/jimmy.jpg',
-        userDisplayName: 'Jimmy Los'
+        id: '1',
+        profilePhotoUrl: 'assets/images/jimmy.jpg',
+        displayName: 'Jimmy Los'
       },
       content: 'Thank you! Take care.',
       date: 'Oct 5.'
     },
     {
       sender: {
-        userId: '2',
-        userProfilePhoto: 'assets/images/luna.jpg',
-        userDisplayName: 'Luna Bader'
+        id: '2',
+        profilePhotoUrl: 'assets/images/luna.jpg',
+        displayName: 'Luna Bader'
       },
       content: 'Hello sweetie, How is going?',
       date: '@2:am'
     },
     {
       sender: {
-        userId: '1',
-        userProfilePhoto: 'assets/images/jimmy.jpg',
-        userDisplayName: 'Jimmy Los'
+        id: '1',
+        profilePhotoUrl: 'assets/images/jimmy.jpg',
+        displayName: 'Jimmy Los'
       },
       content: 'Thank you! Take care.',
       date: 'Oct 5.'
     },
     {
       sender: {
-        userId: '2',
-        userProfilePhoto: 'assets/images/luna.jpg',
-        userDisplayName: 'Luna Bader'
+        id: '2',
+        profilePhotoUrl: 'assets/images/luna.jpg',
+        displayName: 'Luna Bader'
       },
       content: 'Hello sweetie, How is going?',
       date: '@2:am'
     },
     {
       sender: {
-        userId: '1',
-        userProfilePhoto: 'assets/images/jimmy.jpg',
-        userDisplayName: 'Jimmy Los'
+        id: '1',
+        profilePhotoUrl: 'assets/images/jimmy.jpg',
+        displayName: 'Jimmy Los'
       },
       content: 'Thank you! Take care.',
       date: 'Oct 5.'
     },
     {
       sender: {
-        userId: '2',
-        userProfilePhoto: 'assets/images/luna.jpg',
-        userDisplayName: 'Luna Bader'
+        id: '2',
+        profilePhotoUrl: 'assets/images/luna.jpg',
+        displayName: 'Luna Bader'
       },
       content: 'Hello sweetie, How is going?',
       date: '@2:am'
     },
     {
       sender: {
-        userId: '1',
-        userProfilePhoto: 'assets/images/jimmy.jpg',
-        userDisplayName: 'Jimmy Los'
+        id: '1',
+        profilePhotoUrl: 'assets/images/jimmy.jpg',
+        displayName: 'Jimmy Los'
       },
       content: 'Thank you! Take care.',
       date: 'Oct 5.'
     },
     {
       sender: {
-        userId: '2',
-        userProfilePhoto: 'assets/images/luna.jpg',
-        userDisplayName: 'Luna Bader'
+        id: '2',
+        profilePhotoUrl: 'assets/images/luna.jpg',
+        displayName: 'Luna Bader'
       },
       content: 'Hello sweetie, How is going?',
       date: '@2:am'

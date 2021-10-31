@@ -8,7 +8,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { LoginFormComponent } from './login-form/login-form.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { SuccessComponent } from './success/success.component';
@@ -44,7 +43,6 @@ const routes: Routes = [
   declarations: [
     LoginComponent,
     RegisterComponent,
-    LoginFormComponent,
     VerifyEmailComponent,
     EditProfileComponent,
     SuccessComponent,

@@ -1,3 +1,4 @@
+import { LoginFormComponent } from './login-form/login-form.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
@@ -39,7 +40,8 @@ import { SuggestionsComponent } from './suggestions/suggestions.component';
     EmojiComponent,
     PostModalComponent,
     NavbarComponent,
-    SuggestionsComponent
+    SuggestionsComponent,
+    LoginFormComponent
   ],
   imports: [
     CommonModule,
@@ -71,6 +73,7 @@ import { SuggestionsComponent } from './suggestions/suggestions.component';
     ChatRoomComponent,
     ChatsComponent,
     NavbarComponent,
+    LoginFormComponent,
     SuggestionsComponent
   ]
 })

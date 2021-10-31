@@ -2,8 +2,8 @@
     <img src="assets/images/volume-dark.png">
     <h3 class="pt-1">Volume</h3>
 </div>
-<div class="row mx-0 py-1" [ngSwitch]="activeIndex">
-    <div class="col-md-3 timeline pt-5">
+<div class="row mx-0 py-5" [ngSwitch]="activeIndex">
+    <div class="col-md-3 timeline pt-5 p-d-none p-d-md-inline-flex">
         <p-timeline [value]="events" align="left" styleClass="customized-timeline">
             <ng-template pTemplate="marker" let-event>
                 <span [ngClass]="event.isChecked? 'marker-checked' : 'marker-unchecked'" [style.backgroundColor]="event.color">
@@ -16,7 +16,7 @@
         </p-timeline>  
     </div>
     <div class="col-md-9 pt-3">
-        <div class="col-sm-12 col-md-12 col-lg-8">
+        <div class="col-sm-12 col-md-11 col-lg-9">
             <div *ngSwitchCase="PageNames.registration">
                 <app-register (activeIndexEmitter)="setActiveIndex($event)"></app-register>
             </div>

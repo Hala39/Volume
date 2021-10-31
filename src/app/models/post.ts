@@ -1,3 +1,4 @@
+import { Comment } from './comment';
 import { UserCard } from './userCard';
 export interface Post {
     postId?: number;

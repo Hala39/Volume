@@ -1,4 +1,19 @@
-h1 {
-    text-align: center;
+p {
+    font-size: small;
 }
 
+.p-field {
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+:host ::ng-deep {
+    .p-checkbox-label {
+        font-size: small;
+    }
+
+    .p-button-label {
+        font-size: small;
+    }
+
+}

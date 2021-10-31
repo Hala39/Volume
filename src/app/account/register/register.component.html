@@ -10,29 +10,37 @@
         </div>
         <form [formGroup]="registrationForm">
           <div class="p-field">
-            <input pInputText placeholder="Display Name" type="text" formControlName="displayName"/>
+            <input pInputText class="p-inputtext-sm" placeholder="Name" type="text"  pKeyFilter="alpha" formControlName="displayName"/>
+            <small *ngIf="displayName.dirty && displayName.hasError('required')" class="p-error">This field is required.</small>
+            <small *ngIf="displayName.dirty && (!displayName.hasError('required')) 
+                && displayName.hasError('minlength')" class="p-error">
+                Your name should contains at least 3 characters.
+          </small>
           </div>
           <div class="p-field">
-            <input pInputText placeholder="Email" type="text" formControlName="email"/>
+            <input pInputText class="p-inputtext-sm" placeholder="Email" type="text" pKeyFilter="email" formControlName="email"/>
+            <small *ngIf="email.dirty && email.hasError('required')" class="p-error">This field is required.</small>
+            <small *ngIf="(!email.hasError('required')) && email.dirty && email.hasError('email')" class="p-error">Please enter a valid email.</small>
           </div>
           <div class="p-field">
-            <input pInputText placeholder="Password" type="password" formControlName="password"/>
+            <input pInputText class="p-inputtext-sm" placeholder="Password" type="password" formControlName="password"/>
+            <small *ngIf="password.dirty && password.hasError('required')" class="p-error">This field is required.</small>
           </div>
         </form>
         <div class="p-field">  
-          <p-checkbox [(ngModel)]="checkbox" [binary]="true" label="I agree to Volume privacy and policy."></p-checkbox>
+          <p-checkbox [(ngModel)]="checkbox" [binary]="true" label="I agree to Volume privacy and policy." [class]="!checkbox ? 'p-error' : ''"></p-checkbox>
         </div>
         <div class="p-field p-pt-3">
           <p-button label="Register" (click)="register()"></p-button>
         </div>
       </div>
     </div>
-    <div class="col-12 col-sm-2">
+    <div class="col-12 col-sm-2 p-my-5">
       <p-divider layout="vertical">
         <b>OR</b>
       </p-divider>
     </div>
-    <div class="col-12 col-sm-5 p-d-flex p-ai-center p-jc-center p-pt-4">
+    <div class="col-12 col-sm-5 p-d-flex p-ai-center p-jc-center">
       <div class="p-fluid">
         <div class="p-field">
           <p-button
@@ -43,10 +51,15 @@
         </div>
         <div class="p-field">
           <p>Already have an account? 
-              <a class="primary">Login</a>
+              <a class="primary" (click)="displayDialog=true">Login</a>
           </p>
         </div>
       </div>
     </div>
   </div>
 </p-card>
+
+<p-dialog header="Login" [(visible)]="displayDialog" [breakpoints]="{'960px': '75vw'}" [style]="{width: '30vw'}"
+    [draggable]="false" [resizable]="false" [modal]="true">
+    <app-login-form></app-login-form>
+  </p-dialog>

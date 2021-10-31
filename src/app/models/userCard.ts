@@ -1,7 +1,7 @@
 export interface UserCard {
-    userId: string;
-    userProfilePhoto: string;
-    userDisplayName: string;
+    id: string;
+    profilePhotoUrl: string;
+    displayName: string;
     title?: string;
     token?: string;
 } 

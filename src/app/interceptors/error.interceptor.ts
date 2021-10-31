@@ -31,15 +31,16 @@ export class ErrorInterceptor implements HttpInterceptor {
                 }
                 throw modalStateErrors.flat();
               } else if (typeof(error.error) === 'object') {
-                this.messageService.add({severity: 'error', summary: 'Nad Request!', detail: error.statusText});
+                this.messageService.add({severity: 'error', summary: 'Bad Request!', detail: error.statusText});
               } else {
                 this.messageService.add({severity: 'error', summary: 'Bad Request!', detail: error.error});
               }
               break;
             case 401:
+              if (!request.url.includes("login")) {
+                this.userService.logout();
+              }
               this.messageService.add({severity: 'error', summary: 'Unauthorized', detail: error.error || 'Please login first!'});
-              this.userService.logout();
-              this.router.navigateByUrl('/account/login');
               break;
             case 404:
               this.router.navigateByUrl('/not-found');

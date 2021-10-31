@@ -1,0 +1,22 @@
+<div class="p-fluid">
+    <form [formGroup]="loginForm">
+        <div class="p-field">
+            <span class="p-input-icon-right">
+                <i class="pi pi-user"></i>
+                <input pInputText class="p-inputtext-sm" placeholder="Email" type="text" pKeyFilter="email" formControlName="email"/>
+            </span>
+            <small *ngIf="email.dirty && email.hasError('required')" class="p-error">This field is required.</small>
+            <small *ngIf="(!email.hasError('required')) && email.dirty && email.hasError('email')" class="p-error">Please enter a valid email.</small>
+          </div>
+          <div class="p-field">
+            <span class="p-input-icon-right">
+                <i class="pi pi-lock"></i>
+                <input pInputText class="p-inputtext-sm" placeholder="Password" type="password" formControlName="password"/>
+            </span>
+            <small *ngIf="password.dirty && password.hasError('required')" class="p-error">This field is required.</small>
+          </div>
+          <div class="p-filed">
+              <p-button label="Login" (click)="login()"></p-button>
+        </div>
+    </form>
+</div>

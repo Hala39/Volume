@@ -27,24 +27,47 @@ export class RegisterComponent implements OnInit {
 
   registrationForm: FormGroup;
 
+  displayDialog: boolean = false;
 
-  displayName = new FormControl("", [Validators.required]);
-  email = new FormControl("", [Validators.required, Validators.email]);
-  password = new FormControl("", [Validators.required, Validators.minLength(6)]);
+
+  displayName = new FormControl("", {
+    validators: [
+      Validators.required,
+      Validators.minLength(3)
+    ],
+      updateOn: 'blur'
+  });
+
+  email = new FormControl("", { 
+    validators: [
+      Validators.required, 
+      Validators.email
+    ], 
+      updateOn: 'blur'
+  });
+
+  password = new FormControl("", {
+    validators: [
+      Validators.required, 
+      Validators.minLength(6)
+    ],
+      updateOn: 'blur'
+  });
 
 
   register() {
-    if (this.registrationForm.valid) {
+    if (this.registrationForm.valid && this.checkbox) {
       const userRegister: UserRegister = {
         displayName: this.displayName.value,
         email: this.email.value,
         password: this.password.value
-      }
-      this.messageService.add({severity: 'success', summary: 'Invalid Data', detail: 'Please enter a valid data!'});
-      // this.userService.signUp(userRegister).subscribe();
-      this.switch();
-    } else {
-      this.messageService.add({severity: 'warn', summary: 'Invalid Data', detail: 'Please enter a valid data!'});
+      } 
+      this.userService.signup(userRegister).subscribe(
+        res => this.switch()
+      );
+    } 
+    else {
+      this.messageService.add({severity: 'warn', summary: 'Invalid Data', detail: 'Please take care of errors before proceeding.'});
     }
   }
 

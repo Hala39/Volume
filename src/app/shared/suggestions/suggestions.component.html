@@ -1,12 +1,12 @@
 <p-toolbar *ngFor="let user of users">
     <div class="p-toolbar-group-left my-2">
         <div class="d-flex flex-row mt-1"> 
-            <p-avatar [image]="user.userProfilePhoto" styleClass="p-mr-2 p-ml-2" size="xlarge" shape="circle"></p-avatar>
+            <p-avatar [image]="user.profilePhotoUrl" styleClass="p-mr-2 p-ml-2" size="xlarge" shape="circle"></p-avatar>
             <div class="p-ml-2 w-100"> 
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex flex-row align-items-center"> 
                         <span class="name">
-                            <h5>{{ user.userDisplayName }}</h5> 
+                            <h5>{{ user.displayName }}</h5> 
                         </span> 
                     </div> 
                 </div>

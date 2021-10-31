@@ -21,21 +21,21 @@ export class NetworkComponent implements OnInit {
 
   users: UserCard[] = [
     {
-      userId: '1',
-      userProfilePhoto: 'assets/images/jimmy.jpg',
-      userDisplayName: 'Jimmy Los',
+      id: '1',
+      profilePhotoUrl: 'assets/images/jimmy.jpg',
+      displayName: 'Jimmy Los',
       title: 'CEO'
     },
     {
-      userId: '2',
-      userProfilePhoto: 'assets/images/me.jpg',
-      userDisplayName: 'Hala Taleb',
+      id: '2',
+      profilePhotoUrl: 'assets/images/me.jpg',
+      displayName: 'Hala Taleb',
       title: 'Web Developer'
     },
     {
-      userId: '3',
-      userProfilePhoto: 'assets/images/luna.jpg',
-      userDisplayName: 'Luna Bader',
+      id: '3',
+      profilePhotoUrl: 'assets/images/luna.jpg',
+      displayName: 'Luna Bader',
       title: 'Manager'
     },
   ]
