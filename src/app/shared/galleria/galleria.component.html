@@ -1,0 +1,18 @@
+<p-galleria [value]="photos" [(visible)]="displayCustom" [(activeIndex)]="activeIndex" [responsiveOptions]="responsiveOptions" 
+    [containerStyle]="{'max-width': '850px'}" [numVisible]="7"
+    [circular]="true" [fullScreen]="true" [showItemNavigators]="true" [showThumbnails]="false" [baseZIndex]="100000">
+    <ng-template pTemplate="item" let-item>
+        <img [src]="item.url" style="width: 100%; display: block;"/>
+    </ng-template>
+    <ng-template pTemplate="thumbnail" let-item>
+        <div class="p-grid p-nogutter p-justify-center">
+            <img [src]="item.url" style="display: block;"/>
+        </div>
+    </ng-template>
+</p-galleria>
+                    
+<div *ngIf="photos" class="p-grid" style="max-width: 400px;">
+    <div *ngFor="let photo of photos; let index = index;" class="p-col-3 p-ml-2" key="index">
+        <img [src]="photo.url" style="cursor: pointer; width: 100px;" (click)="photoClick(index)"/>
+    </div>
+</div>

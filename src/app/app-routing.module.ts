@@ -12,6 +12,10 @@ const routes: Routes = [
     path: 'chat', loadChildren: () => import('../app/messaging/messaging.module')
       .then(m => m.MessagingModule),
   },
+  {
+    path: 'profile', loadChildren: () => import('../app/profile/profile.module')
+      .then(m => m.ProfileModule)
+  }
 ];
 
 @NgModule({

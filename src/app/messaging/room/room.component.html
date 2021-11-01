@@ -1,22 +1,10 @@
-
-<app-chat-room class="size1" *ngIf="chatRoomExpanded" (backToContactsEmitter)="backToContacts($event)"  
-[listStyle]="chatRoomListStyle1" [chatRoomClass]="''"></app-chat-room>
-
-<app-chat-popup class="size1" *ngIf="!chatRoomExpanded" [title]="'Contacts'" [popupClass]="'col-12 col-sm-12 pb-0'" 
-[containerClass]="'fixed-bottom'" [chatsExpanded]="true" [fullScreen]="true" [listStyle]="popupListStyle1"
-(expandChatRoomEmitter)="expandChatRoom($event)">
-</app-chat-popup>
-
-
-
-<div class="row pb-0 mb-0 size2">
-    <div class="col-4" style="margin-top: 5.5%">
-        <app-chat-popup class="size2" [title]="'Contacts'" [popupClass]="'pb-0 mb-0'" 
-        [containerClass]="''" [chatsExpanded]="true" [fullScreen]="true">
-        </app-chat-popup>
-    </div>
-    <div class="col-8 py-0 mb-0 mt-3">
-        <app-chat-room class="size2" (backToContactsEmitter)="backToContacts($event)"  [listStyle]="chatRoomListStyle2">
-        </app-chat-room>
+<div class="container-fluid pt-2">
+    <div class="row">
+        <div class="col-12 col-sm-5 col-md-4 px-0 contacts">
+            <app-contacts></app-contacts>
+        </div>
+        <div class="col-12 col-sm-7 col-md-8 px-0 thread">
+            <app-thread></app-thread>
+        </div>
     </div>
 </div>

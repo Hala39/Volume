@@ -1,21 +1,5 @@
-
-app-chat-room.size1 {
-    padding-top: 0%;
-    padding-bottom: 0%;
-    margin-bottom: 0%;
-}
-
-.size1 {
-    display: none;
-}
-
-@media screen and (max-width: 1200px) {
-
-    .size2 {
+@media screen and (max-width: 757px) {
+    .thread {
         display: none;
-    }
-
-    .size1 {
-        display: block;
     }
 }

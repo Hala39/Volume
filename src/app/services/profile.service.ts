@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { File } from '../models/file';
 import { Profile } from '../models/Profile';
 
 @Injectable({
@@ -13,19 +15,33 @@ export class ProfileService {
 
   baseUrl = environment.apiUrl + 'profile/';
 
+  profileSource = new BehaviorSubject<Profile>(null);
+  profile$ = this.profileSource.asObservable();
+
+  photosSource = new BehaviorSubject<File[]>([]);
+  photos$ = this.photosSource.asObservable();
+
   createOrUpdateProfile(profile: Profile) {
     return this.apiCaller.post(this.baseUrl, profile).pipe(
       map(response => {
-        localStorage.setItem('profile', JSON.stringify(profile));
+       
       })
     )
   }
 
   getProfileForUser(id: string) {
-    return this.apiCaller.get(this.baseUrl + id).pipe(
+    return this.apiCaller.get<Profile>(this.baseUrl + id).pipe(
       map(response => {
-        localStorage.setItem('profile', JSON.stringify(response));
+        this.profileSource.next(response);
       })
     );
+  }
+
+  getPhotosForUser(id: string) {
+    return this.apiCaller.get<File[]>(this.baseUrl + 'photos/' + id).pipe(
+      map(response => {
+        this.photosSource.next(response)
+      })
+    )
   }
 }

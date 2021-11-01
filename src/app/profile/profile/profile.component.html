@@ -1,0 +1,71 @@
+<app-navbar></app-navbar>
+
+<div class="container-fluid">
+    <p-card *ngIf="(profile$ | async) as profile">
+        <div class="d-flex flex-row cover"> 
+            <p-avatar 
+            size="xlarge" shape="circle" 
+            [icon]="profile.profilePhotoUrl? '' : 'pi pi-user'" 
+            [image]="profile.profilePhotoUrl? profile.profilePhotoUrl : ''"
+            pTooltip="Add a profile photo"></p-avatar>
+            <div class="p-ml-3 w-100">
+                <div class="d-flex justify-content-between align-items-center p-pt-5">
+                    <div class="d-flex flex-row align-items-center"> 
+                        <span class="name">
+                            <h3>{{ profile.displayName }}</h3> 
+                        </span> 
+                    </div> 
+                </div>
+                <p class="user-comment-text text-justify">{{ profile.title }}</p>
+            </div>
+            <p-button
+            icon="pi pi-plus" 
+            label="follow"
+            styleClass="p-button-rounded p-button-warning p-button-text"></p-button>
+        </div>
+    </p-card>
+    <p-card>
+        <p-tabView [scrollable]="true" [(activeIndex)]="index" (onChange)="indexChanged(index)">
+            <p-tabPanel header="About">
+                <ng-template pTemplate="content">
+                    Complex Content to Lazy Load
+                </ng-template>
+            </p-tabPanel>
+            <p-tabPanel header="Timeline">
+                <ng-template pTemplate="content">
+                    <div *ngIf="(profile$ | async)?.posts.length > 0">
+                        <div *ngFor="let post of (profile$ | async).posts">
+                            <app-post-card [post]="post"></app-post-card>
+                        </div>
+                    </div>
+                    <div *ngIf="(profile$ | async)?.posts.length === 0">
+                        Nothing to show.
+                    </div>
+                </ng-template>
+             </p-tabPanel>
+            <p-tabPanel header="Photos">
+                <ng-template pTemplate="content">
+                    <app-galleria [photos]="(photos$ | async)"></app-galleria>
+                </ng-template>
+            </p-tabPanel>
+            <p-tabPanel header="Followings">
+                <ng-template pTemplate="content">
+                    <div *ngIf="(followings$ | async)?.length === 0">
+                        Nothing to show.
+                    </div>
+                    <app-suggestions [users]="(followings$ | async)"></app-suggestions>
+                </ng-template>
+            </p-tabPanel>
+            <p-tabPanel header="Followers">
+                <ng-template pTemplate="content">
+                    <div *ngIf="(followers$ | async)?.length === 0">
+                        Nothing to show.
+                    </div>
+                    <div class="follow-list">
+                        <app-suggestions [users]="(followers$ | async)"></app-suggestions>
+                    </div>
+                </ng-template>
+            </p-tabPanel>
+        </p-tabView>
+    </p-card>
+</div>

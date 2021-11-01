@@ -1,3 +1,6 @@
+import { File } from './file';
+import { Post } from "./post";
+
 export class Profile {
     displayName?: string;
     phoneNumber?: string;
@@ -7,4 +10,6 @@ export class Profile {
     gender?: string;
     profilePhotoUrl?: string;
     coverPhotoUrl?: string;
+    posts?: Post[] = [];
+    photos?: File[] = [];
 }

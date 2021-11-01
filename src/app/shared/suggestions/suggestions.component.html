@@ -18,7 +18,7 @@
         <p-button pRipple type="button" 
         [label]="user.isFollowing? 'Following' : 'Follow'" 
         [icon]="user.isFollowing? 'pi pi-check' : 'pi pi-plus'" 
-        (click)="followToggle(user.displayName)"
+        (click)="followToggle(user.id)"
         styleClass="p-button-outlined p-button-rounded p-button-sm ml-5"></p-button>
     </div>
 </p-toolbar>

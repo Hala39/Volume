@@ -1,3 +1,5 @@
+import { GalleriaModule } from 'primeng/galleria';
+import { RouterModule } from '@angular/router';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AvatarModule } from 'primeng/avatar';
@@ -28,6 +30,8 @@ import { WebcamModule } from 'ngx-webcam';
 import { PostModalComponent } from './post-modal/post-modal.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SuggestionsComponent } from './suggestions/suggestions.component';
+import { GalleriaComponent } from './galleria/galleria.component';
+import { IdentityComponent } from './identity/identity.component';
 
 
 @NgModule({
@@ -41,7 +45,9 @@ import { SuggestionsComponent } from './suggestions/suggestions.component';
     PostModalComponent,
     NavbarComponent,
     SuggestionsComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    GalleriaComponent,
+    IdentityComponent
   ],
   imports: [
     CommonModule,
@@ -62,17 +68,21 @@ import { SuggestionsComponent } from './suggestions/suggestions.component';
     DialogModule,
     ToolbarModule,
     MenuModule,
+    GalleriaModule,
     FormsModule,
     EmojiModule,
-    PickerModule
+    PickerModule,
+    RouterModule
   ],
   exports: [
     PostCardComponent,
     SideCardsComponent,
     ChatPopupComponent,
     ChatRoomComponent,
+    GalleriaComponent,
     ChatsComponent,
     NavbarComponent,
+    EmojiComponent,
     LoginFormComponent,
     SuggestionsComponent
   ]

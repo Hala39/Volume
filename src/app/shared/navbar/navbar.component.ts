@@ -20,7 +20,7 @@ export class NavbarComponent implements OnInit {
     this.menuExpanded = !this.menuExpanded;
   }
 
-  @Input() user: UserCard;
+  user: UserCard = JSON.parse(localStorage.getItem('userCard'));
 
   items: MenuItem[] = [
     {label: 'Messages', icon: 'pi pi-fw pi-envelope'},

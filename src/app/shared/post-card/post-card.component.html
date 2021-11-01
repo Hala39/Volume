@@ -5,7 +5,9 @@
                 <div class="d-flex justify-content-between">
                     <div class="d-flex flex-row align-items-center">
                         <div class="profilePhotoUrl"> 
-                            <p-avatar image="assets/images/jimmy.jpg" styleClass="p-mr-2" size="large" shape="circle"></p-avatar>
+                            <p-avatar [image]="post.appUser.profilePhotoUrl? post.appUser.profilePhotoUrl: ''" 
+                            [icon]="post.appUser.profilePhotoUrl? '': 'pi pi-user'"
+                            styleClass="p-mr-2" size="large" shape="circle"></p-avatar>
                         </div>
                         <div class="ms-2 c-details">
                             <h6 class="mb-0">{{ post.appUser.displayName }}</h6> <span>{{ post.date | date}}</span>
@@ -34,7 +36,7 @@
                         <!-- Action buttons -->
                         <p-toolbar [style]="{'margin-top': '15px'}">   
                             <button pButton pRipple type="button" styleClass="p-button-lg" [label]="post.isLikedByUser? 'Liked' : 'Like'" 
-                            [icon]="post.isLikedByUser? 'pi pi-check' : 'pi pi-heart'" (click)="likeToggle()"
+                            icon="pi pi-heart" (click)="likeToggle()"
                             class="p-button-rounded p-button-danger p-button-text"></button>
                             <button pButton pRipple type="button" styleClass="p-button-lg" label="Comment" 
                             [icon]="commentsExpanded? 'pi pi-times' : 'pi pi-comment'" (click)="expandComments(post.id)"
@@ -48,7 +50,9 @@
                         <div class="mt-2" *ngIf="commentsExpanded">
                             <div *ngFor="let comment of (comments$ | async )">
                                 <div class="d-flex flex-row mt-4"> 
-                                    <p-avatar [image]="comment.appUser.profilePhotoUrl" styleClass="p-mr-2" size="large" shape="circle"></p-avatar>
+                                    <p-avatar [image]="comment.appUser.profilePhotoUrl? comment.appUser.profilePhotoUrl : ''" 
+                                    [icon]="comment.appUser.profilePhotoUrl? '' : 'pi pi-user'"
+                                    styleClass="p-mr-2" size="large" shape="circle"></p-avatar>
                                     <div class="ml-2 w-100">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="d-flex flex-row align-items-center"> 
@@ -67,7 +71,9 @@
                                 </div>
                             </div>
                             <div class="d-flex flex-row mt-4">
-                                <p-avatar [image]="post.appUser.profilePhotoUrl" styleClass="p-mr-2" size="large" shape="circle"></p-avatar>
+                                <p-avatar [image]="currentUser.profilePhotoUrl? currentUser.profilePhotoUrl : ''" 
+                                [icon]="currentUser.profilePhotoUrl? '' : 'pi pi-user'" styleClass="p-mr-2" 
+                                size="large" shape="circle"></p-avatar>
                                 <input type="text" placeholder="Your comment .." pInputText [(ngModel)]="content" (keyup.enter)="addComment()"/>
                             </div>
                         </div>
