@@ -9,10 +9,10 @@ export class FollowService {
 
   constructor(private apiCaller: HttpClient) { }
 
-  baseUrl = environment.apiUrl + 'follow';
+  baseUrl = environment.apiUrl + 'follow/';
 
   followToggle(id: string) {
-    return this.apiCaller.post(this.baseUrl + id, {});
+    return this.apiCaller.post(this.baseUrl + id.toString(), {});
   }
 
   getUserFollowing(userId: string, predicate: string) {

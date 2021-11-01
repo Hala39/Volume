@@ -1,8 +1,12 @@
-import { UserCard } from './userCard';
-import { Post } from './post';
-export interface AppUser {
-    userCard: UserCard;
-    posts: Post[];
-    following: UserCard[];
-    followers: UserCard[];
+export class AppUser {
+    id: string;
+    displayName: string;
+    profilePhotoUrl: string;
+    isFollowing: boolean;
+    lastMessageSent?: string;
+    lastMessageReceived?: string;
+    title?: string;
+    hometown?: string;
 }
+
+

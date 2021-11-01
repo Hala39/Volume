@@ -26,6 +26,18 @@ body {
     color: #FFDE59;
 }
 
+.primary-link {
+    color: #FFDE59;
+}
+
+.primary-link:hover {
+    color: #ffcd2e;
+}
+
+.primary-link:enabled:active {
+    color: #ffc50c;
+}
+
 .primary-bg {
     background-color: #17212f;
 }

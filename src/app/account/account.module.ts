@@ -11,7 +11,6 @@ import { RegisterComponent } from './register/register.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { SuccessComponent } from './success/success.component';
-import { RegisterFormComponent } from './register-form/register-form.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { DividerModule } from 'primeng/divider';
 import { AccountComponent } from './account/account.component';
@@ -46,7 +45,6 @@ const routes: Routes = [
     VerifyEmailComponent,
     EditProfileComponent,
     SuccessComponent,
-    RegisterFormComponent,
     AccountComponent,
     NetworkComponent
   ],

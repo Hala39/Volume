@@ -16,6 +16,7 @@
 .text1 {
     font-size: 14px;
     font-weight: 600;
+    cursor: pointer;
 }
 
 .text2 {
@@ -46,5 +47,9 @@
     .p-toolbar {
         border: none;
         padding-bottom: 0%;
+    }
+
+    .p-badge {
+        cursor: pointer;
     }
 }

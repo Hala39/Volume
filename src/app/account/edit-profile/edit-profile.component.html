@@ -5,7 +5,7 @@
                 <b>Step 3</b>
             </div>
             <div class="p-toolbar-group-right">
-                <span pButton pRipple type="button" label="Skip" class="p-button-text"></span>
+                <span pButton pRipple type="button" label="Skip" class="p-button-text" (click)="switch()"></span>
             </div>
         </p-toolbar>
     </ng-template>
@@ -56,7 +56,7 @@
     </form>
     <ng-template pTemplate="footer">
         <div class="p-grid p-nogutter p-justify-end mt-5">
-            <button pRipple pButton label="Save changes" (click)="switch()"></button>
+            <button pRipple pButton label="Save changes" (click)="saveChanges()"></button>
         </div>
     </ng-template>
 </p-card>
@@ -64,7 +64,8 @@
 
 <p-dialog header="Header" [(visible)]="displayDialog" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}"
     [draggable]="false" [resizable]="false">
-        <p-fileUpload name="myfile[]" [customUpload]="true" [multiple]="false" accept="image/*" [maxFileSize]="1000000" (uploadHandler)="myUploader($event)"></p-fileUpload>
+        <p-fileUpload name="myfile[]" [customUpload]="true" [multiple]="false" accept="image/*" 
+        [maxFileSize]="1000000" (uploadHandler)="myUploader($event)"></p-fileUpload>
 </p-dialog> 
 
 

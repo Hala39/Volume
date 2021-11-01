@@ -3,8 +3,10 @@
 <div class="row mx-0">
     <div class="col-sm-8 col-md-8 core">
         <app-add-post></app-add-post>
-        <div *ngFor="let post of posts">
-            <app-post-card [post]="post"></app-post-card>
+        <div *ngIf="(posts$ | async) as posts">
+            <div *ngFor="let post of posts">
+                <app-post-card [post]="post"></app-post-card>
+            </div>
         </div>
     </div>
     <div class="col-4 col-sm-4 col-md-4 pt-5 secondary px-0">

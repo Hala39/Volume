@@ -1,3 +1,4 @@
+import { DividerModule } from 'primeng/divider';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BadgeModule } from 'primeng/badge';
@@ -36,6 +37,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
     EditorModule,
     FileUploadModule,
     ToggleButtonModule,
+    DividerModule,
     FormsModule,
     RouterModule
   ]

@@ -1,12 +1,15 @@
+import { File } from './file';
+import { AppUser } from './appUser';
 import { Comment } from './comment';
-import { UserCard } from './userCard';
 export interface Post {
-    postId?: number;
-    userCard?: UserCard;
-    date?: string;
-    photo?: string;
+    id?: number;
+    appUser?: AppUser;
+    date?: Date;
+    file?: File;
     description?: string;
     comments?: Comment[];
     likesCount?: number;
-    isLikedByMe?: boolean;
+    commentsCount?: number;
+    isLikedByUser?: boolean;
+    isFollowing: boolean;
 }
