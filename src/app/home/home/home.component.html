@@ -1,7 +1,10 @@
 <app-navbar [user]="user"></app-navbar>
 
 <div class="row mx-0">
-    <div class="col-sm-8 col-md-8 core">
+    <div class="col-lg-1 col-md-0">
+
+    </div>
+    <div class="col-12 col-sm-12 col-md-8">
         <app-add-post></app-add-post>
         <div *ngIf="(posts$ | async) as posts">
             <div *ngFor="let post of posts">
@@ -9,9 +12,8 @@
             </div>
         </div>
     </div>
-    <div class="col-4 col-sm-4 col-md-4 pt-5 secondary px-0">
+    <div class="p-d-none p-d-md-inline-flex col-md-4 col-lg-3">
         <app-side-cards></app-side-cards>
     </div>
 </div>
-<!-- <app-chat-popup></app-chat-popup> -->
 

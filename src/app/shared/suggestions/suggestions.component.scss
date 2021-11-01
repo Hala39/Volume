@@ -3,5 +3,18 @@
         border: none;
         width: 100%;
         cursor: pointer;
+        padding: 0%;
     }
+
+    .p-button-label {
+        font-size: xx-small;
+    }
+
+    .p-button.p-button-sm .p-button-icon {
+        font-size: xx-small;
+      }
+}
+
+p {
+    font-size: x-small;
 }
