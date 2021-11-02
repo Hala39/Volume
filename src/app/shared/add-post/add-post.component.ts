@@ -1,3 +1,4 @@
+import { UserCard } from 'src/app/models/userCard';
 import { PostService } from 'src/app/services/post.service';
 import { Component, OnInit } from '@angular/core';
 import { Post } from 'src/app/models/post';
@@ -19,7 +20,7 @@ export class AddPostComponent implements OnInit {
   description: string = null;
   isPhoto: boolean = false;
 
-
+  currentUser: UserCard = JSON.parse(localStorage.getItem("userCard"));
 
   // Editor
   editorToggle: boolean = false;

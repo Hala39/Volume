@@ -12,13 +12,8 @@
             <p-avatar [image]="user.profilePhotoUrl? user.profilePhotoUrl : ''"
             [icon]="user.profilePhotoUrl? '' : 'pi pi-user'" 
             [routerLink]="['/profile']"
-            styleClass="p-mr-2" size="large" shape="circle"></p-avatar>
-            <i class="pi pi-link pi-ellipsis-h" (click)="expandMenu()"></i>
+            styleClass="p-mr-2" shape="circle"></p-avatar>
         </div>
     </p-toolbar>
-
-    <div *ngIf="menuExpanded">
-        <p-menu [model]="items"></p-menu>
-    </div>
 
 </div>

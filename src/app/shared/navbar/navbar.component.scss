@@ -1,29 +1,27 @@
 .pi-link, p-avatar, img {
-    font-size: 1.5rem;
+    font-size: 1rem;
     cursor: pointer;
 }
 
-.pi-ellipsis-h {
-    display: none;
-}
-
-@media screen and (max-width: 600px) {
-    .right-icons, p-avatar {
-        display: none;
-    }
-
-    .pi-ellipsis-h {
-        display: block;
-    }
-
-}
 
 :host ::ng-deep {
     .p-menu {
         width: 100%;
     }
 
-    .p-avatar.p-avatar-circle {
-        background-color: #304562;
+    .p-inputtext {
+        width: 100% !important;
+        background-color: transparent;
+        border: {
+            top: none;
+            left: none;
+            right: none;
+        }
+        border-radius: 0%;
     }
+
+    .p-inputtext:enabled:focus {
+        box-shadow: none;
+    }
+
 }

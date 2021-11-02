@@ -32,7 +32,6 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { DialogModule } from 'primeng/dialog';
 import { WebcamModule } from 'ngx-webcam';
 
-import { PostModalComponent } from './post-modal/post-modal.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SuggestionsComponent } from './suggestions/suggestions.component';
 import { GalleriaComponent } from './galleria/galleria.component';
@@ -52,7 +51,6 @@ import { FileUploaderComponent } from './file-uploader/file-uploader.component';
     ChatsComponent,
     ChatRoomComponent,
     EmojiComponent,
-    PostModalComponent,
     NavbarComponent,
     SuggestionsComponent,
     LoginFormComponent,

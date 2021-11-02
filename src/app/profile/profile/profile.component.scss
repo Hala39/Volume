@@ -1,16 +1,36 @@
 :host ::ng-deep {
-    .p-avatar.p-avatar-circle {
-        background-color: #304562;
+    .p-avatar.profile {
+        width: 6rem;
+        height: 6rem;
+        font-size: 3rem;
+    }
+    
+    .p-card.joined {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
     }
 
-    .p-avatar.p-avatar-xl {
-        width: 8rem;
-        height: 8rem;
-        font-size: 4rem;
+    .p-card.no-post {
+        border-radius: 10px;
     }
-
+    
 }
 
 .add-post {
     padding: 0 10%;
+}
+
+@media screen and (max-width: 400px) {
+    :host ::ng-deep {
+        .p-avatar.profile {
+            width: 4rem;
+            height: 4rem;
+            font-size: 2rem;
+        }
+    }
+
+    .name {
+        font-size: 0.5rem;
+    }
+
 }

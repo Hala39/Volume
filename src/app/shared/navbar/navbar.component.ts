@@ -14,18 +14,6 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  menuExpanded: boolean;
-
-  expandMenu() {
-    this.menuExpanded = !this.menuExpanded;
-  }
-
   user: UserCard = JSON.parse(localStorage.getItem('userCard'));
-
-  items: MenuItem[] = [
-    {label: 'Messages', icon: 'pi pi-fw pi-envelope'},
-    {label: 'Notifications', icon: 'pi pi-fw pi-bell'},
-    {label: 'Search', icon: 'pi pi-fw pi-search'}
-  ];
   
 }

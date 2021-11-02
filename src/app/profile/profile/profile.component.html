@@ -2,21 +2,21 @@
 
 <div class="container-fluid mt-4">
     <p-card *ngIf="(profile$ | async) as profile">
-        <div class="d-flex flex-row cover"> 
+        <div class="d-flex flex-row"> 
             <p-avatar 
-            size="xlarge" shape="circle" 
+            shape="circle" styleClass="profile"
             [icon]="profile.profilePhotoUrl? '' : 'pi pi-user'" 
             [image]="profile.profilePhotoUrl? profile.profilePhotoUrl : ''"
             pTooltip="Add a profile photo"></p-avatar>
             <div class="p-ml-3 w-100">
-                <div class="d-flex justify-content-between align-items-center p-pt-5">
+                <div class="d-flex justify-content-between align-items-center p-pt-3">
                     <div class="d-flex flex-row align-items-center"> 
                         <span class="name">
                             <h3>{{ profile.displayName }}</h3> 
                         </span> 
                     </div> 
                 </div>
-                <p class="user-comment-text text-justify">{{ profile.title }}</p>
+                <p class="user-comment-text text-justify">{{ profile.title || 'Volume user' }}</p>
             </div>
             <p-button
             icon="pi pi-plus" 
@@ -81,9 +81,17 @@
     </div>
 </div>
 
-<div class="d-flex justify-content-center mt-5">
+<div class="d-flex justify-content-center mt-5" *ngIf="(profile$|async).posts.length === 0">
     <div class="col-12 col-sm-6 col-md-6">
-        <p-card>
+        <p-card styleClass="no-post">
+            <h3 style="text-align: center;">No posts yet.</h3>
+        </p-card>
+    </div>
+</div>
+
+<div class="d-flex justify-content-center mt-3">
+    <div class="col-12 col-sm-6 col-md-6">
+        <p-card styleClass="joined">
             <h3 style="text-align: center;">Joined in 19/02/1999 </h3>
         </p-card>
     </div>
