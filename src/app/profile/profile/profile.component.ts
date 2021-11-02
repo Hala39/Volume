@@ -69,9 +69,6 @@ export class ProfileComponent implements OnInit {
         this.getFollowers();
         break;
 
-      case 5:
-        break;
-
       default:
         break;
     }

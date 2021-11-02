@@ -11,5 +11,6 @@ export interface Post {
     likesCount?: number;
     commentsCount?: number;
     isLikedByUser?: boolean;
-    isFollowing: boolean;
+    isFollowing?: boolean;
+    isPhoto: boolean;
 }

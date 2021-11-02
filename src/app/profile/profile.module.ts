@@ -14,6 +14,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProfileComponent } from './profile/profile.component';
 import { SharedModule } from '../shared/shared.module';
+import { UserAboutComponent } from './user-about/user-about.component';
 
 const routes : Routes = [
   { path: '', component: ProfileComponent}
@@ -21,7 +22,8 @@ const routes : Routes = [
 
 @NgModule({
   declarations: [
-    ProfileComponent
+    ProfileComponent,
+    UserAboutComponent
   ],
   imports: [
     CommonModule,

@@ -1,18 +1,14 @@
 import { DividerModule } from 'primeng/divider';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { BadgeModule } from 'primeng/badge';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home/home.component';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
-import { MenubarModule } from 'primeng/menubar';
-import { AddPostComponent } from './add-post/add-post.component';
 import { AvatarModule } from 'primeng/avatar';
 import {ToolbarModule} from 'primeng/toolbar';
-import {EditorModule} from 'primeng/editor';
 import {FileUploadModule} from 'primeng/fileupload';
 import {ToggleButtonModule} from 'primeng/togglebutton';
 import { SharedModule } from '../shared/shared.module';
@@ -22,7 +18,6 @@ import { WelcomeComponent } from './welcome/welcome.component';
 @NgModule({
   declarations: [
     HomeComponent,
-    AddPostComponent,
     WelcomeComponent
   ],
   imports: [
@@ -34,7 +29,6 @@ import { WelcomeComponent } from './welcome/welcome.component';
     FontAwesomeModule,
     AvatarModule,
     ToolbarModule,
-    EditorModule,
     FileUploadModule,
     ToggleButtonModule,
     DividerModule,

@@ -1,4 +1,4 @@
-import { Post } from './../models/post';
+import { Post } from 'src/app/models/post';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
@@ -20,8 +20,18 @@ export class PostService {
 
   constructor(private apiCaller: HttpClient) { }
 
-  addPost(post: Post) {
-    return this.apiCaller.post(this.baseUrl, post);
+  addPost(post: any) {
+    var formData: any = new FormData();
+    formData.append("Description", post.description);
+    formData.append("File", post.fileToUpload);
+    formData.append("IsPhoto", post.isPhoto);
+    return this.apiCaller.post(this.baseUrl, formData).pipe(
+      map(response => {
+        if (response) {
+          this.getPosts();
+        }
+      })
+    );
   }
 
   deletePost(id: number) {

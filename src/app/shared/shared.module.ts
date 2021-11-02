@@ -1,3 +1,8 @@
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { EditorModule } from 'primeng/editor';
+import { AddPostComponent } from './add-post/add-post.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { FileUploadModule } from 'primeng/fileupload';
 import { GalleriaModule } from 'primeng/galleria';
 import { RouterModule } from '@angular/router';
 import { LoginFormComponent } from './login-form/login-form.component';
@@ -32,6 +37,11 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SuggestionsComponent } from './suggestions/suggestions.component';
 import { GalleriaComponent } from './galleria/galleria.component';
 import { IdentityComponent } from './identity/identity.component';
+import { CalendarModule } from 'primeng/calendar';
+import { KeyFilterModule } from 'primeng/keyfilter';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { UserCardComponent } from './user-card/user-card.component';
+import { FileUploaderComponent } from './file-uploader/file-uploader.component';
 
 
 @NgModule({
@@ -47,7 +57,10 @@ import { IdentityComponent } from './identity/identity.component';
     SuggestionsComponent,
     LoginFormComponent,
     GalleriaComponent,
-    IdentityComponent
+    IdentityComponent,
+    UserCardComponent,
+    AddPostComponent,
+    FileUploaderComponent
   ],
   imports: [
     CommonModule,
@@ -67,12 +80,19 @@ import { IdentityComponent } from './identity/identity.component';
     FontAwesomeModule,
     DialogModule,
     ToolbarModule,
+    FileUploadModule,
+    DropdownModule,
     MenuModule,
     GalleriaModule,
     FormsModule,
     EmojiModule,
     PickerModule,
-    RouterModule
+    RouterModule,
+    CalendarModule,
+    KeyFilterModule,
+    RadioButtonModule,
+    EditorModule,
+    InputTextareaModule
   ],
   exports: [
     PostCardComponent,
@@ -84,7 +104,10 @@ import { IdentityComponent } from './identity/identity.component';
     NavbarComponent,
     EmojiComponent,
     LoginFormComponent,
-    SuggestionsComponent
+    SuggestionsComponent,
+    IdentityComponent,
+    UserCardComponent,
+    AddPostComponent
   ]
 })
 export class SharedModule { }

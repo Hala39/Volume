@@ -1,0 +1,43 @@
+:host ::ng-deep {
+
+    .p-avatar.p-avatar-xl {
+        width: 8rem;
+        height: 8rem;
+        font-size: 4rem;
+    }
+
+    .p-inputtext {
+        width: 100% !important;
+        background-color: transparent;
+        border: {
+            top: none;
+            left: none;
+            right: none;
+        }
+        border-radius: 0%;
+    }
+
+    .p-inputtext:enabled:focus {
+        box-shadow: none;
+    }
+
+    .p-calendar-w-btn .p-datepicker-trigger {
+        color:rgba(255, 255, 255, 0.6);
+    }
+
+    .p-button.p-button-icon-only {
+        border: {
+            top: none;
+            left: none;
+            right: none;
+        }
+        border-color: #304562;
+        background-color: transparent;
+    }
+
+    .p-button.p-button-icon-only:focus, .p-button.p-button-icon-only:hover {
+        box-shadow: none;
+        border-color: #FFD54F;
+    }
+
+}

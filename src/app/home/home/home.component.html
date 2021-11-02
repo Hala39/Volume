@@ -5,7 +5,9 @@
 
     </div>
     <div class="col-12 col-sm-12 col-md-8">
-        <app-add-post></app-add-post>
+        <p-card>
+            <app-add-post></app-add-post>
+        </p-card>
         <div *ngIf="(posts$ | async) as posts">
             <div *ngFor="let post of posts">
                 <app-post-card [post]="post"></app-post-card>

@@ -22,9 +22,9 @@
                 <div class="mt-5">
 
                     <!-- Post Body -->
-                    <p>{{ post.description }}</p>
+                    <p [innerHtml]="post.description"></p>
                     <div class="mt-3">
-                        <img [src]="post.file.url" alt="" class="postImage">
+                        <img *ngIf="post.file" [src]="post.file.url" alt="" class="postImage">
                         <div class="mt-3"> 
                             <span class="text1" (click)="op.toggle($event)">{{ post.likesCount}} like, </span>
                             <span class="text2" *ngIf="post.commentsCount === 1 || post.commentsCount === 0"  

@@ -1,0 +1,23 @@
+:host ::ng-deep {
+    .p-toolbar {
+        width: 100%;
+        cursor: pointer;
+    }
+
+    .p-toolbar:hover {
+        color: rgba(255, 255, 255, 0.87);
+        background: rgba(255, 255, 255, 0.03);
+    }
+
+    .p-button-label {
+        font-size: xx-small;
+    }
+
+    .p-button.p-button-sm .p-button-icon {
+        font-size: xx-small;
+      }
+}
+
+p {
+    font-size: x-small;
+}

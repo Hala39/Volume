@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 
-<div class="container-fluid">
+<div class="container-fluid mt-4">
     <p-card *ngIf="(profile$ | async) as profile">
         <div class="d-flex flex-row cover"> 
             <p-avatar 
@@ -28,21 +28,18 @@
         <p-tabView [scrollable]="true" [(activeIndex)]="index" (onChange)="indexChanged(index)">
             <p-tabPanel header="About">
                 <ng-template pTemplate="content">
-                    Complex Content to Lazy Load
+                    <app-user-about></app-user-about>
                 </ng-template>
             </p-tabPanel>
-            <p-tabPanel header="Timeline">
+            <p-tabPanel header="New">
                 <ng-template pTemplate="content">
-                    <div *ngIf="(profile$ | async)?.posts.length > 0">
-                        <div *ngFor="let post of (profile$ | async).posts">
-                            <app-post-card [post]="post"></app-post-card>
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-12 col-sm-12 col-md-6 pt-5">
+                            <app-add-post></app-add-post>
                         </div>
                     </div>
-                    <div *ngIf="(profile$ | async)?.posts.length === 0">
-                        Nothing to show.
-                    </div>
                 </ng-template>
-             </p-tabPanel>
+            </p-tabPanel>
             <p-tabPanel header="Photos">
                 <ng-template pTemplate="content">
                     <app-galleria [photos]="(photos$ | async)"></app-galleria>
@@ -53,7 +50,11 @@
                     <div *ngIf="(followings$ | async)?.length === 0">
                         Nothing to show.
                     </div>
-                    <app-suggestions [users]="(followings$ | async)"></app-suggestions>
+                    <div class="row">
+                        <div class="col-12 col-md-6" *ngFor="let user of (followings$ | async)">
+                            <app-user-card [user]="user"></app-user-card>
+                        </div>
+                    </div>
                 </ng-template>
             </p-tabPanel>
             <p-tabPanel header="Followers">
@@ -61,11 +62,29 @@
                     <div *ngIf="(followers$ | async)?.length === 0">
                         Nothing to show.
                     </div>
-                    <div class="follow-list">
-                        <app-suggestions [users]="(followers$ | async)"></app-suggestions>
+                    <div class="row">
+                        <div class="col-12 col-md-6" *ngFor="let user of (followers$ | async)">
+                            <app-user-card [user]="user"></app-user-card>
+                        </div>
                     </div>
                 </ng-template>
             </p-tabPanel>
         </p-tabView>
     </p-card>
+</div>
+
+<div *ngFor="let post of (profile$|async)?.posts">
+    <div class="d-flex justify-content-center">
+        <div class="col-12 col-md-6">
+            <app-post-card [post]="post"></app-post-card>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex justify-content-center mt-5">
+    <div class="col-12 col-sm-6 col-md-6">
+        <p-card>
+            <h3 style="text-align: center;">Joined in 19/02/1999 </h3>
+        </p-card>
+    </div>
 </div>

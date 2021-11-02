@@ -63,7 +63,6 @@ const routes: Routes = [
     AvatarModule,
     RadioButtonModule,
     InputNumberModule,
-    InputTextareaModule,
     TooltipModule,
     InputTextModule,
     InputSwitchModule,
