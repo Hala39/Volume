@@ -9,7 +9,5 @@ export class Profile {
     hometown?: string;
     gender?: string;
     profilePhotoUrl?: string;
-    coverPhotoUrl?: string;
     posts?: Post[] = [];
-    photos?: File[] = [];
 }

@@ -81,7 +81,7 @@
     </div>
 </div>
 
-<div class="d-flex justify-content-center mt-5" *ngIf="(profile$|async).posts.length === 0">
+<div class="d-flex justify-content-center mt-5" *ngIf="(profile$|async)?.posts.length === 0">
     <div class="col-12 col-sm-6 col-md-6">
         <p-card styleClass="no-post">
             <h3 style="text-align: center;">No posts yet.</h3>

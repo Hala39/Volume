@@ -1,7 +1,4 @@
-import { ProfileService } from './../../services/profile.service';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Profile } from 'src/app/models/Profile';
 
 @Component({
   selector: 'app-edit-profile',
@@ -19,6 +16,10 @@ export class EditProfileComponent implements OnInit {
 
   switch() {
     this.activeIndexEmitter.emit(3);
+  }
+
+  close($event: any) {
+    this.switch();
   }
 
 }

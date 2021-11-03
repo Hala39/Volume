@@ -3,15 +3,21 @@
         <div class="row">
             <div class="col-12 d-flex justify-content-end">
                 <p-button 
-                icon="pi pi-pencil" 
+                icon="pi pi-pencil" (click)="displayDialog=true"
                 styleClass="p-button-rounded p-button-secondary p-button-text">
             </p-button>
             </div>
         </div>
-        <p><i class="pi pi-home p-mr-2 mt-2"></i>From Lebanon</p>
-        <p><i class="pi pi-calendar p-mr-2"></i>Born in 12/02/1999</p>
-        <p><i class="pi pi-briefcase p-mr-2"></i>Software Engineer</p>
-        <p><i class="pi pi-mobile p-mr-2"></i>70 785 489</p>
-        <p><i class="pi pi-user p-mr-2"></i>Male</p>
+        <p><i *ngIf="(profile$ | async).hometown" class="pi pi-home p-mr-2 mt-2"></i>From {{ (profile$ | async).hometown }}</p>
+        <p><i *ngIf="(profile$ | async).dob" class="pi pi-calendar p-mr-2"></i>Born in {{ (profile$ | async).dob  }}</p>
+        <p><i *ngIf="(profile$ | async).title" class="pi pi-briefcase p-mr-2"></i>Works as {{ (profile$ | async).title  }}</p>
+        <p><i *ngIf="(profile$ | async).phoneNumber" class="pi pi-mobile p-mr-2"></i>Call at {{ (profile$ | async).phoneNumber  }}</p>
+        <p><i *ngIf="(profile$ | async).gender" class="pi pi-user p-mr-2"></i>{{ (profile$ | async).gender }}</p>
     </div>
 </div>
+
+<p-dialog header="Edit user info" [(visible)]="displayDialog" [breakpoints]="{'960px': '75vw', hight: '100%'}" 
+[style]="{width: '50vw'}" [dismissableMask]="true"
+    [draggable]="false" [resizable]="false" [modal]="true">
+    <app-identity (dataSavedEmitter)="hideDialog($event)"></app-identity>
+</p-dialog>

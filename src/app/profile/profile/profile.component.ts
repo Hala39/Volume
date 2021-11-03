@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { UserCard } from 'src/app/models/userCard';
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from 'src/app/services/profile.service';
-import { Profile } from 'src/app/models/Profile';
+import { Profile } from 'src/app/models/userProfile';
 import { AppUser } from 'src/app/models/appUser';
 import { File } from 'src/app/models/file';
 

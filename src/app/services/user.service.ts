@@ -41,6 +41,7 @@ export class UserService {
   }
 
   setUserCard(userCard: UserCard) {
+    localStorage.clear();
     localStorage.setItem('userCard', JSON.stringify(userCard));
     localStorage.setItem('access_token', userCard.token);
     localStorage.setItem('expirationDate', 

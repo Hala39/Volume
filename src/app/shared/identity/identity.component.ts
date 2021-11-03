@@ -1,6 +1,8 @@
+import { Observable } from 'rxjs';
+import { UserCard } from 'src/app/models/userCard';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { Profile } from 'src/app/models/Profile';
+import { Profile } from 'src/app/models/userProfile';
 import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
@@ -10,16 +12,18 @@ import { ProfileService } from 'src/app/services/profile.service';
 })
 export class IdentityComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, 
-      private profileService: ProfileService) { }
+  constructor(private fb: FormBuilder, private profileService: ProfileService) { }
 
   ngOnInit(): void {
     this.build();
   }
 
+  currentUser: UserCard = JSON.parse(localStorage.getItem("userCard"));
+  profile: Profile = JSON.parse(localStorage.getItem("profile"));
+
   @Output() activeIndexEmitter = new EventEmitter<number>();
+  @Output() dataSavedEmitter = new EventEmitter<boolean>();
   @Input() registration: boolean = false;
-  @Input() profile: Profile;
 
   displayDialog: boolean = false;
 
@@ -31,11 +35,8 @@ export class IdentityComponent implements OnInit {
   show() {
     this.displayDialog = true;
   }
-
-  
-
+ 
   genders = [
-    {name: 'Gender', inactive: true},
     {name: 'Male'},
     {name: 'Female'},
     {name: 'Unspecified'}
@@ -45,7 +46,7 @@ export class IdentityComponent implements OnInit {
 
   build() {
     this.form = this.fb.group({
-      profilePhoto: this.profilePhoto,
+      profilePhoto: this.profilePhotoUrl,
       displayName: this.displayName,
       title: this.title,
       hometown: this.hometown,
@@ -59,26 +60,36 @@ export class IdentityComponent implements OnInit {
     this.activeIndexEmitter.emit(3);
   }
 
-  profilePhoto = new FormControl();
-  displayName = new FormControl(JSON.parse(localStorage.getItem("userCard")).displayName, Validators.required);
-  title = new FormControl();
-  hometown = new FormControl();
-  phoneNumber = new FormControl();
-  dob = new FormControl();
-  gender = new FormControl(this.genders);
+  hi() {
+  }
+
+  profilePhotoUrl = new FormControl(this.currentUser.profilePhotoUrl);
+  displayName = new FormControl(this.currentUser.displayName, Validators.required);
+  title = new FormControl(this.profile?.title);
+  hometown = new FormControl(this.profile?.hometown);
+  phoneNumber = new FormControl(this.profile?.phoneNumber);
+  dob = new FormControl(this.profile?.dob);
+  gender = new FormControl(this.profile?.gender);
 
   saveChanges() {
     if (this.form.dirty) {
-      const profile: Profile = {
+      const profileToSend: Profile = {
         displayName: this.displayName.value,
-        title: this.title.value,
-        hometown: this.hometown.value,
-        phoneNumber: this.phoneNumber.value,
-        dob: this.dob.value,
-        gender: this.gender.value
+        title: this.title?.value,
+        hometown: this.hometown?.value,
+        phoneNumber: this.phoneNumber?.value,
+        dob: this.dob?.value,
+        gender: this.gender.value?.name
       }
-      this.profileService.createOrUpdateProfile(profile).subscribe(
-        response => this.switch()
+
+      if (this.gender.dirty) {
+        profileToSend.gender = this.gender.value?.name
+      } else {
+        profileToSend.gender = this.profile?.gender
+      }
+
+      this.profileService.setUserBio(profileToSend).subscribe(
+        response => this.dataSavedEmitter.emit(false)
       );
     }
   }

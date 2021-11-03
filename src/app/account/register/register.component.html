@@ -10,7 +10,7 @@
         </div>
         <form [formGroup]="registrationForm">
           <div class="p-field">
-            <input pInputText class="p-inputtext-sm" placeholder="Name" type="text"  pKeyFilter="alpha" formControlName="displayName"/>
+            <input pInputText class="p-inputtext-sm" placeholder="Name" type="text"  formControlName="displayName"/>
             <small *ngIf="displayName.dirty && displayName.hasError('required')" class="p-error">This field is required.</small>
             <small *ngIf="displayName.dirty && (!displayName.hasError('required')) 
                 && displayName.hasError('minlength')" class="p-error">
