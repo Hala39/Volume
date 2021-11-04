@@ -59,6 +59,8 @@ export class ProfileService {
       map(response => {
         this.profileSource.next(response);
         localStorage.setItem('profile', JSON.stringify(response));
+        this.currentUser.profilePhotoUrl = response.profilePhotoUrl;
+        localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
       })
     );
   }

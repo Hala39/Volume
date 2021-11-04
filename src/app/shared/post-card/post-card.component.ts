@@ -41,12 +41,17 @@ export class PostCardComponent implements OnInit {
   }
 
   deleteComment(id: number) {
-    this.commentService.deleteComment(id).subscribe();
+    this.commentService.deleteComment(id).subscribe(
+      response => this.post.commentsCount--
+    );
   }
 
   addComment() {
     this.commentService.addComment(this.post.id, this.content).subscribe(
-      response => this.content = ""
+      response => {
+        this.content = "";
+        this.post.commentsCount++;
+      }
     );
   }
 
@@ -58,7 +63,14 @@ export class PostCardComponent implements OnInit {
 
   likeToggle() {
     this.likeService.likeToggle(this.post.id).subscribe(
-      response => this.post.isLikedByUser = !this.post.isLikedByUser
+      response => {
+        this.post.isLikedByUser = !this.post.isLikedByUser;
+        if (this.post.isLikedByUser) {
+          this.post.likesCount++;
+        } else {
+          this.post.likesCount--;
+        }
+      }
     )
   }
 

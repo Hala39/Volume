@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { AppUser } from '../models/appUser';
 import { map } from 'rxjs/operators';
+import { UserCard } from '../models/userCard';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,8 @@ export class LikeService {
   likers$ = this.likersSource.asObservable();
   
   paginatedResult = new PaginatedResult<AppUser[]>();
+
+  currentUser: UserCard = JSON.parse(localStorage.getItem("userCard"));
 
   likeToggle(id: number) {
     return this.apiCaller.post(this.baseUrl + id.toString(), {});
