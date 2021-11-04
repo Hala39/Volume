@@ -36,9 +36,10 @@
     </div>
     <div class="row pt-5 calendar">
         <div class="col-6">
-            <p-calendar formControlName="dob" placeholder="Date Of Birth" dateFormat="dd.mm.yy" 
-            [showTime]="false" appendTo="body" [yearNavigator]="true"  yearRange="1920:2020"
-            dataType="string" icon="pi pi-pencil" [showIcon]="true"></p-calendar>
+            <span class="p-input-icon-right">
+                <i class="pi pi-pencil"></i>
+            <p-inputMask mask="99/99/9999" formControlName="dob" placeholder="99/99/9999" slotChar="mm/dd/yyyy"></p-inputMask>
+            </span>
         </div>
         <div class="col-6">
             <p-dropdown [options]="genders" formControlName="gender" optionLabel="name"></p-dropdown>

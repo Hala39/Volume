@@ -1,3 +1,4 @@
+import { UserCard } from './../../models/userCard';
 import { Observable } from 'rxjs';
 import { ProfileService } from 'src/app/services/profile.service';
 import { Component, OnInit } from '@angular/core';
@@ -21,6 +22,8 @@ export class UserAboutComponent implements OnInit {
 
   displayDialog = false;
 
+  currentUser: UserCard = JSON.parse(localStorage.getItem("userCard"));
+  
   hideDialog($event: any) {
     this.displayDialog = $event;
   }

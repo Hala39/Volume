@@ -36,12 +36,11 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SuggestionsComponent } from './suggestions/suggestions.component';
 import { GalleriaComponent } from './galleria/galleria.component';
 import { IdentityComponent } from './identity/identity.component';
-import { CalendarModule } from 'primeng/calendar';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { UserCardComponent } from './user-card/user-card.component';
 import { FileUploaderComponent } from './file-uploader/file-uploader.component';
-
+import { InputMaskModule } from 'primeng/inputmask';
 
 @NgModule({
   declarations: [
@@ -67,6 +66,8 @@ import { FileUploaderComponent } from './file-uploader/file-uploader.component';
     BadgeModule,
     WebcamModule,
     InputTextModule,
+    InputTextareaModule,
+    InputMaskModule,
     ListboxModule,
     MenuModule,
     CardModule,
@@ -86,7 +87,6 @@ import { FileUploaderComponent } from './file-uploader/file-uploader.component';
     EmojiModule,
     PickerModule,
     RouterModule,
-    CalendarModule,
     KeyFilterModule,
     RadioButtonModule,
     EditorModule,

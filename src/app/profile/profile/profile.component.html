@@ -19,6 +19,7 @@
                 <p class="user-comment-text text-justify">{{ profile.title || 'Volume user' }}</p>
             </div>
             <p-button
+            *ngIf="currentUser.id !== userId"
             icon="pi pi-plus" 
             label="follow"
             styleClass="p-button-rounded p-button-warning p-button-text"></p-button>
@@ -29,15 +30,6 @@
             <p-tabPanel header="About">
                 <ng-template pTemplate="content">
                     <app-user-about></app-user-about>
-                </ng-template>
-            </p-tabPanel>
-            <p-tabPanel header="New">
-                <ng-template pTemplate="content">
-                    <div class="row d-flex justify-content-center">
-                        <div class="col-12 col-sm-12 col-md-6 pt-5">
-                            <app-add-post></app-add-post>
-                        </div>
-                    </div>
                 </ng-template>
             </p-tabPanel>
             <p-tabPanel header="Photos">
@@ -73,6 +65,16 @@
     </p-card>
 </div>
 
+<div class="container-fluid" *ngIf="currentUser.id === userId">
+        <div class="row d-flex justify-content-center">
+            <div class="col-12 col-sm-12 col-md-6 pt-1">
+                <p-card>
+                    <app-add-post></app-add-post>
+                </p-card>
+            </div>
+        </div>
+</div>
+
 <div *ngFor="let post of (profile$|async)?.posts">
     <div class="d-flex justify-content-center">
         <div class="col-12 col-md-6">
@@ -81,7 +83,7 @@
     </div>
 </div>
 
-<div class="d-flex justify-content-center mt-5" *ngIf="(profile$|async)?.posts.length === 0">
+<div class="d-flex justify-content-center mt-4" *ngIf="(profile$|async)?.posts.length === 0">
     <div class="col-12 col-sm-6 col-md-6">
         <p-card styleClass="no-post">
             <h3 style="text-align: center;">No posts yet.</h3>

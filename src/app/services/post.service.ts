@@ -35,12 +35,13 @@ export class PostService {
   }
 
   deletePost(id: number) {
-    return this.apiCaller.delete(this.baseUrl + id.toString());
+    return this.apiCaller.delete(this.baseUrl + id.toString()).pipe(
+      map(response => this.postsSource.next(this.postsSource.value.filter(p => p.id !== id)))
+    );
   }
 
   getPosts() {
-  let params = new HttpParams();
-
+    let params = new HttpParams();
     return this.apiCaller.get<Post[]>(this.baseUrl, {observe: 'response', params}).pipe(
       map(response => {
         this.paginatedResult.result = response.body;
@@ -55,5 +56,8 @@ export class PostService {
     )
   }
 
+  updatePost(id: number, description: string) {
+    return this.apiCaller.put(this.baseUrl + id.toString() +'?description=' + description, {});
+  }
   
 }

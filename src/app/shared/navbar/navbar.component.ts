@@ -1,6 +1,6 @@
+import { Router } from '@angular/router';
 import { UserCard } from './../../models/userCard';
-import { Component, Input, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
@@ -9,11 +9,15 @@ import { MenuItem } from 'primeng/api';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
   user: UserCard = JSON.parse(localStorage.getItem('userCard'));
-  
+  userId = this.user.id;
+
+  goToProfile() {
+    this.router.navigateByUrl('/profile/' + this.userId)
+  }
 }

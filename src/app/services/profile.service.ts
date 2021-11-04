@@ -1,4 +1,3 @@
-import { MiniUser } from './../models/miniUser';
 import { UserCard } from 'src/app/models/userCard';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';

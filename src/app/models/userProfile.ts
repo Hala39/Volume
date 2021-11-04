@@ -2,6 +2,7 @@ import { File } from './file';
 import { Post } from "./post";
 
 export class Profile {
+    id?: string;
     displayName?: string;
     phoneNumber?: string;
     title?: string;

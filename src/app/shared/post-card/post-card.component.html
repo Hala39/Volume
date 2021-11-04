@@ -13,7 +13,9 @@
                             <h6 class="mb-0">{{ post.appUser.displayName }}</h6> <span>{{ post.date | date}}</span>
                         </div>
                     </div>
-                    <p-button pRipple type="button" [label]="post.isFollowing? 'Following' : 'Follow'" 
+                    <span *ngIf="currentUser.id === post.appUser.id" class="pi pi-ellipsis-h" (click)="menu.toggle($event)"></span>
+                    <p-button *ngIf="currentUser.id !== post.appUser.id"
+                        pRipple type="button" [label]="post.isFollowing? 'Following' : 'Follow'" 
                         [icon]="post.isFollowing? 'pi pi-check' : 'pi pi-plus'" 
                         (click)="followToggle()"
                         styleClass="p-button-outlined p-button-rounded p-button-sm">
@@ -90,3 +92,14 @@
         <app-suggestions *ngIf="(likers$ | async) as likers" [users]="likers"></app-suggestions>
     </ng-template>
 </p-overlayPanel>
+
+<p-menu #menu [popup]="true"  [model]="items"></p-menu>
+
+<p-dialog header="Edit post" [(visible)]="displayDialog" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}"
+    [draggable]="false" [resizable]="false" (onShow)="onDialogSHow()">
+    <textarea [rows]="3" pInputTextarea placeholder="Post description" required [(ngModel)]="description"></textarea>
+    <div class="d-flex justify-content-end mt-2">
+        <p-button label="Save Changes" (click)="saveChanges()" 
+        [disabled]="description === null || description === '' || description === post.description"></p-button>
+    </div>
+</p-dialog>

@@ -2,17 +2,17 @@
     <div class="col-12">
         <div class="row">
             <div class="col-12 d-flex justify-content-end">
-                <p-button 
+                <p-button *ngIf="(profile$ | async)?.id === currentUser.id"
                 icon="pi pi-pencil" (click)="displayDialog=true"
                 styleClass="p-button-rounded p-button-secondary p-button-text">
             </p-button>
             </div>
         </div>
-        <p><i *ngIf="(profile$ | async).hometown" class="pi pi-home p-mr-2 mt-2"></i>From {{ (profile$ | async).hometown }}</p>
-        <p><i *ngIf="(profile$ | async).dob" class="pi pi-calendar p-mr-2"></i>Born in {{ (profile$ | async).dob  }}</p>
-        <p><i *ngIf="(profile$ | async).title" class="pi pi-briefcase p-mr-2"></i>Works as {{ (profile$ | async).title  }}</p>
-        <p><i *ngIf="(profile$ | async).phoneNumber" class="pi pi-mobile p-mr-2"></i>Call at {{ (profile$ | async).phoneNumber  }}</p>
-        <p><i *ngIf="(profile$ | async).gender" class="pi pi-user p-mr-2"></i>{{ (profile$ | async).gender }}</p>
+        <p><i *ngIf="(profile$ | async)?.hometown" class="pi pi-home p-mr-2 mt-2"></i>From {{ (profile$ | async)?.hometown }}</p>
+        <p><i *ngIf="(profile$ | async)?.dob" class="pi pi-calendar p-mr-2"></i>Born in {{ (profile$ | async)?.dob  }}</p>
+        <p><i *ngIf="(profile$ | async)?.title" class="pi pi-briefcase p-mr-2"></i>Works as {{ (profile$ | async)?.title  }}</p>
+        <p><i *ngIf="(profile$ | async)?.phoneNumber" class="pi pi-mobile p-mr-2"></i>Call at {{ (profile$ | async)?.phoneNumber  }}</p>
+        <p><i *ngIf="(profile$ | async)?.gender" class="pi pi-user p-mr-2"></i>{{ (profile$ | async)?.gender }}</p>
     </div>
 </div>
 

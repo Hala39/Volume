@@ -11,7 +11,7 @@
             <i class="right-icons pi pi-link pi-envelope p-mr-4"></i>
             <p-avatar [image]="user.profilePhotoUrl? user.profilePhotoUrl : ''"
             [icon]="user.profilePhotoUrl? '' : 'pi pi-user'" 
-            [routerLink]="['/profile']"
+            (click)="goToProfile()"
             styleClass="p-mr-2" shape="circle"></p-avatar>
         </div>
     </p-toolbar>
