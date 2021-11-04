@@ -1,9 +1,12 @@
+import { MessageService } from 'primeng/api';
+import { UserCard } from './../models/userCard';
+import { ProfileService } from 'src/app/services/profile.service';
 import { Post } from 'src/app/models/post';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { PaginatedResult } from '../models/paginatedResult';
 
 @Injectable({
@@ -11,15 +14,18 @@ import { PaginatedResult } from '../models/paginatedResult';
 })
 export class PostService {
 
-  baseUrl = environment.apiUrl + 'post/';
+  currentUser: UserCard = JSON.parse(localStorage.getItem("userCard"));
+
+  constructor(private apiCaller: HttpClient, private profileService: ProfileService, 
+    private messageService: MessageService) { }
+
+    baseUrl = environment.apiUrl + 'post/';
 
   paginatedResult: PaginatedResult<Post[]> = new PaginatedResult<Post[]>();
 
   postsSource = new BehaviorSubject<Post[]>([]);
   posts$ = this.postsSource.asObservable();
-
-  constructor(private apiCaller: HttpClient) { }
-
+  
   addPost(post: any) {
     var formData: any = new FormData();
     formData.append("Description", post.description);
@@ -28,7 +34,7 @@ export class PostService {
     return this.apiCaller.post(this.baseUrl, formData).pipe(
       map(response => {
         if (response) {
-          this.getPosts();
+          this.profileService.getProfileForUser(this.currentUser.id).subscribe()
         }
       })
     );
@@ -36,7 +42,12 @@ export class PostService {
 
   deletePost(id: number) {
     return this.apiCaller.delete(this.baseUrl + id.toString()).pipe(
-      map(response => this.postsSource.next(this.postsSource.value.filter(p => p.id !== id)))
+      map(response => {
+        const value = this.profileService.profileSource.value;
+        value.posts = value.posts.filter(p => p.id !== id);
+        this.profileService.profileSource.next(value);
+        this.messageService.add({severity: 'success', summary: 'Success', detail: 'Post deleted successfully!'})
+      })
     );
   }
 

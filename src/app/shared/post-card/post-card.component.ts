@@ -1,3 +1,4 @@
+import { UserService } from './../../services/user.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { PostService } from './../../services/post.service';
 import { LikeService } from './../../services/like.service';
@@ -7,7 +8,7 @@ import { Observable } from 'rxjs';
 import { CommentService } from './../../services/comment.service';
 import { Comment } from './../../models/comment';
 import { Post } from './../../models/post';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { AppUser } from 'src/app/models/appUser';
 import { MenuItem } from 'primeng/api';
 
@@ -19,9 +20,9 @@ import { MenuItem } from 'primeng/api';
 export class PostCardComponent implements OnInit {
 
   constructor(private commentService: CommentService, private likeService: LikeService,
-    private profileService: ProfileService,
+    private profileService: ProfileService, private userService: UserService,
     private followService: FollowService, private postService: PostService) {
-    this.currentUser = JSON.parse(localStorage.getItem("userCard"));
+    this.user$ = this.userService.user$
   }
 
   ngOnInit(): void {
@@ -32,10 +33,10 @@ export class PostCardComponent implements OnInit {
   commentsExpanded: boolean = false;
   comments$: Observable<Comment[]>;
 
-  currentUser: UserCard;
   content: string;
 
   likers$: Observable<AppUser[]>;
+  user$: Observable<UserCard>;
 
   @Input() post: Post;
 
@@ -99,7 +100,11 @@ export class PostCardComponent implements OnInit {
       label: 'Delete', 
       icon: 'pi pi-fw pi-trash',
       command: () => {
-        this.postService.deletePost(this.post.id).subscribe();
+        this.postService.deletePost(this.post.id).subscribe(
+          response => {
+            
+          }
+        );
       }
     },
     {
@@ -109,8 +114,7 @@ export class PostCardComponent implements OnInit {
         const setProfile = {
           url: this.post.file.url
         }
-        this.profileService.setProfilePhoto(setProfile).subscribe(
-          
+          this.profileService.setProfilePhoto(setProfile).subscribe( 
         );
       }
     }
@@ -126,6 +130,26 @@ export class PostCardComponent implements OnInit {
     this.description = this.post.description;
   }
 
+  onMenuShow() {
+    this.items[2].visible = this.isItemVisible();
+    this.items[2].disabled = this.isItemDisabled();
+  }
+
+  isItemVisible(): boolean {
+    if (this.post.file === null || this.post.file.isPhoto === false) {
+      return false;
+    } 
+    return true;
+  }
+
+  isItemDisabled() : boolean {
+    if (this.post.file.url === this.userService.userSource.value.profilePhotoUrl) {
+      return true;
+    }
+
+    return false;
+  }
+
   saveChanges() {
     if (this.description.length > 0 && this.description !== null)
     this.postService.updatePost(this.post.id, this.description).subscribe(
@@ -137,4 +161,10 @@ export class PostCardComponent implements OnInit {
 
   }
 
+  
+
 }
+
+
+
+

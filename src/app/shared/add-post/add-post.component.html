@@ -1,7 +1,7 @@
     <!-- Profile & Input -->
     <div class="d-flex flex-row">
-        <p-avatar [image]="currentUser.profilePhotoUrl? currentUser.profilePhotoUrl : ''" 
-                [icon]="currentUser.profilePhotoUrl? '' : 'pi pi-user'"
+        <p-avatar [image]="(user$ | async).profilePhotoUrl? (user$ | async).profilePhotoUrl : ''" 
+                [icon]="(user$ | async).profilePhotoUrl? '' : 'pi pi-user'"
                 styleClass="p-mr-2" size="large" shape="circle">
         </p-avatar>
         <input type="text" pInputText class="p-inputtext-md"  placeholder="Start a post .." (click)="displayDialogFunc()">
@@ -11,11 +11,11 @@
     <div>
         <p-toolbar [style]="{'margin-top': '15px'}">   
 
-            <button pButton pRipple type="button" styleClass="p-button-lg" label="Photos" 
+            <button pButton pRipple type="button" styleClass="p-button-lg" label="Photo" 
             [icon]="photoUploadToggle && displayDialog? 'pi pi-times' : 'pi pi-images'" (click)="togglePhotoUploader()"
             class="p-button-rounded p-button-warning p-button-text"></button>
 
-            <button pButton pRipple type="button" styleClass="p-button-lg" label="Files" 
+            <button pButton pRipple type="button" styleClass="p-button-lg" label="File" 
             [icon]="fileUploadToggle && displayDialog? 'pi pi-times' : 'pi pi-paperclip'"  (click)="toggleFileUploader()"
             class="p-button-rounded p-button-help p-button-text"></button>
 
@@ -32,11 +32,11 @@
     <div class="p-fluid">
         <div class="p-field">
             <div class="d-flex flex-row">
-                <p-avatar [image]="currentUser.profilePhotoUrl? currentUser.profilePhotoUrl : ''" 
-                    [icon]="currentUser.profilePhotoUrl? '' : 'pi pi-user'"
+                <p-avatar [image]="(user$ | async).profilePhotoUrl? (user$ | async).profilePhotoUrl : ''" 
+                    [icon]="(user$ | async).profilePhotoUrl? '' : 'pi pi-user'"
                     styleClass="p-mr-3" size="large" shape="circle">
                 </p-avatar>
-                <h6 class="p-mt-1">{{currentUser.displayName}}</h6>
+                <h6 class="p-mt-1">{{(user$ | async).displayName}}</h6>
             </div>
         </div>
         <div class="p-field p-mt-3">

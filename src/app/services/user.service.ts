@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { AppUser } from '../models/appUser';
 import { map } from 'rxjs/operators';
 import { UserLogin } from '../models/userLogin';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,9 @@ export class UserService {
     private router: Router) { }
     
   baseUrl = environment.apiUrl + 'account/';
+
+  userSource = new BehaviorSubject<UserCard>(null);
+  user$ = this.userSource.asObservable();
 
   login(userLogin: UserLogin) {
     return this.apiCaller.post<UserCard>(this.baseUrl + 'login', userLogin).pipe(
@@ -42,6 +46,7 @@ export class UserService {
 
   setUserCard(userCard: UserCard) {
     localStorage.clear();
+    this.userSource.next(userCard);
     localStorage.setItem('userCard', JSON.stringify(userCard));
     localStorage.setItem('access_token', userCard.token);
     localStorage.setItem('expirationDate', 

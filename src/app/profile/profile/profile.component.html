@@ -19,7 +19,7 @@
                 <p class="user-comment-text text-justify">{{ profile.title || 'Volume user' }}</p>
             </div>
             <p-button
-            *ngIf="currentUser.id !== userId"
+            *ngIf="(user$ | async).id !== userId"
             icon="pi pi-plus" 
             label="follow"
             styleClass="p-button-rounded p-button-warning p-button-text"></p-button>
@@ -65,7 +65,7 @@
     </p-card>
 </div>
 
-<div class="container-fluid" *ngIf="currentUser.id === userId">
+<div class="container-fluid" *ngIf="(user$ | async).id === userId">
         <div class="row d-flex justify-content-center">
             <div class="col-12 col-sm-12 col-md-6 pt-1">
                 <p-card>

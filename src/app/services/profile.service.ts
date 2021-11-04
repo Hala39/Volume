@@ -1,3 +1,4 @@
+import { UserService } from './user.service';
 import { UserCard } from 'src/app/models/userCard';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -12,7 +13,9 @@ import { Profile } from '../models/userProfile';
 })
 export class ProfileService {
 
-  constructor(private apiCaller: HttpClient) { }
+  constructor(private apiCaller: HttpClient, private userService: UserService) { 
+
+  }
 
   baseUrl = environment.apiUrl + 'profile/';
 
@@ -35,6 +38,9 @@ export class ProfileService {
     return this.apiCaller.post(this.baseUrl + 'photo', formData).pipe(
       map(response => {
         this.getProfileForUser(this.currentUser.id).subscribe();
+        this.currentUser.profilePhotoUrl = this.profileSource.value.profilePhotoUrl;
+        localStorage.setItem("userCard", JSON.stringify(this.currentUser));
+        this.userService.userSource.next(this.currentUser);
       })
     );
   }
@@ -60,6 +66,7 @@ export class ProfileService {
         localStorage.setItem('profile', JSON.stringify(response));
         this.currentUser.profilePhotoUrl = response.profilePhotoUrl;
         localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+        this.userService.userSource.next(this.currentUser);
       })
     );
   }

@@ -23,6 +23,8 @@ export class IdentityComponent implements OnInit {
   profile: Profile = JSON.parse(localStorage.getItem("profile"));
   profile$: Observable<Profile>;
 
+  user$: Observable<UserCard>;
+
   @Output() activeIndexEmitter = new EventEmitter<number>();
   @Output() dataSavedEmitter = new EventEmitter<boolean>();
   @Output() photoSavedEmitter = new EventEmitter<boolean>();

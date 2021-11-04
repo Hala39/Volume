@@ -1,3 +1,5 @@
+import { UserService } from './../../services/user.service';
+import { Observable } from 'rxjs';
 import { UserCard } from 'src/app/models/userCard';
 import { PostService } from 'src/app/services/post.service';
 import { Component, OnInit } from '@angular/core';
@@ -11,7 +13,9 @@ import { Post } from 'src/app/models/post';
 })
 export class AddPostComponent implements OnInit {
 
-  constructor(private postService: PostService) { }
+  constructor(private postService: PostService, private userService: UserService) {
+    this.user$ = this.userService.user$
+  }
 
   ngOnInit(): void {
   }
@@ -19,8 +23,8 @@ export class AddPostComponent implements OnInit {
   file: File = null;
   description: string = null;
   isPhoto: boolean = false;
-
-  currentUser: UserCard = JSON.parse(localStorage.getItem("userCard"));
+  user$: Observable<UserCard>;
+  
 
   // Editor
   editorToggle: boolean = false;
@@ -74,6 +78,11 @@ export class AddPostComponent implements OnInit {
       description: this.description
     };
     this.description = null;
-    this.postService.addPost(post).subscribe();
+    this.postService.addPost(post).subscribe(
+      response => {
+        this.displayDialog = false;
+        this.description = '';
+      }
+    );
   }
 }

@@ -13,8 +13,8 @@
                             <h6 class="mb-0">{{ post.appUser.displayName }}</h6> <span>{{ post.date | date}}</span>
                         </div>
                     </div>
-                    <span *ngIf="currentUser.id === post.appUser.id" class="pi pi-ellipsis-h" (click)="menu.toggle($event)"></span>
-                    <p-button *ngIf="currentUser.id !== post.appUser.id"
+                    <span *ngIf="(user$ | async).id === post.appUser.id" class="pi pi-ellipsis-h" (click)="menu.toggle($event)"></span>
+                    <p-button *ngIf="(user$ | async).id !== post.appUser.id"
                         pRipple type="button" [label]="post.isFollowing? 'Following' : 'Follow'" 
                         [icon]="post.isFollowing? 'pi pi-check' : 'pi pi-plus'" 
                         (click)="followToggle()"
@@ -67,14 +67,14 @@
                                         <p class="user-comment-text text-justify">{{ comment.content }}</p>
                                     </div>
                                     <p-button (click)="deleteComment(comment.id)"
-                                    *ngIf="comment.appUser.id === currentUser.id" 
+                                    *ngIf="comment.appUser.id === (user$ | async).id" 
                                     icon="pi pi-trash" 
                                     styleClass="p-button-rounded p-button-warning p-button-text"></p-button>
                                 </div>
                             </div>
                             <div class="d-flex flex-row mt-4">
-                                <p-avatar [image]="currentUser.profilePhotoUrl? currentUser.profilePhotoUrl : ''" 
-                                [icon]="currentUser.profilePhotoUrl? '' : 'pi pi-user'" styleClass="p-mr-2" 
+                                <p-avatar [image]="(user$ | async).profilePhotoUrl? (user$ | async).profilePhotoUrl : ''" 
+                                [icon]="(user$ | async).profilePhotoUrl? '' : 'pi pi-user'" styleClass="p-mr-2" 
                                 size="large" shape="circle"></p-avatar>
                                 <input type="text" placeholder="Your comment .." pInputText [(ngModel)]="content" (keyup.enter)="addComment()"/>
                             </div>
@@ -93,7 +93,7 @@
     </ng-template>
 </p-overlayPanel>
 
-<p-menu #menu [popup]="true"  [model]="items"></p-menu>
+<p-menu #menu [popup]="true"  [model]="items" (onShow)="onMenuShow()"></p-menu>
 
 <p-dialog header="Edit post" [(visible)]="displayDialog" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}"
     [draggable]="false" [resizable]="false" (onShow)="onDialogSHow()">

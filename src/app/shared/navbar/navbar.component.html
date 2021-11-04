@@ -9,8 +9,8 @@
             <i class="right-icons pi pi-link pi-search p-mr-4"></i>
             <i class="right-icons pi pi-link pi-bell p-mr-4"></i>
             <i class="right-icons pi pi-link pi-envelope p-mr-4"></i>
-            <p-avatar [image]="user.profilePhotoUrl? user.profilePhotoUrl : ''"
-            [icon]="user.profilePhotoUrl? '' : 'pi pi-user'" 
+            <p-avatar [image]="(user$ | async).profilePhotoUrl? (user$ | async).profilePhotoUrl : ''"
+            [icon]="(user$ | async).profilePhotoUrl? '' : 'pi pi-user'" 
             (click)="goToProfile()"
             styleClass="p-mr-2" shape="circle"></p-avatar>
         </div>

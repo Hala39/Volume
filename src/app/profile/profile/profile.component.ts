@@ -1,3 +1,4 @@
+import { UserService } from './../../services/user.service';
 import { FollowService } from './../../services/follow.service';
 import { Observable } from 'rxjs';
 import { UserCard } from 'src/app/models/userCard';
@@ -15,7 +16,11 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor(private profileService: ProfileService, private followService: FollowService, private activatedRoute : ActivatedRoute) { }
+  constructor(private profileService: ProfileService, private followService: FollowService, 
+    private userService: UserService,
+    private activatedRoute : ActivatedRoute) {
+      this.user$ = this.userService.user$;
+    }
 
   ngOnInit(): void {
     this.getProfile();
@@ -25,8 +30,8 @@ export class ProfileComponent implements OnInit {
   followers$: Observable<AppUser[]>;
   followings$: Observable<AppUser[]>;
   photos$: Observable<File[]>;
+  user$: Observable<UserCard>;
 
-  currentUser: UserCard = JSON.parse(localStorage.getItem("userCard"));
   userId = this.activatedRoute.snapshot.paramMap.get('id');
 
   getProfile() {

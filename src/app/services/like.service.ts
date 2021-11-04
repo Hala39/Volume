@@ -1,5 +1,6 @@
+import { UserService } from './user.service';
 import { PaginatedResult } from './../models/paginatedResult';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
@@ -12,7 +13,9 @@ import { UserCard } from '../models/userCard';
 })
 export class LikeService {
 
-  constructor(private apiCaller: HttpClient) { }
+  constructor(private apiCaller: HttpClient, private userService: UserService) { 
+    this.user$ = this.userService.user$;
+  }
 
   baseUrl = environment.apiUrl + 'like/';
 
@@ -21,7 +24,7 @@ export class LikeService {
   
   paginatedResult = new PaginatedResult<AppUser[]>();
 
-  currentUser: UserCard = JSON.parse(localStorage.getItem("userCard"));
+  user$: Observable<UserCard>;
 
   likeToggle(id: number) {
     return this.apiCaller.post(this.baseUrl + id.toString(), {});

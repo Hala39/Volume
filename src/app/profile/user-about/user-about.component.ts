@@ -1,3 +1,4 @@
+import { UserService } from './../../services/user.service';
 import { UserCard } from './../../models/userCard';
 import { Observable } from 'rxjs';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -11,18 +12,18 @@ import { Profile } from 'src/app/models/userProfile';
 })
 export class UserAboutComponent implements OnInit {
 
-  constructor(private profileService: ProfileService) { 
+  constructor(private profileService: ProfileService, private userService: UserService) { 
     this.profile$ = this.profileService.profile$;
+    this.user$ = this.userService.user$;
   }
 
   ngOnInit(): void {
   }
 
-  profile$ : Observable<Profile>;
+  profile$: Observable<Profile>;
+  user$: Observable<UserCard>;
 
   displayDialog = false;
-
-  currentUser: UserCard = JSON.parse(localStorage.getItem("userCard"));
   
   hideDialog($event: any) {
     this.displayDialog = $event;

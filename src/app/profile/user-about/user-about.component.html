@@ -2,7 +2,7 @@
     <div class="col-12">
         <div class="row">
             <div class="col-12 d-flex justify-content-end">
-                <p-button *ngIf="(profile$ | async)?.id === currentUser.id"
+                <p-button *ngIf="(profile$ | async)?.id === (user$ | async).id"
                 icon="pi pi-pencil" (click)="displayDialog=true"
                 styleClass="p-button-rounded p-button-secondary p-button-text">
             </p-button>
