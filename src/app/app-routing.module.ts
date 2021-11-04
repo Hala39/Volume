@@ -1,20 +1,26 @@
+import { CanLoadGuard } from './guards/can-load.guard';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home/home.component';
-import { AccountComponent } from './account/account/account.component';
 import { WelcomeComponent } from './home/welcome/welcome.component';
 
 const routes: Routes = [
   {path: '', component: WelcomeComponent},
-  {path: 'register', component: AccountComponent},
-  {path: 'home', component: HomeComponent},
+  {path: 'register', loadChildren: () => import('../app/account/account.module')
+    .then(m => m.AccountModule)
+  },
+  {path: 'home', loadChildren: () => import('../app/home/home.module')
+    .then(m => m.HomeModule),
+    canLoad: [CanLoadGuard]
+  },
   {
     path: 'chat', loadChildren: () => import('../app/messaging/messaging.module')
       .then(m => m.MessagingModule),
+      canLoad: [CanLoadGuard]
   },
   {
     path: 'profile', loadChildren: () => import('../app/profile/profile.module')
-      .then(m => m.ProfileModule)
+      .then(m => m.ProfileModule),
+      canLoad: [CanLoadGuard]
   }
 ];
 

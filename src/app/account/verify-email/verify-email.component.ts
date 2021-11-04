@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-verify-email',
@@ -13,6 +13,7 @@ export class VerifyEmailComponent implements OnInit {
   }
 
   @Output() activeIndexEmitter = new EventEmitter<number>();
+  @Input() email: string;
 
   switch() {
     this.activeIndexEmitter.emit(2);

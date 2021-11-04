@@ -1,3 +1,5 @@
+import { CanActivateGuard } from './guards/can-activate.guard';
+import { CanLoadGuard } from './guards/can-load.guard';
 import { AccountModule } from './account/account.module';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToolbarModule } from 'primeng/toolbar';
@@ -72,6 +74,8 @@ export function tokenGetter() {
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    CanLoadGuard,
+    CanActivateGuard,
     MessageService
     // {provide: HTTP_INTERCEPTORS, useClass: BusyInterceptor, multi: true}
   ],

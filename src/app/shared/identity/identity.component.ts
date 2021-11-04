@@ -12,7 +12,8 @@ import { ProfileService } from 'src/app/services/profile.service';
 })
 export class IdentityComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private profileService: ProfileService) { }
+  constructor(private fb: FormBuilder, private profileService: ProfileService) { 
+  }
 
   ngOnInit(): void {
     this.build();
@@ -20,9 +21,11 @@ export class IdentityComponent implements OnInit {
 
   currentUser: UserCard = JSON.parse(localStorage.getItem("userCard"));
   profile: Profile = JSON.parse(localStorage.getItem("profile"));
+  profile$: Observable<Profile>;
 
   @Output() activeIndexEmitter = new EventEmitter<number>();
   @Output() dataSavedEmitter = new EventEmitter<boolean>();
+  @Output() photoSavedEmitter = new EventEmitter<boolean>();
   @Input() registration: boolean = false;
 
   displayDialog: boolean = false;
@@ -60,9 +63,6 @@ export class IdentityComponent implements OnInit {
     this.activeIndexEmitter.emit(3);
   }
 
-  hi() {
-  }
-
   profilePhotoUrl = new FormControl(this.currentUser.profilePhotoUrl);
   displayName = new FormControl(this.currentUser.displayName, Validators.required);
   title = new FormControl(this.profile?.title);
@@ -93,4 +93,27 @@ export class IdentityComponent implements OnInit {
       );
     }
   }
+
+  file: File = null;
+
+  fileSelected($event: File) {
+    this.file = $event;
+  }
+
+  addProfilePhoto() {
+    if (this.file !== null) {
+      const setProfile = {
+        file: this.file
+      }
+      this.profileService.setProfilePhoto(setProfile).subscribe(
+        response => {
+          this.profile$ = this.profileService.profile$;
+          this.displayDialog = false;
+        }
+      )
+        
+    }
+  }
+
 }
+

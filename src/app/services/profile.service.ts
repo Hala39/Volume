@@ -1,3 +1,4 @@
+import { MiniUser } from './../models/miniUser';
 import { UserCard } from 'src/app/models/userCard';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -26,12 +27,17 @@ export class ProfileService {
 
   setProfilePhoto(setProfile: any) {
     var formData: any = new FormData();
-    formData.append("File", setProfile.file);
-    formData.append("Url", setProfile.url);
-    return this.apiCaller.post(this.baseUrl + 'photo', {}).pipe(
+    if (setProfile.file !== undefined) {
+      formData.append("File", setProfile.file);
+    }
+    if (setProfile.url !== undefined) {
+      formData.append("Url", setProfile.url);
+    }
+    return this.apiCaller.post(this.baseUrl + 'photo', formData).pipe(
       map(response => {
+        this.getProfileForUser(this.currentUser.id).subscribe();
       })
-    )
+    );
   }
 
   setUserBio(profile: Profile) {

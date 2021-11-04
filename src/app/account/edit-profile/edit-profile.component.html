@@ -10,7 +10,9 @@
         </p-toolbar>
     </ng-template>
     <h2 class="p-mb-5">Profile</h2>
-    <app-identity (activeIndexEmitter)="switch()" (dataSavedEmitter)="close($event)" [registration]="true"></app-identity>
+    <app-identity (activeIndexEmitter)="switch()" 
+    (dataSavedEmitter)="close($event)" 
+    [registration]="true"></app-identity>
     
 </p-card>
 

@@ -6,7 +6,6 @@ import { TimelineModule } from 'primeng/timeline';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
@@ -34,13 +33,11 @@ import { SharedModule } from '../shared/shared.module';
 import { NetworkComponent } from './network/network.component';
 
 const routes: Routes = [
-  {path: 'login', component: LoginComponent},
-  {path: 'register', component: RegisterComponent}
+  {path: '', component: AccountComponent}
 ]
 
 @NgModule({
   declarations: [
-    LoginComponent,
     RegisterComponent,
     VerifyEmailComponent,
     EditProfileComponent,

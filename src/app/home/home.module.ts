@@ -1,5 +1,6 @@
+import { CanActivateGuard } from './../guards/can-activate.guard';
 import { DividerModule } from 'primeng/divider';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes, CanActivate } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -15,6 +16,9 @@ import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { WelcomeComponent } from './welcome/welcome.component';
 
+const routes: Routes = [
+  {path: '', component: HomeComponent, canActivate: [CanActivateGuard]}
+]
 @NgModule({
   declarations: [
     HomeComponent,
@@ -33,7 +37,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
     ToggleButtonModule,
     DividerModule,
     FormsModule,
-    RouterModule
+    RouterModule.forChild(routes)
   ]
 })
 export class HomeModule { }

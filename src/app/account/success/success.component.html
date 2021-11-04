@@ -1,1 +1,18 @@
-<p>success works!</p>
+<p-card>
+    <ng-template pTemplate="header">
+        <p-toolbar>
+            Step 5
+        </p-toolbar>
+    </ng-template>
+    <h2 class="p-mb-5">Start scrolling</h2>
+    <p>Joined successfully!</p>
+        <div class="row pt-5">
+            <img src="assets/images/success.png" alt="">
+        </div>
+
+    <ng-template pTemplate="footer">
+        <div class="p-grid p-nogutter p-justify-end mt-5">
+            <button pRipple pButton label="Here!" [routerLink]="['/home']"></button>
+        </div>
+    </ng-template>
+</p-card>

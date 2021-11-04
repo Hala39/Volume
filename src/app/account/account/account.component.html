@@ -18,10 +18,10 @@
     <div class="col-md-9 pt-3">
         <div class="col-sm-12 col-md-11 col-lg-9">
             <div *ngSwitchCase="PageNames.registration">
-                <app-register (activeIndexEmitter)="setActiveIndex($event)"></app-register>
+                <app-register (activeIndexEmitter)="setActiveIndex($event)" (emailEmitter)="getEmail($event)"></app-register>
             </div>
             <div *ngSwitchCase="PageNames.verification">
-                <app-verify-email (activeIndexEmitter)="setActiveIndex($event)"></app-verify-email>
+                <app-verify-email (activeIndexEmitter)="setActiveIndex($event)" [email]="email"></app-verify-email>
             </div>
             <div *ngSwitchCase="PageNames.profile">
                 <app-edit-profile (activeIndexEmitter)="setActiveIndex($event)"></app-edit-profile>

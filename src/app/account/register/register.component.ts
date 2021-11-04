@@ -3,14 +3,17 @@ import { UserService } from './../../services/user.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+import { TitleCasePipe } from '@angular/common';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
+  providers: [TitleCasePipe]
 })
 
 export class RegisterComponent implements OnInit {
   constructor(private userService: UserService, private fb: FormBuilder, 
+    private titleCasePipe: TitleCasePipe,
     private messageService: MessageService) { }
 
   ngOnInit(): void {
@@ -18,6 +21,7 @@ export class RegisterComponent implements OnInit {
   }
 
   @Output() activeIndexEmitter = new EventEmitter<number>();
+  @Output() emailEmitter = new EventEmitter<string>();
 
   switch() {
     this.activeIndexEmitter.emit(1);
@@ -58,12 +62,15 @@ export class RegisterComponent implements OnInit {
   register() {
     if (this.registrationForm.valid && this.checkbox) {
       const userRegister: UserRegister = {
-        displayName: this.displayName.value,
+        displayName: this.titleCasePipe.transform(this.displayName.value),
         email: this.email.value,
         password: this.password.value
       } 
       this.userService.signup(userRegister).subscribe(
-        res => this.switch()
+        res => {
+          this.emailEmitter.emit(this.email.value);
+          this.switch();
+        }
       );
     } 
     else {
