@@ -3,7 +3,10 @@ import { Observable } from 'rxjs';
 import { UserCard } from 'src/app/models/userCard';
 import { PostService } from 'src/app/services/post.service';
 import { Component, OnInit } from '@angular/core';
-import { Post } from 'src/app/models/post';
+import { EmojiData } from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import { faGrinAlt } from '@fortawesome/free-regular-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 
 
 @Component({
@@ -13,15 +16,19 @@ import { Post } from 'src/app/models/post';
 })
 export class AddPostComponent implements OnInit {
 
-  constructor(private postService: PostService, private userService: UserService) {
+  constructor(private postService: PostService, private userService: UserService,
+    private fb: FormBuilder) {
     this.user$ = this.userService.user$
   }
 
   ngOnInit(): void {
+    this.build()
   }
 
+  faGrinAlt = faGrinAlt;
+  faTimes = faTimes;
+
   file: File = null;
-  description: string = null;
   isPhoto: boolean = false;
   user$: Observable<UserCard>;
   
@@ -66,7 +73,7 @@ export class AddPostComponent implements OnInit {
   }
 
   onHide() {
-    this.description = null;
+    this.inputForm.reset();
   }
 
   displayDialog = false;
@@ -75,14 +82,44 @@ export class AddPostComponent implements OnInit {
     const post = {
       isPhoto: isPhoto, 
       fileToUpload: this.file,
-      description: this.description
+      description: this.description.value
     };
-    this.description = null;
+    this.inputForm.reset();
     this.postService.addPost(post).subscribe(
       response => {
-        this.description = '';
         this.displayDialog = false;
       }
     );
+  }
+
+  //emoji
+  emojiExpanded: boolean = false;
+
+  expandEmoji() {
+    this.emojiExpanded = true;
+  }
+
+  hideEmoji() {
+    this.emojiExpanded = false;
+  }
+
+  select($event: EmojiData) {
+    let data = this.inputForm.get('description').value;
+    if (!data)  data = '';
+    this.inputForm.patchValue({"description": data + $event.native});
+  }
+
+  description = new FormControl();
+
+  inputForm: FormGroup;
+
+  build() {
+    this.inputForm = this.fb.group({
+      description: this.description
+    })
+  }
+
+  hi() {
+    alert("hi")
   }
 }

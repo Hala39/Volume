@@ -40,12 +40,20 @@
             </div>
         </div>
         <div class="p-field p-mt-3">
-            <textarea *ngIf="!editorToggle" pInputTextarea [rows]="2" placeholder="Type something.." [(ngModel)]="description"></textarea>
+            <form [formGroup]="inputForm">
+                <textarea *ngIf="!editorToggle" pInputTextarea [rows]="2" placeholder="Type something.." formControlName="description"></textarea>
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-end">
+                        <fa-icon *ngIf="!emojiExpanded" [icon]="faGrinAlt" (click)="op.show($event)"></fa-icon>
+                        <fa-icon *ngIf="emojiExpanded" [icon]="faTimes"></fa-icon>
+                    </div>
+                </div>
+            </form>
         </div>
         <div class="p-filed p-mt-2">
             <app-file-uploader *ngIf="photoUploadToggle" (fileSelectedEmitter)="fileSelected($event)"></app-file-uploader>
             <app-file-uploader *ngIf="fileUploadToggle" (fileSelectedEmitter)="fileSelected($event)" [accept]="'application/*'"></app-file-uploader>
-            <p-editor *ngIf="editorToggle" [style]="{'height':'320px'}"  [(ngModel)]="description"></p-editor>
+            <p-editor *ngIf="editorToggle" [style]="{'height':'320px'}"  formControlName="description"></p-editor>
         </div>
         <div class="p-field p-mt-3">
             <p-button label="Post" *ngIf="!photoUploadToggle" (click)="addPost(false)"></p-button>
@@ -54,4 +62,10 @@
     </div>
 </p-dialog>
     
+<p-overlayPanel #op (onShow)="expandEmoji()" (onHide)="hideEmoji()" 
+[dismissable]="true" [showCloseIcon]="true" appendTo="body">
+    <ng-template pTemplate>
+        <app-emoji (emojiEmitter)="select($event)" (emojiClickEmitter)="op.hide()"></app-emoji>
+    </ng-template>
+</p-overlayPanel>
     

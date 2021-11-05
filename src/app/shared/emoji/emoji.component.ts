@@ -13,6 +13,8 @@ export class EmojiComponent implements OnInit {
   }
 
   @Output() emojiEmitter = new EventEmitter<any>();
+  @Output() emojiClickEmitter = new EventEmitter();
+
 
   select($event: any)
   {
@@ -21,4 +23,7 @@ export class EmojiComponent implements OnInit {
 
   yellow = '#FFDE59';
 
+  emojiClick() {
+    this.emojiClickEmitter.emit();
+  }
 }

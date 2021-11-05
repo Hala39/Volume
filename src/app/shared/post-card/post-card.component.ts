@@ -149,7 +149,7 @@ export class PostCardComponent implements OnInit {
   }
 
   isItemDisabled() : boolean {
-    if (this.post.file.url === this.userService.userSource.value.profilePhotoUrl) {
+    if (this.post.file !== null && this.post.file.url === this.userService.userSource.value.profilePhotoUrl) {
       return true;
     }
 
