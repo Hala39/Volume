@@ -34,7 +34,7 @@
             <div class="d-flex flex-row">
                 <p-avatar [image]="(user$ | async)?.profilePhotoUrl? (user$ | async)?.profilePhotoUrl : ''" 
                     [icon]="(user$ | async)?.profilePhotoUrl? '' : 'pi pi-user'"
-                    styleClass="p-mr-3" size="large" shape="circle">
+                    styleClass="p-mr-1" size="large" shape="circle">
                 </p-avatar>
                 <h6 class="p-mt-1">{{(user$ | async)?.displayName}}</h6>
             </div>
@@ -42,18 +42,20 @@
         <div class="p-field p-mt-3">
             <form [formGroup]="inputForm">
                 <textarea *ngIf="!editorToggle" pInputTextarea [rows]="2" placeholder="Type something.." formControlName="description"></textarea>
-                <div class="row">
-                    <div class="col-12 d-flex justify-content-end">
-                        <fa-icon *ngIf="!emojiExpanded" [icon]="faGrinAlt" (click)="op.show($event)"></fa-icon>
-                        <fa-icon *ngIf="emojiExpanded" [icon]="faTimes"></fa-icon>
-                    </div>
-                </div>
             </form>
         </div>
-        <div class="p-filed p-mt-2">
+        <div class="p-filed p-mt-3">
+            <form [formGroup]="inputForm">
+                <p-editor *ngIf="editorToggle" [style]="{'height':'200px'}"  formControlName="description"></p-editor>
+            </form>
+            <div class="row pb-2">
+                <div class="col-12 d-flex justify-content-end">
+                    <fa-icon *ngIf="!emojiExpanded" [icon]="faGrinAlt" (click)="op.show($event)"></fa-icon>
+                    <fa-icon *ngIf="emojiExpanded" [icon]="faTimes"></fa-icon>
+                </div>
+            </div>
             <app-file-uploader *ngIf="photoUploadToggle" (fileSelectedEmitter)="fileSelected($event)"></app-file-uploader>
             <app-file-uploader *ngIf="fileUploadToggle" (fileSelectedEmitter)="fileSelected($event)" [accept]="'application/*'"></app-file-uploader>
-            <p-editor *ngIf="editorToggle" [style]="{'height':'320px'}"  formControlName="description"></p-editor>
         </div>
         <div class="p-field p-mt-3">
             <p-button label="Post" *ngIf="!photoUploadToggle" (click)="addPost(false)"></p-button>

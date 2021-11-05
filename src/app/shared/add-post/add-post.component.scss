@@ -1,16 +1,13 @@
 :host ::ng-deep { 
     .p-inputtext {
         width: 100% !important;
-        margin-left: 15px;
-        padding-left: 20px;
-    }
-
-    .p-toolbar {
-        border: none;
     }
 
     .p-inputtextarea {
         margin-left: 0%;
+    }
+    .p-toolbar {
+        border: none;
     }
 
 }
@@ -22,4 +19,14 @@ input {
 fa-icon {
     cursor: pointer;
     font-size: 1.5rem;
+}
+
+
+@media screen and (max-width: 400px) {
+    :host ::ng-deep { 
+        .p-toolbar {
+            padding: 0% !important;
+        }
+    }
+
 }

@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 
 <div class="container-fluid mt-4">
-    <p-card *ngIf="(profile$ | async) as profile">
+    <p-card *ngIf="(profile$ | async) as profile"  #myDiv>
         <div class="d-flex flex-row"> 
             <p-avatar 
             shape="circle" styleClass="profile"
@@ -25,7 +25,7 @@
             [label]="(profile$ | async).isFollowing? 'following' :'follow'"
             (click)="followToggle()"
             styleClass="p-button-rounded p-button-warning p-button-text"></p-button>
-            <i class="pi pi-ellipsis-v" 
+            <i class="pi pi-ellipsis-v"
             *ngIf="(user$ | async)?.id === userId"
             (click)="menu.toggle($event)">
             </i>

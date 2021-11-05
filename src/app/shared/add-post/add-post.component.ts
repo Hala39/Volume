@@ -69,6 +69,9 @@ export class AddPostComponent implements OnInit {
 
   // Dialog
   displayDialogFunc() {
+    this.editorToggle = false;
+    this.photoUploadToggle = false;
+    this.fileUploadToggle = false;
     this.displayDialog = true;
   }
 
