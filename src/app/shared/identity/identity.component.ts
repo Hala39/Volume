@@ -1,3 +1,4 @@
+import { TitleCasePipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { UserCard } from 'src/app/models/userCard';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
@@ -8,11 +9,13 @@ import { ProfileService } from 'src/app/services/profile.service';
 @Component({
   selector: 'app-identity',
   templateUrl: './identity.component.html',
-  styleUrls: ['./identity.component.scss']
+  styleUrls: ['./identity.component.scss'],
+  providers: [TitleCasePipe]
 })
 export class IdentityComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private profileService: ProfileService) { 
+  constructor(private fb: FormBuilder, private profileService: ProfileService,
+    private titleCasePipe: TitleCasePipe) { 
   }
 
   ngOnInit(): void {
@@ -75,11 +78,11 @@ export class IdentityComponent implements OnInit {
   gender = new FormControl(this.profile?.gender);
 
   saveChanges() {
-    if (this.form.dirty) {
+    if (this.form.dirty && this.form.valid) {
       const profileToSend: Profile = {
-        displayName: this.displayName.value,
-        title: this.title?.value,
-        hometown: this.hometown?.value,
+        displayName: this.titleCasePipe.transform(this.displayName.value),
+        title: this.titleCasePipe.transform(this.title?.value),
+        hometown: this.titleCasePipe.transform(this.hometown?.value),
         phoneNumber: this.phoneNumber?.value,
         dob: this.dob?.value,
         gender: this.gender.value?.name || null
@@ -94,6 +97,8 @@ export class IdentityComponent implements OnInit {
       this.profileService.setUserBio(profileToSend).subscribe(
         response => this.dataSavedEmitter.emit(false)
       );
+    } else {
+      this.switch()
     }
   }
 

@@ -56,4 +56,10 @@ export class LoginFormComponent implements OnInit {
     }
   }
 
+  passwordOn = true;
+
+  togglePassword() {
+    this.passwordOn = !this.passwordOn;
+  }
+
 }

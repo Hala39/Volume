@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { FollowService } from './../../services/follow.service';
 import { AppUser } from 'src/app/models/appUser';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-user-card',
@@ -16,11 +16,15 @@ export class UserCardComponent implements OnInit {
   }
 
   @Input() user: AppUser;
+  @Output() removeFromSuggestionsEmitter = new EventEmitter<string>();
   
   followToggle(id: string) {
     this.followService.followToggle(id).subscribe(
-      response => 
-      this.user.isFollowing = !this.user.isFollowing
+      response => {
+        this.user.isFollowing = !this.user.isFollowing;
+        this.removeFromSuggestionsEmitter.emit(id);
+      }
+      
     );
   }
 

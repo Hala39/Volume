@@ -33,7 +33,6 @@ import { DialogModule } from 'primeng/dialog';
 import { WebcamModule } from 'ngx-webcam';
 
 import { NavbarComponent } from './navbar/navbar.component';
-import { SuggestionsComponent } from './suggestions/suggestions.component';
 import { GalleriaComponent } from './galleria/galleria.component';
 import { IdentityComponent } from './identity/identity.component';
 import { KeyFilterModule } from 'primeng/keyfilter';
@@ -52,7 +51,6 @@ import {ChipsModule} from 'primeng/chips';
     ChatRoomComponent,
     EmojiComponent,
     NavbarComponent,
-    SuggestionsComponent,
     LoginFormComponent,
     GalleriaComponent,
     IdentityComponent,
@@ -103,7 +101,6 @@ import {ChipsModule} from 'primeng/chips';
     NavbarComponent,
     EmojiComponent,
     LoginFormComponent,
-    SuggestionsComponent,
     IdentityComponent,
     UserCardComponent,
     AddPostComponent

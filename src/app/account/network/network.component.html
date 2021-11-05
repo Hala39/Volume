@@ -11,8 +11,8 @@
     </ng-template>
     <h2 class="p-mb-5">Network</h2>
     <p>Start adding to your feed</p>
-        <div class="row pt-5">
-            <app-suggestions [users]="users"></app-suggestions>
+        <div class="row pt-5" *ngFor="let user of (suggestions$ | async)">
+            <app-user-card [user]="user" (removeFromSuggestionsEmitter)="remove($event)"></app-user-card>
         </div>
 
     <ng-template pTemplate="footer">

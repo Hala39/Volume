@@ -8,6 +8,7 @@ import { Profile } from 'src/app/models/userProfile';
 import { AppUser } from 'src/app/models/appUser';
 import { File } from 'src/app/models/file';
 import { ActivatedRoute } from '@angular/router';
+import { MenuItem, PrimeIcons } from 'primeng/api';
 
 @Component({
   selector: 'app-profile',
@@ -94,4 +95,9 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  items : MenuItem[] = [
+    { label: 'Sign out', icon: PrimeIcons.SIGN_OUT, command: () => {
+      this.userService.logout();
+    }}
+  ]
 }

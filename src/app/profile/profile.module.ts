@@ -1,3 +1,4 @@
+import { MenuModule } from 'primeng/menu';
 import { TooltipModule } from 'primeng/tooltip';
 import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
@@ -38,6 +39,7 @@ const routes : Routes = [
     AvatarModule,
     DropdownModule,
     TooltipModule,
+    MenuModule,
     CardModule,
     GalleriaModule,
     RouterModule.forChild(routes)

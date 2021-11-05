@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+import { ProfileService } from 'src/app/services/profile.service';
 import { AppUser } from 'src/app/models/appUser';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
@@ -8,10 +10,13 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class NetworkComponent implements OnInit {
 
-  constructor() { }
+  constructor(private profileService: ProfileService) { }
 
   ngOnInit(): void {
+    this.getSuggestions();
   }
+
+  suggestions$: Observable<AppUser[]>;
 
   @Output() activeIndexEmitter = new EventEmitter<number>();
 
@@ -19,27 +24,13 @@ export class NetworkComponent implements OnInit {
     this.activeIndexEmitter.emit(4);
   }
 
-  users: AppUser[] = [
-    {
-      id: '1',
-      profilePhotoUrl: 'assets/images/jimmy.jpg',
-      displayName: 'Jimmy Los',
-      title: 'CEO',
-      isFollowing: false
-    },
-    {
-      id: '2',
-      profilePhotoUrl: 'assets/images/me.jpg',
-      displayName: 'Hala Taleb',
-      title: 'Web Developer',
-      isFollowing: false
-    },
-    {
-      id: '3',
-      profilePhotoUrl: 'assets/images/luna.jpg',
-      displayName: 'Luna Bader',
-      title: 'Manager',
-      isFollowing: false
-    },
-  ]
+  getSuggestions() {
+    this.profileService.getSuggestedUsersList().subscribe(
+      response => this.suggestions$ = this.profileService.suggestions$
+    )
+  }
+
+  remove($event: string) {
+    this.profileService.getSuggestedUsersList().subscribe()
+  }
 }

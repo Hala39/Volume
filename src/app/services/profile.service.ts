@@ -33,7 +33,11 @@ export class ProfileService {
 
   searchResultsSource = new BehaviorSubject<AppUser[]>([]);
   searchResults$ = this.searchResultsSource.asObservable();
-  paginatedResult: PaginatedResult<AppUser[]> = new PaginatedResult<AppUser[]>();
+  paginatedResult = new PaginatedResult<AppUser[]>();
+
+  suggestionsSource = new BehaviorSubject<AppUser[]>([]);
+  suggestions$ = this.suggestionsSource.asObservable();
+  paginatedSuggestionsResult = new PaginatedResult<AppUser[]>();
 
   setProfilePhoto(setProfile: any) {
     var formData: any = new FormData();
@@ -96,10 +100,28 @@ export class ProfileService {
     )
   }
 
-  getProfilesList(keyword: string, suggest: boolean) {
+  getSuggestedUsersList() {
+    let params = new HttpParams();
+    params = params.append("Suggest", true);
+    params = params.append("PageSize", 5);
+    return this.apiCaller.get<AppUser[]>(this.baseUrl, {observe: 'response', params}).pipe(
+      map(response => {
+        this.paginatedSuggestionsResult.result = response.body; 
+        this.suggestionsSource.next(response.body);
+
+        if (response.headers.get("Pagination") !== null) {
+          this.paginatedResult.pagination = JSON.parse(response.headers.get("Pagination"));
+        }
+
+        return response.body;
+      })
+    )
+  }
+
+  getProfilesList(keyword: string) {
     let params = new HttpParams();
     params = params.append("Keyword", keyword);
-    params = params.append("Suggest", suggest);
+    params = params.append("Suggest", false);
     return this.apiCaller.get<AppUser[]>(this.baseUrl, {observe: 'response', params}).pipe(
       map(response => {
         this.paginatedResult.result = response.body; 

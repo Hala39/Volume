@@ -13,7 +13,7 @@
                             <h6 class="mb-0 pointer" (click)="goToProfile(post.appUser.id)">{{ post.appUser.displayName }}</h6> <span>{{ post.date | date}}</span>
                         </div>
                     </div>
-                    <span *ngIf="(user$ | async)?.id === post.appUser.id" class="pi pi-ellipsis-h" (click)="menu.toggle($event)"></span>
+                    <span *ngIf="(user$ | async)?.id === post.appUser.id" class="pi pi-ellipsis-v" (click)="menu.toggle($event)"></span>
                     <p-button *ngIf="(user$ | async)?.id !== post.appUser.id"
                         pRipple type="button" [label]="post.isFollowing? 'Following' : 'Follow'" 
                         [icon]="post.isFollowing? 'pi pi-check' : 'pi pi-plus'" 
@@ -89,7 +89,9 @@
 
 <p-overlayPanel #op (onShow)="getLikers()">
     <ng-template pTemplate>
-        <app-suggestions *ngIf="(likers$ | async) as likers" [users]="likers"></app-suggestions>
+        <div *ngFor="let user of (likers$ | async)">
+            <app-user-card [user]="user"></app-user-card>
+        </div>
     </ng-template>
 </p-overlayPanel>
 

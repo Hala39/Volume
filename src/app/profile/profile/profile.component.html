@@ -13,7 +13,7 @@
                     <div class="d-flex flex-row align-items-center"> 
                         <span class="name">
                             <h3>{{ profile.displayName }}</h3> 
-                        </span> 
+                        </span>  
                     </div> 
                 </div>
                 <p class="user-comment-text text-justify">{{ profile.title || 'Volume user' }}</p>
@@ -24,6 +24,11 @@
             [label]="(profile$ | async).isFollowing? 'following' :'follow'"
             (click)="followToggle()"
             styleClass="p-button-rounded p-button-warning p-button-text"></p-button>
+            <i class="pi pi-ellipsis-v" 
+            style="cursor: pointer;"
+            *ngIf="(user$ | async)?.id === userId"
+            (click)="menu.toggle($event)">
+            </i>
         </div>
     </p-card>
     <p-card>
@@ -99,3 +104,5 @@
         </p-card>
     </div>
 </div>
+
+<p-menu #menu [popup]="true"  [model]="items"></p-menu>

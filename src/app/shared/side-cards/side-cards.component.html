@@ -4,12 +4,13 @@
 
 <p-card header="People You May Know">
     <p-avatarGroup styleClass="p-mb-3">
-        <p-avatar image="assets/images/luna.jpg" size="large" shape="circle"></p-avatar>
-        <p-avatar image="assets/images/me.jpg" size="large" shape="circle"></p-avatar>
-        <p-avatar image="assets/images/jimmy.jpg" size="large" shape="circle"></p-avatar>
-        <p-avatar image="assets/images/mira.jpg" size="large" shape="circle"></p-avatar>
-        <p-avatar image="assets/images/samaj.jpg" size="large" shape="circle"></p-avatar>
+        <p-avatar  *ngFor="let user of (suggestions$ | async)" 
+        [image]="user.profilePhotoUrl? user.profilePhotoUrl : ''"
+        [icon]="user.profilePhotoUrl? '' : 'pi pi-user'"
+        size="large" shape="circle"></p-avatar>
         <p-avatar label="+2" shape="circle" size="large" [style]="{'background-color':'#9c27b0', 'color': '#ffffff'}"></p-avatar>
     </p-avatarGroup>
-    <app-suggestions [users]="users"></app-suggestions>
+    <div *ngFor="let user of (suggestions$ | async)">
+        <app-user-card [user]="user" (removeFromSuggestionsEmitter)="remove($event)"></app-user-card>
+    </div>
 </p-card>

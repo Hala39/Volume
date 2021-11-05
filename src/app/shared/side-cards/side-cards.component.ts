@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+import { ProfileService } from 'src/app/services/profile.service';
 import { AppUser } from './../../models/appUser';
 import { UserCard } from './../../models/userCard';
 import { Component, OnInit } from '@angular/core';
@@ -9,36 +11,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SideCardsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private profileService: ProfileService) { }
 
   ngOnInit(): void {
+    this.getSuggestions();
   }
+
+  suggestions$: Observable<AppUser[]>;
 
   trends: string[] = [
     'AspNetCore', 'C#', 'Angular12', 'UI/UX', 'Programming', 'React', 'Ionic5', 'PrimeNg', 'Bootstrap'
   ];
 
-  users: AppUser[] = [
-    {
-      id: '1',
-      profilePhotoUrl: 'assets/images/jimmy.jpg',
-      displayName: 'Jimmy Los',
-      isFollowing: false,
-      title: 'CEO'
-    },
-    {
-      id: '2',
-      profilePhotoUrl: 'assets/images/me.jpg',
-      displayName: 'Hala Taleb',
-      isFollowing: false,
-      title: 'Web Developer'
-    },
-    {
-      id: '3',
-      profilePhotoUrl: 'assets/images/luna.jpg',
-      displayName: 'Luna Bader',
-      isFollowing: false,
-      title: 'Lives in Lebanon'
-    },
-  ]
+  getSuggestions() {
+    this.profileService.getSuggestedUsersList().subscribe(
+      response => this.suggestions$ = this.profileService.suggestions$
+    )
+  }
+
+  remove($event: string) {
+    var currentValue = this.profileService.suggestionsSource.value;
+    currentValue = currentValue.filter(v => v.id !== $event);
+    this.profileService.suggestionsSource.next(currentValue);
+    console.log(this.profileService.suggestionsSource.value)
+  }
 }

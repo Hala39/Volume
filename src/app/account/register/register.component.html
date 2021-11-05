@@ -10,7 +10,10 @@
         </div>
         <form [formGroup]="registrationForm">
           <div class="p-field">
-            <input pInputText class="p-inputtext-sm" placeholder="Name" type="text"  formControlName="displayName"/>
+            <span class="p-input-icon-right">
+              <i class="pi pi-user"></i>
+              <input pInputText class="p-inputtext-sm" placeholder="Full Name" type="text"  formControlName="displayName"/>
+            </span>
             <small *ngIf="displayName.dirty && displayName.hasError('required')" class="p-error">This field is required.</small>
             <small *ngIf="displayName.dirty && (!displayName.hasError('required')) 
                 && displayName.hasError('minlength')" class="p-error">
@@ -18,12 +21,18 @@
           </small>
           </div>
           <div class="p-field">
-            <input pInputText class="p-inputtext-sm" placeholder="Email" type="text" pKeyFilter="email" formControlName="email"/>
+            <span class="p-input-icon-right">
+              <i class="pi pi-envelope"></i>
+              <input pInputText class="p-inputtext-sm" placeholder="Email" type="text" pKeyFilter="email" formControlName="email"/>
+            </span>
             <small *ngIf="email.dirty && email.hasError('required')" class="p-error">This field is required.</small>
             <small *ngIf="(!email.hasError('required')) && email.dirty && email.hasError('email')" class="p-error">Please enter a valid email.</small>
           </div>
           <div class="p-field">
-            <input pInputText class="p-inputtext-sm" placeholder="Password" type="password" formControlName="password"/>
+            <span class="p-input-icon-right">
+              <i (click)="togglePassword()" [class]="passwordOn? 'pi pi-lock' : 'pi pi-lock-open'" style="cursor: pointer;"></i>
+              <input pInputText class="p-inputtext-sm" placeholder="Password" [type]="passwordOn? 'password' : 'text'" formControlName="password"/>
+          </span>
             <small *ngIf="password.dirty && password.hasError('required')" class="p-error">This field is required.</small>
           </div>
         </form>

@@ -22,6 +22,7 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
   }
 
   user: UserCard = JSON.parse(localStorage.getItem('userCard'));
@@ -48,7 +49,7 @@ export class NavbarComponent implements OnInit {
     {
       var word = this.keyword.join(" ");
     }
-    this.profileService.getProfilesList(word, false).subscribe(
+    this.profileService.getProfilesList(word).subscribe(
       response => {
         this.searchResults$ = this.profileService.searchResults$;
         this.hideRecent = true;

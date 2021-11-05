@@ -86,6 +86,12 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  passwordOn = true;
+
+  togglePassword() {
+    this.passwordOn = !this.passwordOn;
+  }
+
 }
 
 
