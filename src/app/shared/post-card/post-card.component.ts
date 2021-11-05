@@ -11,6 +11,7 @@ import { Post } from './../../models/post';
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { AppUser } from 'src/app/models/appUser';
 import { MenuItem } from 'primeng/api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post-card',
@@ -21,6 +22,7 @@ export class PostCardComponent implements OnInit {
 
   constructor(private commentService: CommentService, private likeService: LikeService,
     private profileService: ProfileService, private userService: UserService,
+    private router: Router,
     private followService: FollowService, private postService: PostService) {
     this.user$ = this.userService.user$
   }
@@ -39,6 +41,10 @@ export class PostCardComponent implements OnInit {
   user$: Observable<UserCard>;
 
   @Input() post: Post;
+
+  goToProfile(id: string) {
+    this.router.navigateByUrl('/profile/' + id);
+  }
 
   expandComments(postId: number) {
     this.commentService.listComments(postId).subscribe(

@@ -9,6 +9,7 @@ export class Profile {
     dob?: string;
     hometown?: string;
     gender?: string;
+    isFollowing?: boolean;
     profilePhotoUrl?: string;
     posts?: Post[] = [];
 }

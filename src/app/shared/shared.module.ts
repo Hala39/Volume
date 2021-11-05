@@ -41,6 +41,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { UserCardComponent } from './user-card/user-card.component';
 import { FileUploaderComponent } from './file-uploader/file-uploader.component';
 import { InputMaskModule } from 'primeng/inputmask';
+import {ChipsModule} from 'primeng/chips';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,7 @@ import { InputMaskModule } from 'primeng/inputmask';
     CommonModule,
     ReactiveFormsModule,
     OverlayPanelModule,
-    BadgeModule,
+    ChipsModule,
     WebcamModule,
     InputTextModule,
     InputTextareaModule,

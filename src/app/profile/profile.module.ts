@@ -17,7 +17,8 @@ import { SharedModule } from '../shared/shared.module';
 import { UserAboutComponent } from './user-about/user-about.component';
 
 const routes : Routes = [
-  { path: '', component: ProfileComponent}
+  { path: ':id', component: ProfileComponent},
+  {path: '', component: ProfileComponent}
 ]
 
 @NgModule({

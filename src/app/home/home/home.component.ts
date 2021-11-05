@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UserCard } from './../../models/userCard';
 import { Component, OnInit } from '@angular/core';
@@ -11,13 +12,12 @@ import { PostService } from 'src/app/services/post.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private postService: PostService) {
+  constructor(private postService: PostService, private router: Router) {
     this.getPosts();
     this.posts$ = this.postService.posts$;
   }
 
   ngOnInit() {
-    // this.getPosts();
   }
 
   posts$: Observable<Post[]>;

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { FollowService } from './../../services/follow.service';
 import { AppUser } from 'src/app/models/appUser';
 import { Component, Input, OnInit } from '@angular/core';
@@ -9,7 +10,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class UserCardComponent implements OnInit {
 
-  constructor(private followService: FollowService) { }
+  constructor(private followService: FollowService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -21,5 +22,9 @@ export class UserCardComponent implements OnInit {
       response => 
       this.user.isFollowing = !this.user.isFollowing
     );
+  }
+
+  goToProfile(id: string) {
+    this.router.navigateByUrl('/profile/' + id);
   }
 }

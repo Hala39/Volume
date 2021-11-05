@@ -28,6 +28,7 @@ export class IdentityComponent implements OnInit {
   @Output() activeIndexEmitter = new EventEmitter<number>();
   @Output() dataSavedEmitter = new EventEmitter<boolean>();
   @Output() photoSavedEmitter = new EventEmitter<boolean>();
+  
   @Input() registration: boolean = false;
 
   displayDialog: boolean = false;
@@ -81,7 +82,7 @@ export class IdentityComponent implements OnInit {
         hometown: this.hometown?.value,
         phoneNumber: this.phoneNumber?.value,
         dob: this.dob?.value,
-        gender: this.gender.value?.name
+        gender: this.gender.value?.name || null
       }
 
       if (this.gender.dirty) {
@@ -96,6 +97,10 @@ export class IdentityComponent implements OnInit {
     }
   }
 
+  close() {
+    this.switch();
+    this.dataSavedEmitter.emit(false)
+  }
   file: File = null;
 
   fileSelected($event: File) {

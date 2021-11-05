@@ -18,7 +18,7 @@ const routes: Routes = [
       canLoad: [CanLoadGuard]
   },
   {
-    path: 'profile/:id', loadChildren: () => import('../app/profile/profile.module')
+    path: 'profile', loadChildren: () => import('../app/profile/profile.module')
       .then(m => m.ProfileModule),
       canLoad: [CanLoadGuard]
   }

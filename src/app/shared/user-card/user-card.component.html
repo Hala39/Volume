@@ -1,7 +1,8 @@
-<p-toolbar>
+<p-toolbar (click)="goToProfile(user.id)">
     <div class="p-toolbar-group-left my-2">
         <div class="d-flex flex-row mt-1"> 
-            <p-avatar [image]="user.profilePhotoUrl" styleClass="p-mr-1" size="large" shape="circle"></p-avatar>
+            <p-avatar [image]="user.profilePhotoUrl" styleClass="p-mr-1" size="large" shape="circle"
+            ></p-avatar>
             <div class="p-ml-1 "> 
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex flex-row align-items-center"> 
@@ -10,7 +11,7 @@
                         </span> 
                     </div> 
                 </div>
-                <p [innerText]="user.title !== null? user.title : user.hometown || 'Valued Volume user'"></p>
+                <p [innerText]="user.title || 'Volume user'"></p>
             </div>
         </div>
     </div>

@@ -19,9 +19,10 @@
                 <p class="user-comment-text text-justify">{{ profile.title || 'Volume user' }}</p>
             </div>
             <p-button
-            *ngIf="(user$ | async).id !== userId"
-            icon="pi pi-plus" 
-            label="follow"
+            *ngIf="(user$ | async)?.id !== userId"
+            [icon]="(profile$ | async).isFollowing? 'pi pi-check' : 'pi pi-plus'" 
+            [label]="(profile$ | async).isFollowing? 'following' :'follow'"
+            (click)="followToggle()"
             styleClass="p-button-rounded p-button-warning p-button-text"></p-button>
         </div>
     </p-card>
@@ -65,7 +66,7 @@
     </p-card>
 </div>
 
-<div class="container-fluid" *ngIf="(user$ | async).id === userId">
+<div class="container-fluid" *ngIf="(user$ | async)?.id === userId">
         <div class="row d-flex justify-content-center">
             <div class="col-12 col-sm-12 col-md-6 pt-1">
                 <p-card>

@@ -80,8 +80,8 @@ export class AddPostComponent implements OnInit {
     this.description = null;
     this.postService.addPost(post).subscribe(
       response => {
-        this.displayDialog = false;
         this.description = '';
+        this.displayDialog = false;
       }
     );
   }

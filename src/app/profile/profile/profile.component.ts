@@ -32,11 +32,24 @@ export class ProfileComponent implements OnInit {
   photos$: Observable<File[]>;
   user$: Observable<UserCard>;
 
-  userId = this.activatedRoute.snapshot.paramMap.get('id');
+  userId = this.activatedRoute.snapshot.paramMap.get('id')? 
+  this.activatedRoute.snapshot.paramMap.get('id') : this.userService.userSource.value.id;
+
+
+  followToggle() {
+    this.followService.followToggle(this.userId).subscribe(
+      response => {
+        var currentProfile = this.profileService.profileSource.value;
+        currentProfile.isFollowing = !currentProfile.isFollowing;
+        this.profileService.profileSource.next(currentProfile);
+        console.log(currentProfile.isFollowing)
+      }
+    );
+  }
 
   getProfile() {
     this.profileService.getProfileForUser(this.userId).subscribe(
-      response => {this.profile$ = this.profileService.profile$, console.log(this.profile$)}
+      response => this.profile$ = this.profileService.profile$
     );
   }
 

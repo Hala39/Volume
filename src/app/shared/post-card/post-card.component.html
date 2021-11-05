@@ -6,15 +6,15 @@
                     <div class="d-flex flex-row align-items-center">
                         <div class="profilePhotoUrl"> 
                             <p-avatar [image]="post.appUser.profilePhotoUrl? post.appUser.profilePhotoUrl: ''" 
-                            [icon]="post.appUser.profilePhotoUrl? '': 'pi pi-user'"
-                            styleClass="p-mr-2" size="large" shape="circle"></p-avatar>
+                            [icon]="post.appUser.profilePhotoUrl? '': 'pi pi-user'" (click)="goToProfile(post.appUser.id)"
+                            styleClass="p-mr-2" size="large" shape="circle" class="pointer"></p-avatar>
                         </div>
                         <div class="ms-2 c-details">
-                            <h6 class="mb-0">{{ post.appUser.displayName }}</h6> <span>{{ post.date | date}}</span>
+                            <h6 class="mb-0 pointer" (click)="goToProfile(post.appUser.id)">{{ post.appUser.displayName }}</h6> <span>{{ post.date | date}}</span>
                         </div>
                     </div>
-                    <span *ngIf="(user$ | async).id === post.appUser.id" class="pi pi-ellipsis-h" (click)="menu.toggle($event)"></span>
-                    <p-button *ngIf="(user$ | async).id !== post.appUser.id"
+                    <span *ngIf="(user$ | async)?.id === post.appUser.id" class="pi pi-ellipsis-h" (click)="menu.toggle($event)"></span>
+                    <p-button *ngIf="(user$ | async)?.id !== post.appUser.id"
                         pRipple type="button" [label]="post.isFollowing? 'Following' : 'Follow'" 
                         [icon]="post.isFollowing? 'pi pi-check' : 'pi pi-plus'" 
                         (click)="followToggle()"
@@ -53,13 +53,13 @@
                             <div *ngFor="let comment of (comments$ | async )">
                                 <div class="d-flex flex-row mt-4"> 
                                     <p-avatar [image]="comment.appUser.profilePhotoUrl? comment.appUser.profilePhotoUrl : ''" 
-                                    [icon]="comment.appUser.profilePhotoUrl? '' : 'pi pi-user'"
-                                    styleClass="p-mr-2" size="large" shape="circle"></p-avatar>
+                                    [icon]="comment.appUser.profilePhotoUrl? '' : 'pi pi-user'" (click)="goToProfile(comment.appUser.id)"
+                                    styleClass="p-mr-2" size="large" shape="circle" class="pointer"></p-avatar>
                                     <div class="ml-2 w-100">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="d-flex flex-row align-items-center"> 
                                                 <span class="name">
-                                                    <h6>{{ comment.appUser.displayName }}</h6> 
+                                                    <h6 class="pointer" (click)="goToProfile(comment.appUser.id)">{{ comment.appUser.displayName }}</h6> 
                                                 </span> 
                                                 <small class="text-muted time-text"> {{ comment.date | date }}</small>
                                             </div> 
@@ -67,14 +67,14 @@
                                         <p class="user-comment-text text-justify">{{ comment.content }}</p>
                                     </div>
                                     <p-button (click)="deleteComment(comment.id)"
-                                    *ngIf="comment.appUser.id === (user$ | async).id" 
+                                    *ngIf="comment.appUser.id === (user$ | async)?.id" 
                                     icon="pi pi-trash" 
                                     styleClass="p-button-rounded p-button-warning p-button-text"></p-button>
                                 </div>
                             </div>
                             <div class="d-flex flex-row mt-4">
-                                <p-avatar [image]="(user$ | async).profilePhotoUrl? (user$ | async).profilePhotoUrl : ''" 
-                                [icon]="(user$ | async).profilePhotoUrl? '' : 'pi pi-user'" styleClass="p-mr-2" 
+                                <p-avatar [image]="(user$ | async)?.profilePhotoUrl? (user$ | async)?.profilePhotoUrl : ''" 
+                                [icon]="(user$ | async)?.profilePhotoUrl? '' : 'pi pi-user'" styleClass="p-mr-2" 
                                 size="large" shape="circle"></p-avatar>
                                 <input type="text" placeholder="Your comment .." pInputText [(ngModel)]="content" (keyup.enter)="addComment()"/>
                             </div>
