@@ -7,7 +7,8 @@
             shape="circle" styleClass="profile"
             [icon]="profile.profilePhotoUrl? '' : 'pi pi-user'" 
             [image]="profile.profilePhotoUrl? profile.profilePhotoUrl : ''"
-            pTooltip="Add a profile photo"></p-avatar>
+            (click)="show()"
+            pTooltip="Edit your profile photo"></p-avatar>
             <div class="p-ml-3 w-100">
                 <div class="d-flex justify-content-between align-items-center p-pt-3">
                     <div class="d-flex flex-row align-items-center"> 
@@ -106,3 +107,10 @@
 </div>
 
 <p-menu #menu [popup]="true"  [model]="items"></p-menu>
+
+<p-dialog header="Add profile picture" [(visible)]="displayDialog" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}"
+    [dismissableMask]="true" [resizable]="false">
+        
+    <app-add-profile-photo (hideDialogEmitter)="displayDialog=false" (photoUploadedEmitter)="photoUploaded($event)"></app-add-profile-photo>
+
+</p-dialog>

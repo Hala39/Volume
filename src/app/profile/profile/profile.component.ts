@@ -95,9 +95,22 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  //Menu
   items : MenuItem[] = [
     { label: 'Sign out', icon: PrimeIcons.SIGN_OUT, command: () => {
       this.userService.logout();
     }}
   ]
+
+  //Profile photo dialog
+  displayDialog: boolean = false;
+
+  show() {
+    this.displayDialog = true;
+  }
+
+  photoUploaded($event: any) {
+    this.displayDialog = false;
+    this.profile$ = this.profileService.profile$;
+  }
 }

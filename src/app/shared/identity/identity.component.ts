@@ -33,17 +33,6 @@ export class IdentityComponent implements OnInit {
   @Output() photoSavedEmitter = new EventEmitter<boolean>();
   
   @Input() registration: boolean = false;
-
-  displayDialog: boolean = false;
-
-  
-  myUploader($event: any) {
-
-  }
-  
-  show() {
-    this.displayDialog = true;
-  }
  
   genders = [
     {name: 'Male'},
@@ -63,6 +52,11 @@ export class IdentityComponent implements OnInit {
       dob: this.dob,
       gender: this.gender
     })
+  }
+
+  close() {
+    this.switch();
+    this.dataSavedEmitter.emit(false)
   }
 
   switch() {
@@ -102,30 +96,17 @@ export class IdentityComponent implements OnInit {
     }
   }
 
-  close() {
-    this.switch();
-    this.dataSavedEmitter.emit(false)
-  }
-  file: File = null;
 
-  fileSelected($event: File) {
-    this.file = $event;
+
+  displayDialog: boolean = false;
+
+  show() {
+    this.displayDialog = true;
   }
 
-  addProfilePhoto() {
-    if (this.file !== null) {
-      const setProfile = {
-        file: this.file
-      }
-      this.profileService.setProfilePhoto(setProfile).subscribe(
-        response => {
-          this.profile$ = this.profileService.profile$;
-          this.displayDialog = false;
-        }
-      )
-        
-    }
+  photoUploaded($event: any) {
+    this.displayDialog = false;
+    this.profile$ = this.profileService.profile$;
   }
-
 }
 

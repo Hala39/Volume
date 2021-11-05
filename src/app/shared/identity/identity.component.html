@@ -3,7 +3,7 @@
         <div class="col-6">
             <p-avatar [image]="(profile$ | async)?.profilePhotoUrl? (profile$ | async)?.profilePhotoUrl : ''" 
             [icon]="(profile$ | async)?.profilePhotoUrl? '' : 'pi pi-user'" 
-            size="xlarge" shape="circle" (click)="show()" pTooltip="Add a profile photo" (click)="show()"></p-avatar>
+            size="xlarge" shape="circle" pTooltip="Add a profile photo" (click)="show()"></p-avatar>
         </div>
     </div>
     <div class="row pt-5">
@@ -53,11 +53,7 @@
 
 <p-dialog header="Add profile picture" [(visible)]="displayDialog" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}"
     [dismissableMask]="true" [resizable]="false">
-        <app-file-uploader (fileSelectedEmitter)="fileSelected($event)"></app-file-uploader>
-        <div class="p-grid p-nogutter p-justify-end mt-5">
-            <button class="p-mr-2" pRipple pButton label="Save changes" (click)="addProfilePhoto()" 
-            [disabled]="!file"></button>
-            <button pRipple pButton label="Cancel" class="p-button-outlined" (click)="displayDialog=false"></button>
-        </div>
-</p-dialog> 
+        
+    <app-add-profile-photo (hideDialogEmitter)="displayDialog=false" (photoUploadedEmitter)="photoUploaded($event)"></app-add-profile-photo>
 
+</p-dialog>

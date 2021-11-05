@@ -41,6 +41,7 @@ import { UserCardComponent } from './user-card/user-card.component';
 import { FileUploaderComponent } from './file-uploader/file-uploader.component';
 import { InputMaskModule } from 'primeng/inputmask';
 import {ChipsModule} from 'primeng/chips';
+import { AddProfilePhotoComponent } from './add-profile-photo/add-profile-photo.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import {ChipsModule} from 'primeng/chips';
     IdentityComponent,
     UserCardComponent,
     AddPostComponent,
-    FileUploaderComponent
+    FileUploaderComponent,
+    AddProfilePhotoComponent
   ],
   imports: [
     CommonModule,
@@ -103,7 +105,8 @@ import {ChipsModule} from 'primeng/chips';
     LoginFormComponent,
     IdentityComponent,
     UserCardComponent,
-    AddPostComponent
+    AddPostComponent,
+    AddProfilePhotoComponent
   ]
 })
 export class SharedModule { }
