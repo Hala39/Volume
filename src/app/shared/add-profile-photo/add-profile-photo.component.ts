@@ -28,8 +28,10 @@ export class AddProfilePhotoComponent implements OnInit {
       const setProfile = {
         file: this.file
       }
+      this.pending = true;
       this.profileService.setProfilePhoto(setProfile).subscribe(
         response => {
+          this.pending = false;
           this.photoUploadedEmitter.emit(true)
         }
       )
@@ -40,4 +42,6 @@ export class AddProfilePhotoComponent implements OnInit {
   hideDialog() {
     this.hideDialogEmitter.emit(true)
   }
+
+  pending: boolean = false;
 }

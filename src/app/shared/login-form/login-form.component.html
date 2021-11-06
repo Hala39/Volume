@@ -3,6 +3,7 @@
         <div class="p-field">
             <span class="p-input-icon-right">
                 <i class="pi pi-envelope"></i>
+                <i *ngIf="loginForm.status === 'PENDING'" class="pi pi-spinner"></i>
                 <input pInputText class="p-inputtext-sm" placeholder="Email" type="text" pKeyFilter="email" formControlName="email"/>
             </span>
             <small *ngIf="email.dirty && email.hasError('required')" class="p-error">This field is required.</small>
@@ -16,7 +17,7 @@
             <small *ngIf="password.dirty && password.hasError('required')" class="p-error">This field is required.</small>
           </div>
           <div class="p-filed">
-              <p-button label="Login" (click)="login()"></p-button>
+              <p-button label="Login" [icon]="pending? 'pi pi-spinner pi-spin': ''" (click)="login()"></p-button>
         </div>
     </form>
 </div>

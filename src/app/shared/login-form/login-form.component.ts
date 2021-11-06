@@ -44,13 +44,18 @@ export class LoginFormComponent implements OnInit {
     });
   }
 
+  pending: boolean = false;
+
   login() {
     if(this.loginForm.valid) {
       const userLogin: UserLogin = {
         email: this.email.value,
         password: this.password.value
       }
-      this.userService.login(userLogin).subscribe();
+      this.pending = true;
+      this.userService.login(userLogin).subscribe(
+        response => this.pending = false
+      );
     } else {
       this.messageService.add({severity: 'warn', summary: 'Invalid Data', detail: 'Please re-check the data you entered.'});
     }

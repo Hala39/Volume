@@ -87,16 +87,19 @@ export class IdentityComponent implements OnInit {
       } else {
         profileToSend.gender = this.profile?.gender
       }
-
+      this.pending = true;
       this.profileService.setUserBio(profileToSend).subscribe(
-        response => this.dataSavedEmitter.emit(false)
+        response => {
+          this.dataSavedEmitter.emit(false);
+          this.pending = false;
+        }
       );
     } else {
       this.switch()
     }
   }
 
-
+  pending = false;
 
   displayDialog: boolean = false;
 

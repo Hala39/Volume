@@ -47,7 +47,8 @@
     </div>
 </form>
     <div class="p-grid p-nogutter p-justify-end mt-5">
-        <button class="p-mr-2" pRipple pButton label="Save changes" (click)="saveChanges()"></button>
+        <button class="p-mr-2" pRipple pButton label="Save changes" [disabled]="pending"
+        [icon]="pending? 'pi pi-spinner pi-spin': ''" (click)="saveChanges()"></button>
         <button pRipple pButton label="Cancel" class="p-button-outlined" (click)="close()"></button>
     </div>
 

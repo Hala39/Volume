@@ -1,7 +1,7 @@
 
         <app-file-uploader (fileSelectedEmitter)="fileSelected($event)"></app-file-uploader>
         <div class="p-grid p-nogutter p-justify-end mt-5">
-            <button class="p-mr-2" pRipple pButton label="Save changes" (click)="addProfilePhoto()" 
-            [disabled]="!file"></button>
+            <button class="p-mr-2" pRipple pButton label="Save changes" [icon]="pending? 'pi pi-spinner pi-spin' : ''" (click)="addProfilePhoto()" 
+            [disabled]="!file || pending"></button>
             <button pRipple pButton label="Cancel" class="p-button-outlined" (click)="hideDialog()"></button>
         </div>

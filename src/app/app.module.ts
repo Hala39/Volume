@@ -29,6 +29,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { JwtModule } from '@auth0/angular-jwt';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { BusyInterceptor } from './interceptors/busy.interceptor';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -76,8 +77,8 @@ export function tokenGetter() {
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     CanLoadGuard,
     CanActivateGuard,
-    MessageService
-    // {provide: HTTP_INTERCEPTORS, useClass: BusyInterceptor, multi: true}
+    MessageService,
+    {provide: HTTP_INTERCEPTORS, useClass: BusyInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })
