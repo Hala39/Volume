@@ -1,3 +1,4 @@
+import { PresenceService } from './presence.service';
 import { UserRegister } from './../models/userRegister';
 import { UserCard } from './../models/userCard';
 import { environment } from './../../environments/environment';
@@ -16,6 +17,7 @@ import { BehaviorSubject } from 'rxjs';
 export class UserService {
 
   constructor(private apiCaller: HttpClient, private jwtHelper: JwtHelperService, 
+    private presenceService: PresenceService,
     private router: Router) { }
     
   baseUrl = environment.apiUrl + 'account/';
@@ -29,6 +31,7 @@ export class UserService {
         if (response) {
           this.setUserCard(response);
           this.router.navigateByUrl("/home");
+          this.presenceService.createHubConnection(response);
         }
       })
     )
@@ -39,6 +42,7 @@ export class UserService {
       map(response => {
         if (response) {
           this.setUserCard(response);
+          this.presenceService.createHubConnection(response);
         } 
       })
     );
@@ -61,6 +65,7 @@ export class UserService {
   logout() {
     localStorage.clear();
     this.router.navigateByUrl("/");
+    this.presenceService.stopHubConnection();
   }
   
   getExpiration() {

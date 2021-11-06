@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { AppUser } from 'src/app/models/appUser';
+import { Observable } from 'rxjs';
+import { ChatService } from './../../services/chat.service';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { EmojiData } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { faGrinAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Chat } from 'src/app/models/chat';
+import { Message } from 'src/app/models/message';
 
 @Component({
   selector: 'app-thread',
@@ -11,7 +14,9 @@ import { Chat } from 'src/app/models/chat';
 })
 export class ThreadComponent implements OnInit {
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private chatService: ChatService) { 
+    this.thread$ = this.chatService.thread$;
+  }
 
   ngOnInit(): void {
     this.build();
@@ -34,7 +39,7 @@ export class ThreadComponent implements OnInit {
     this.inputForm.patchValue({"message": data + $event.native});
   }
 
-  message: FormControl;
+  message = new FormControl();
 
   inputForm: FormGroup;
 
@@ -44,133 +49,15 @@ export class ThreadComponent implements OnInit {
     })
   }
 
-  chats: Chat[] = [
-    {
-      sender: {
-        id: '1',
-        profilePhotoUrl: 'assets/images/jimmy.jpg',
-        displayName: 'Jimmy Los'
-      },
-      content: 'Thank you! Take care.',
-      date: 'Oct 5.'
-    },
-    {
-      sender: {
-        id: '2',
-        profilePhotoUrl: 'assets/images/luna.jpg',
-        displayName: 'Luna Bader'
-      },
-      content: 'Hello sweetie, How is going?',
-      date: '@2:am'
-    },
-    {
-      sender: {
-        id: '1',
-        profilePhotoUrl: 'assets/images/jimmy.jpg',
-        displayName: 'Jimmy Los'
-      },
-      content: 'Thank you! Take care.',
-      date: 'Oct 5.'
-    },
-    {
-      sender: {
-        id: '2',
-        profilePhotoUrl: 'assets/images/luna.jpg',
-        displayName: 'Luna Bader'
-      },
-      content: 'Hello sweetie, How is going?',
-      date: '@2:am'
-    },
-    {
-      sender: {
-        id: '1',
-        profilePhotoUrl: 'assets/images/jimmy.jpg',
-        displayName: 'Jimmy Los'
-      },
-      content: 'Thank you! Take care.',
-      date: 'Oct 5.'
-    },
-    {
-      sender: {
-        id: '2',
-        profilePhotoUrl: 'assets/images/luna.jpg',
-        displayName: 'Luna Bader'
-      },
-      content: 'Hello sweetie, How is going?',
-      date: '@2:am'
-    },
-    {
-      sender: {
-        id: '1',
-        profilePhotoUrl: 'assets/images/jimmy.jpg',
-        displayName: 'Jimmy Los'
-      },
-      content: 'Thank you! Take care.',
-      date: 'Oct 5.'
-    },
-    {
-      sender: {
-        id: '2',
-        profilePhotoUrl: 'assets/images/luna.jpg',
-        displayName: 'Luna Bader'
-      },
-      content: 'Hello sweetie, How is going?',
-      date: '@2:am'
-    },
-    {
-      sender: {
-        id: '1',
-        profilePhotoUrl: 'assets/images/jimmy.jpg',
-        displayName: 'Jimmy Los'
-      },
-      content: 'Thank you! Take care.',
-      date: 'Oct 5.'
-    },
-    {
-      sender: {
-        id: '2',
-        profilePhotoUrl: 'assets/images/luna.jpg',
-        displayName: 'Luna Bader'
-      },
-      content: 'Hello sweetie, How is going?',
-      date: '@2:am'
-    },
-    {
-      sender: {
-        id: '1',
-        profilePhotoUrl: 'assets/images/jimmy.jpg',
-        displayName: 'Jimmy Los'
-      },
-      content: 'Thank you! Take care.',
-      date: 'Oct 5.'
-    },
-    {
-      sender: {
-        id: '2',
-        profilePhotoUrl: 'assets/images/luna.jpg',
-        displayName: 'Luna Bader'
-      },
-      content: 'Hello sweetie, How is going?',
-      date: '@2:am'
-    },
-    {
-      sender: {
-        id: '1',
-        profilePhotoUrl: 'assets/images/jimmy.jpg',
-        displayName: 'Jimmy Los'
-      },
-      content: 'Thank you! Take care.',
-      date: 'Oct 5.'
-    },
-    {
-      sender: {
-        id: '2',
-        profilePhotoUrl: 'assets/images/luna.jpg',
-        displayName: 'Luna Bader'
-      },
-      content: 'Hello sweetie, How is going?',
-      date: '@2:am'
-    },
+  //Chat
+  thread$: Observable<Message[]>;
 
-  ]
+  @Input() contactId: string;
+
+  sendMessage() {
+    this.chatService.addMessage(this.contactId, this.message.value, null, false).subscribe(
+      response => this.inputForm.reset()
+    );
+  }
+  
 }

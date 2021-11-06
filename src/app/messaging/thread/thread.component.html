@@ -15,21 +15,21 @@
                 </div>
             </p-toolbar>
             <hr>
-            <p-listbox [options]="chats" [metaKeySelection]="false" [checkbox]="true" [filter]="true" [listStyle]="{ 'max-height': '440px'}"
-            optionLabel="sender.displayName" [multiple]="false">
-            <ng-template let-chat pTemplate="item">
-                <div class="d-flex flex-row mt-1"> 
-                    <p-avatar [image]="chat.sender.profilePhotoUrl" styleClass="p-mr-2" size="large" shape="circle"></p-avatar>
+            <p-listbox [options]="(thread$ | async)" [metaKeySelection]="false" [checkbox]="true" [filter]="true" [listStyle]="{ 'height': '440px'}"
+            optionLabel="thread.senderDisplayName" [multiple]="false">
+            <ng-template let-thread pTemplate="item">
+                <div class="d-flex flex-row mt-1">
+                    <p-avatar icon="pi pi-user" styleClass="p-mr-2" size="large" shape="circle"></p-avatar>
                     <div class="ml-3 w-100">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="d-flex flex-row align-items-center"> 
                                 <span class="name">
-                                    <h6>{{ chat.sender.displayName }}</h6> 
+                                    <h6>{{ thread.senderDisplayName }}</h6> 
                                 </span> 
-                                <small class="text-muted time-text p-ml-1">{{ chat.date }}</small>
+                                <small class="text-muted time-text p-ml-1">{{ thread.sentAt | date }}</small>
                             </div> 
                         </div>
-                        <p class="user-comment-text text-justify">{{ chat.content }}</p>
+                        <p class="user-comment-text text-justify">{{ thread.content }}</p>
                     </div>
                 </div>
             </ng-template>
@@ -47,7 +47,7 @@
                 </div>
                 <div class="col-12">
                     <form [formGroup]="inputForm" class="d-flex justify-content-end">
-                        <input type="text" pInputText placeholder='Press "Enter" to send message ..' formControlName="message"> 
+                        <input type="text" pInputText placeholder='Press "Enter" to send message ..' formControlName="message" (keyup.enter)="sendMessage()"> 
                     </form>
                 </div>  
             </p-card>

@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Chat } from 'src/app/models/chat';
+import { Observable } from 'rxjs';
+import { ChatService } from './../../services/chat.service';
+import { MenuItem } from 'primeng/api';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { AppUser } from 'src/app/models/appUser';
 
 @Component({
   selector: 'app-contacts',
@@ -8,139 +11,26 @@ import { Chat } from 'src/app/models/chat';
 })
 export class ContactsComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(private chatService: ChatService) {
   }
 
-  chats: Chat[] = [
-    {
-      sender: {
-        id: '1',
-        profilePhotoUrl: 'assets/images/jimmy.jpg',
-        displayName: 'Jimmy Los'
-      },
-      content: 'Thank you! Take care.',
-      date: 'Oct 5.'
-    },
-    {
-      sender: {
-        id: '2',
-        profilePhotoUrl: 'assets/images/luna.jpg',
-        displayName: 'Luna Bader'
-      },
-      content: 'Hello sweetie, How is going?',
-      date: '@2:am'
-    },
-    {
-      sender: {
-        id: '1',
-        profilePhotoUrl: 'assets/images/jimmy.jpg',
-        displayName: 'Jimmy Los'
-      },
-      content: 'Thank you! Take care.',
-      date: 'Oct 5.'
-    },
-    {
-      sender: {
-        id: '2',
-        profilePhotoUrl: 'assets/images/luna.jpg',
-        displayName: 'Luna Bader'
-      },
-      content: 'Hello sweetie, How is going?',
-      date: '@2:am'
-    },
-    {
-      sender: {
-        id: '1',
-        profilePhotoUrl: 'assets/images/jimmy.jpg',
-        displayName: 'Jimmy Los'
-      },
-      content: 'Thank you! Take care.',
-      date: 'Oct 5.'
-    },
-    {
-      sender: {
-        id: '2',
-        profilePhotoUrl: 'assets/images/luna.jpg',
-        displayName: 'Luna Bader'
-      },
-      content: 'Hello sweetie, How is going?',
-      date: '@2:am'
-    },
-    {
-      sender: {
-        id: '1',
-        profilePhotoUrl: 'assets/images/jimmy.jpg',
-        displayName: 'Jimmy Los'
-      },
-      content: 'Thank you! Take care.',
-      date: 'Oct 5.'
-    },
-    {
-      sender: {
-        id: '2',
-        profilePhotoUrl: 'assets/images/luna.jpg',
-        displayName: 'Luna Bader'
-      },
-      content: 'Hello sweetie, How is going?',
-      date: '@2:am'
-    },
-    {
-      sender: {
-        id: '1',
-        profilePhotoUrl: 'assets/images/jimmy.jpg',
-        displayName: 'Jimmy Los'
-      },
-      content: 'Thank you! Take care.',
-      date: 'Oct 5.'
-    },
-    {
-      sender: {
-        id: '2',
-        profilePhotoUrl: 'assets/images/luna.jpg',
-        displayName: 'Luna Bader'
-      },
-      content: 'Hello sweetie, How is going?',
-      date: '@2:am'
-    },
-    {
-      sender: {
-        id: '1',
-        profilePhotoUrl: 'assets/images/jimmy.jpg',
-        displayName: 'Jimmy Los'
-      },
-      content: 'Thank you! Take care.',
-      date: 'Oct 5.'
-    },
-    {
-      sender: {
-        id: '2',
-        profilePhotoUrl: 'assets/images/luna.jpg',
-        displayName: 'Luna Bader'
-      },
-      content: 'Hello sweetie, How is going?',
-      date: '@2:am'
-    },
-    {
-      sender: {
-        id: '1',
-        profilePhotoUrl: 'assets/images/jimmy.jpg',
-        displayName: 'Jimmy Los'
-      },
-      content: 'Thank you! Take care.',
-      date: 'Oct 5.'
-    },
-    {
-      sender: {
-        id: '2',
-        profilePhotoUrl: 'assets/images/luna.jpg',
-        displayName: 'Luna Bader'
-      },
-      content: 'Hello sweetie, How is going?',
-      date: '@2:am'
-    },
+  contacts$: Observable<AppUser[]>;
+  @Output() selectedContactEmitter = new EventEmitter<AppUser>();
+
+  ngOnInit(): void {
+    this.chatService.getContacts().subscribe(
+      response => this.contacts$ = this.chatService.contacts$
+    )
+  }
+
+  items: MenuItem[] = [
 
   ]
+
+  selectedContact: AppUser;
+
+  selectContact() {
+    this.selectedContactEmitter.emit(this.selectedContact);
+  }
 
 }

@@ -1,3 +1,4 @@
+import { PresenceService } from './../../services/presence.service';
 import { UserService } from './../../services/user.service';
 import { FollowService } from './../../services/follow.service';
 import { Observable } from 'rxjs';
@@ -18,7 +19,7 @@ import { MenuItem, PrimeIcons } from 'primeng/api';
 export class ProfileComponent implements OnInit {
 
   constructor(private profileService: ProfileService, private followService: FollowService, 
-    private userService: UserService,
+    private userService: UserService, public presenceService: PresenceService,
     private activatedRoute : ActivatedRoute) {
       this.user$ = this.userService.user$;
     }

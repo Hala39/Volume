@@ -18,6 +18,7 @@
                     </div> 
                 </div>
                 <p class="user-comment-text text-justify">{{ profile.title || 'Volume user' }}</p>
+                <p *ngIf="(presenceService.onlineUsers$ | async).includes(profile.id)">Active now</p>
             </div>
             <p-button
             *ngIf="(user$ | async)?.id !== userId"

@@ -1,3 +1,5 @@
+import { AppUser } from 'src/app/models/appUser';
+import { ChatService } from './../../services/chat.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RoomComponent implements OnInit {
 
-  constructor() { }
+  constructor(private chatService: ChatService) { }
 
   ngOnInit(): void {
   }
+
+  contact: AppUser;
+
+  contactSelected($event: any) {
+    this.chatService.getMessageThread($event.id).subscribe(
+      response => {
+        this.contact = $event
+      }
+    );
+  }
+
 
 }

@@ -1,4 +1,5 @@
-import { ReactiveFormsModule } from '@angular/forms';
+import { MenuModule } from 'primeng/menu';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { CardModule } from 'primeng/card';
@@ -32,6 +33,8 @@ const routes: Routes = [
     AvatarModule,
     ToolbarModule,
     FontAwesomeModule,
+    MenuModule,
+    FormsModule,
     CardModule,
     OverlayPanelModule,
     ReactiveFormsModule,

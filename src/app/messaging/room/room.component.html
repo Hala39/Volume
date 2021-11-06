@@ -1,10 +1,10 @@
 <div class="container-fluid pt-2">
     <div class="row">
         <div class="col-12 col-sm-5 col-md-4 px-0 contacts">
-            <app-contacts></app-contacts>
+            <app-contacts (selectedContactEmitter)="contactSelected($event)"></app-contacts>
         </div>
         <div class="col-12 col-sm-7 col-md-8 px-0 thread">
-            <app-thread></app-thread>
+            <app-thread [contactId]="contact?.id"></app-thread>
         </div>
     </div>
 </div>

@@ -54,7 +54,8 @@ export class LoginFormComponent implements OnInit {
       }
       this.pending = true;
       this.userService.login(userLogin).subscribe(
-        response => this.pending = false
+        response => this.pending = false, 
+        error => this.pending = false
       );
     } else {
       this.messageService.add({severity: 'warn', summary: 'Invalid Data', detail: 'Please re-check the data you entered.'});
