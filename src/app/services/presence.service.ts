@@ -23,7 +23,7 @@ export class PresenceService {
   createHubConnection(userCard: UserCard) {
     this.hubConnection = new HubConnectionBuilder()
       .withUrl(this.hubUrl, {
-        accessTokenFactory: () => userCard.token
+        accessTokenFactory: () => localStorage.getItem("access_token")
       })
       .withAutomaticReconnect()
       .build()
@@ -42,6 +42,7 @@ export class PresenceService {
 
     this.hubConnection.on("GetOnlineUsers", (ids: string[]) => {
       this.onlineUsersSource.next(ids);
+      console.log(ids)
     })
 
     this.hubConnection.on("NewMessageReceived", ({id, displayName}) => {
@@ -49,7 +50,6 @@ export class PresenceService {
     })
 
   }
-
 
   stopHubConnection() {
     if (this.hubConnection) {

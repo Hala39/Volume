@@ -4,8 +4,6 @@ export interface Message {
     content: string;
     sentAt?: Date;
     seenAt?: Date;
-    file?: File;
-    isPhoto: boolean;
     senderDisplayName: string;
     recipientId: string;
     senderId?: string;

@@ -13,11 +13,6 @@ const routes: Routes = [
     canLoad: [CanLoadGuard]
   },
   {
-    path: 'chat', loadChildren: () => import('../app/messaging/messaging.module')
-      .then(m => m.MessagingModule),
-      canLoad: [CanLoadGuard]
-  },
-  {
     path: 'profile', loadChildren: () => import('../app/profile/profile.module')
       .then(m => m.ProfileModule),
       canLoad: [CanLoadGuard]

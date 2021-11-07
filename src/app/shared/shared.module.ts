@@ -1,3 +1,4 @@
+import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { EditorModule } from 'primeng/editor';
 import { AddPostComponent } from './add-post/add-post.component';
@@ -38,6 +39,7 @@ import { FileUploaderComponent } from './file-uploader/file-uploader.component';
 import { InputMaskModule } from 'primeng/inputmask';
 import {ChipsModule} from 'primeng/chips';
 import { AddProfilePhotoComponent } from './add-profile-photo/add-profile-photo.component';
+import { ThreadComponent } from '../profile/thread/thread.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,7 @@ import { AddProfilePhotoComponent } from './add-profile-photo/add-profile-photo.
     UserCardComponent,
     AddPostComponent,
     FileUploaderComponent,
-    AddProfilePhotoComponent
+    AddProfilePhotoComponent,
   ],
   imports: [
     CommonModule,
@@ -84,7 +86,7 @@ import { AddProfilePhotoComponent } from './add-profile-photo/add-profile-photo.
     KeyFilterModule,
     RadioButtonModule,
     EditorModule,
-    InputTextareaModule
+    InputTextareaModule,
   ],
   exports: [
     PostCardComponent,

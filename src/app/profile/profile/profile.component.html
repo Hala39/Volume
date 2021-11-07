@@ -13,12 +13,12 @@
                 <div class="d-flex justify-content-between align-items-center p-pt-3">
                     <div class="d-flex flex-row align-items-center"> 
                         <span class="name">
-                            <h3>{{ profile.displayName }}</h3> 
+                            <h4>{{ profile.displayName }}</h4> 
                         </span>  
                     </div> 
                 </div>
-                <p class="user-comment-text text-justify">{{ profile.title || 'Volume user' }}</p>
-                <p *ngIf="(presenceService.onlineUsers$ | async).includes(profile.id)">Active now</p>
+                <small style="font-size: smaller;" *ngIf="(presenceService.onlineUsers$ | async).includes(profile.id)">Active now</small>
+                <small style="font-size: smaller;" *ngIf="!(presenceService.onlineUsers$ | async).includes(profile.id)">Active {{ profile.lastActive |  timeago }}</small>
             </div>
             <p-button
             *ngIf="(user$ | async)?.id !== userId"
@@ -66,6 +66,11 @@
                             <app-user-card [user]="user"></app-user-card>
                         </div>
                     </div>
+                </ng-template>
+            </p-tabPanel>
+            <p-tabPanel header="Messaging" *ngIf="(user$ | async)?.id !== userId">
+                <ng-template pTemplate="content">
+                    <app-thread [contactId]="userId"></app-thread>
                 </ng-template>
             </p-tabPanel>
         </p-tabView>

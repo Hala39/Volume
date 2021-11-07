@@ -1,0 +1,52 @@
+<p-toolbar [style]="{height: '12vh'}">
+    <div class="p-toolbar-group-left">
+        <div class="d-flex flex-row"> 
+            <div class="ml-2 w-100">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex flex-row align-items-center"> 
+                        <span class="name" *ngIf="contact">
+                            <h6>{{contact?.displayName}}</h6> 
+                            <small *ngIf="(presenceService.onlineUsers$ | async).includes(contact.id)">Active now</small>
+                        </span> 
+                        <span class="name" *ngIf="!contact">
+                            <h6>Start a new conversation</h6> 
+                        </span> 
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="p-toolbar-group-right">
+        <i class="pi pi-ellipsis-v"></i>
+    </div>
+</p-toolbar>
+<p-scrollPanel #sc [style]="{height: '60vh', border: '1px solid #304562'}">
+    <div *ngIf="(messages$ | async).length === 0">
+        <div class="col-12 d-flex justify-content-center pt-5">
+            No messages yet. Say "Hello" to begin.
+        </div>
+    </div>
+    <div *ngFor="let message of (messages$ | async)">
+        <div class="d-flex flex-row p-pt-5 px-3"> 
+            <p-avatar [image]="message.senderId === contact?.id? contact?.profilePhotoUrl : (user$ | async)?.profilePhotoUrl" 
+            [icon]="(message.senderId === contact?.id && contact?.profilePhotoUrl === null)? 'pi pi-user' : '' "
+            styleClass="p-mr-2" size="large" shape="circle"></p-avatar>
+            <div class="ml-2 w-100">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex flex-row align-items-center"> 
+                        <span class="name">
+                            <h6 [innerText]="message?.senderId === contact?.id? contact?.displayName : (user$ | async)?.displayName"></h6> 
+                        </span> 
+                        <small class="text-muted p-pl-2">{{message.sentAt | date: "shortTime"}}</small>
+                    </div> 
+                </div>
+                <p class="text-justify">{{message.content}}</p>
+            </div>
+        <i (click)="deleteMessage(message.id)" class="pi pi-trash"></i>
+        </div>
+    </div>
+</p-scrollPanel>
+<form [formGroup]="form" style="height: 14vh; padding: 2%; border: 1px solid #304562; border-top: none">
+    <input type="text" pInputText placeholder='Press "Enter" to send message' formControlName="message" required (keyup.enter)="sendMessage()" >
+    <fa-icon [icon]="faGrinAlt" style="font-size: 1.5rem;" class="p-ml-3"></fa-icon>
+</form>

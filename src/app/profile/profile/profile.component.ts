@@ -1,3 +1,4 @@
+import { ChatService } from './../../services/chat.service';
 import { PresenceService } from './../../services/presence.service';
 import { UserService } from './../../services/user.service';
 import { FollowService } from './../../services/follow.service';
@@ -19,7 +20,7 @@ import { MenuItem, PrimeIcons } from 'primeng/api';
 export class ProfileComponent implements OnInit {
 
   constructor(private profileService: ProfileService, private followService: FollowService, 
-    private userService: UserService, public presenceService: PresenceService,
+    private userService: UserService, public presenceService: PresenceService, private chatService: ChatService,
     private activatedRoute : ActivatedRoute) {
       this.user$ = this.userService.user$;
     }
@@ -33,6 +34,7 @@ export class ProfileComponent implements OnInit {
   followings$: Observable<AppUser[]>;
   photos$: Observable<File[]>;
   user$: Observable<UserCard>;
+  contact: AppUser;
 
   userId = this.activatedRoute.snapshot.paramMap.get('id')? 
   this.activatedRoute.snapshot.paramMap.get('id') : this.userService.userSource.value.id;
@@ -73,6 +75,16 @@ export class ProfileComponent implements OnInit {
     )
   }
 
+
+  loadThread() {
+    this.profileService.getAppUser(this.userId).subscribe(
+      response => {
+        this.chatService.createHubConnection(response.userName);
+      }
+    );
+    
+  }
+
   // TabView
   index = 0;
 
@@ -89,6 +101,10 @@ export class ProfileComponent implements OnInit {
 
       case 3:
         this.getFollowers();
+        break;
+
+      case 4:
+        this.loadThread();
         break;
 
       default:

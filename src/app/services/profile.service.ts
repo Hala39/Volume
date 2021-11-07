@@ -142,5 +142,7 @@ export class ProfileService {
     )
   }
 
-  
+  getAppUser(id: string) {
+    return this.apiCaller.get<AppUser>(this.baseUrl + 'appUser/' + id);
+  }
 }

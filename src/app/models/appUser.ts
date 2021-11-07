@@ -9,7 +9,8 @@ export class AppUser {
     title?: string;
     hometown?: string;
     toShowMessage?: Message;
-
+    userName?: string;
+    lastActive?: Date;
 }
 
 

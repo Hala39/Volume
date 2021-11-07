@@ -1,4 +1,4 @@
-<div class="container-fluid px-0 mx-0">
+<div class="container-fluid px-0 mx-0" >
     <p-toolbar>
         <div class="p-toolbar-group-left">
             <img src="assets/images/volume-light.png" height="30" [routerLink]="['/home']">
@@ -8,7 +8,7 @@
         <div class="p-toolbar-group-right">
             <i class="right-icons pi pi-link pi-search p-mr-4" (click)="op.toggle($event)"></i>
             <i class="right-icons pi pi-link pi-bell p-mr-4"></i>
-            <i class="right-icons pi pi-link pi-envelope p-mr-4"></i>
+            <i class="right-icons pi pi-link pi-envelope p-mr-4" [routerLink]="['/messaging']"></i>
             <p-avatar [image]="(user$ | async)?.profilePhotoUrl? (user$ | async)?.profilePhotoUrl : ''"
             [icon]="(user$ | async)?.profilePhotoUrl? '' : 'pi pi-user'" 
             (click)="goToProfile()"

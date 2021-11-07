@@ -30,6 +30,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { BusyInterceptor } from './interceptors/busy.interceptor';
+import { TimeagoModule } from 'ngx-timeago';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -60,6 +61,7 @@ export function tokenGetter() {
     WebcamModule,
     EmojiModule,
     PickerModule,
+    TimeagoModule.forRoot(),
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

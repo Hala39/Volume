@@ -1,4 +1,3 @@
-import { File } from './file';
 import { Post } from "./post";
 
 export class Profile {
@@ -10,6 +9,8 @@ export class Profile {
     hometown?: string;
     gender?: string;
     isFollowing?: boolean;
+    userName?: string;
+    lastActive?: Date;
     profilePhotoUrl?: string;
     posts?: Post[] = [];
 }
