@@ -1,3 +1,4 @@
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToolbarModule } from 'primeng/toolbar';
@@ -20,12 +21,14 @@ import { ProfileComponent } from './profile/profile.component';
 import { SharedModule } from '../shared/shared.module';
 import { UserAboutComponent } from './user-about/user-about.component';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
-import { TimeagoClock, TimeagoFormatter, TimeagoIntl, TimeagoModule } from 'ngx-timeago';
+import { TimeagoModule } from 'ngx-timeago';
 import { ThreadComponent } from './thread/thread.component';
+import { SlideMenuModule } from 'primeng/slidemenu';
 
 const routes : Routes = [
   { path: ':id', component: ProfileComponent},
-  {path: '', component: ProfileComponent}
+  { path: '', component: ProfileComponent},
+  { path: 'messages/:id', component: ProfileComponent}
 ]
 
 @NgModule({
@@ -38,6 +41,8 @@ const routes : Routes = [
     CommonModule,
     SharedModule,
     FileUploadModule,
+    OverlayPanelModule,
+    SlideMenuModule,
     DialogModule,
     InputTextModule,
     CalendarModule,
@@ -53,6 +58,7 @@ const routes : Routes = [
     CardModule,
     ScrollPanelModule,
     GalleriaModule,
+    MenuModule,
     TimeagoModule.forChild({
       
     }),

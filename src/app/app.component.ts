@@ -1,7 +1,8 @@
 import { PresenceService } from './services/presence.service';
 import { UserService } from './services/user.service';
 import { Component } from '@angular/core';
-import { PrimeNGConfig } from 'primeng/api';
+import { Message, PrimeNGConfig } from 'primeng/api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -11,10 +12,11 @@ import { PrimeNGConfig } from 'primeng/api';
 export class AppComponent {
   title = 'Volume';
   
-  constructor(private primengConfig: PrimeNGConfig, private userService: UserService, private presenceService: PresenceService) {
+  constructor(private primengConfig: PrimeNGConfig, private userService: UserService, private router: Router,
+    private presenceService: PresenceService) {
     this.userService.userSource.next(JSON.parse(localStorage.getItem("userCard")));
     if (this.userService.loggedIn) {
-      this.presenceService.createHubConnection(this.userService.userSource.value)
+      this.presenceService.createHubConnection()
     }
   }
 
@@ -22,5 +24,10 @@ export class AppComponent {
     this.primengConfig.ripple = true;
     window.scrollTo(0,0);
   }
+
+  navigate(id: string) {
+    this.router.navigateByUrl("/profile/messages/" + id)
+  }
+
 
 }

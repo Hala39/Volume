@@ -1,5 +1,5 @@
 import { PresenceService } from '../../services/presence.service';
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { faGrinAlt, faImage } from '@fortawesome/free-regular-svg-icons';
 import { faTimes, faPaperclip } from '@fortawesome/free-solid-svg-icons';
@@ -9,48 +9,53 @@ import { Message } from 'src/app/models/message';
 import { ChatService } from 'src/app/services/chat.service';
 import { UserService } from 'src/app/services/user.service';
 import { ProfileService } from 'src/app/services/profile.service';
+import { EmojiData } from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import { MenuItem, PrimeIcons } from 'primeng/api';
+import { DatePipe } from '@angular/common';
+import { take } from 'rxjs/operators';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-thread',
   templateUrl: './thread.component.html',
-  styleUrls: ['./thread.component.scss']
+  styleUrls: ['./thread.component.scss'],
+  providers: [DatePipe]
 })
 export class ThreadComponent implements OnInit, OnDestroy {
 
   contentViewChild: any;
 
   constructor(private chatService: ChatService, private userService: UserService,
-    private profileService: ProfileService,
-    private fb: FormBuilder, public presenceService: PresenceService) {
+    private profileService: ProfileService, private DatePipe: DatePipe,
+    private fb: FormBuilder, public presenceService: PresenceService, private cdr: ChangeDetectorRef) {
     this.messages$ = this.chatService.thread$;
     this.user$ = this.userService.user$;
-    console.log(this.chatService.threadSource.value)
   }
 
   @ViewChild('sc') private myScrollContainer: any;
 
 
     ngAfterViewChecked() {  
-      this.scrollToBottom();      
+      this.cdr.detectChanges();
+      this.scrollToBottom();   
     } 
 
   scrollToBottom(): void {
     try {
-        this.myScrollContainer.scrollTop(1000)
+      this.myScrollContainer.scrollTop(10000)
     } catch(err) { }                 
 }
 
   scrollTop(scrollTop: any) {
-    let scrollableHeight = this.contentViewChild.nativeElement.scrollHeight - this.contentViewChild.nativeElement.clientHeight;
-    scrollTop = scrollTop > scrollableHeight ? scrollableHeight : scrollTop > 0 ? scrollTop : 0;
-    this.contentViewChild.nativeElement.scrollTop = this.contentViewChild.nativeElement.scrollHeight;
+    this.contentViewChild.nativeElement.scrollTop = scrollTop;
     
   }
   
   ngOnInit(): void {
     this.getContact();
     this.build();
-    this.scrollToBottom();        
+    this.scrollToBottom();  
+
   }
 
   ngOnDestroy() {
@@ -62,8 +67,6 @@ export class ThreadComponent implements OnInit, OnDestroy {
 
   faGrinAlt = faGrinAlt;
   faTimes = faTimes;
-  faPaperClip = faPaperclip;
-  faImage = faImage;
 
   @Input() contactId: string;
   contact: AppUser;
@@ -79,7 +82,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
 
   sendMessage() {
     if (this.message.value !== null) {
-      this.chatService.addMessage(this.contactId, this.message.value, null, false).then(
+      this.chatService.addMessage(this.contactId, this.message.value).then(
         response => {
           this.form.reset();
         }
@@ -95,6 +98,47 @@ export class ThreadComponent implements OnInit, OnDestroy {
 
   deleteMessage(id: number) {
     this.chatService.deleteMessage(id).subscribe();
+  }
+
+  emojiExpanded: boolean = false;
+
+  expandEmoji() {
+    this.emojiExpanded = true;
+  }
+
+  hideEmoji() {
+    this.emojiExpanded = false;
+  }
+
+  select($event: EmojiData) {
+    let data = this.form.get('message').value;
+    if (!data)  data = '';
+    this.form.patchValue({"message": data + $event.native});
+  }
+
+
+  items: MenuItem[] = [
+    { label: 'Delete', icon: PrimeIcons.TRASH },
+    { label: 'info', icon: PrimeIcons.INFO_CIRCLE, command: () => {
+      this.items[1].items[0].label = 'Seen @' + this.DatePipe.transform(this.selectedMessage.seenAt, 'shortTime'),
+      this.items[1].items[1].label = 'Sent @' + this.DatePipe.transform(this.selectedMessage.sentAt, 'shortTime')
+    },
+      items: [
+        {label: ''},
+        {label: ''}
+      ]
+    }
+  ] 
+
+
+  @ViewChild('menu') menu: any;
+
+  selectedMessage: Message;
+
+  selectMessage($event: any, message: Message) {
+    this.menu.show($event);
+    this.selectedMessage = message;
+
   }
 
 

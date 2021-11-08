@@ -8,7 +8,8 @@ const routes: Routes = [
   {path: 'register', loadChildren: () => import('../app/account/account.module')
     .then(m => m.AccountModule)
   },
-  {path: 'home', loadChildren: () => import('../app/home/home.module')
+  {
+    path: 'home', loadChildren: () => import('../app/home/home.module')
     .then(m => m.HomeModule),
     canLoad: [CanLoadGuard]
   },

@@ -1,4 +1,4 @@
-<p-toolbar [style]="{height: '12vh'}">
+<p-toolbar>
     <div class="p-toolbar-group-left">
         <div class="d-flex flex-row"> 
             <div class="ml-2 w-100">
@@ -17,10 +17,10 @@
         </div>
     </div>
     <div class="p-toolbar-group-right">
-        <i class="pi pi-ellipsis-v"></i>
+        <i class="pi pi-ellipsis-h"></i>
     </div>
 </p-toolbar>
-<p-scrollPanel #sc [style]="{height: '60vh', border: '1px solid #304562'}">
+<p-scrollPanel #sc [style]="{height: '600px', border: '1px solid #304562'}">
     <div *ngIf="(messages$ | async).length === 0">
         <div class="col-12 d-flex justify-content-center pt-5">
             No messages yet. Say "Hello" to begin.
@@ -42,11 +42,25 @@
                 </div>
                 <p class="text-justify">{{message.content}}</p>
             </div>
+
+
+        <i (click)="selectMessage($event, message)" class="pi pi-ellipsis-v"></i>
         <i (click)="deleteMessage(message.id)" class="pi pi-trash"></i>
         </div>
     </div>
 </p-scrollPanel>
-<form [formGroup]="form" style="height: 14vh; padding: 2%; border: 1px solid #304562; border-top: none">
-    <input type="text" pInputText placeholder='Press "Enter" to send message' formControlName="message" required (keyup.enter)="sendMessage()" >
-    <fa-icon [icon]="faGrinAlt" style="font-size: 1.5rem;" class="p-ml-3"></fa-icon>
+<form [formGroup]="form" style="padding: 2%; border: 1px solid #304562; border-top: none">
+    <input type="text" pInputText placeholder='Press "Enter" to send message' formControlName="message" 
+    required (keyup.enter)="sendMessage()" class="p-mr-2">
+    <fa-icon *ngIf="!emojiExpanded" [icon]="faGrinAlt" (click)="op.show($event)"></fa-icon>
+    <fa-icon *ngIf="emojiExpanded" [icon]="faTimes"></fa-icon>
 </form>
+
+<p-overlayPanel #op (onShow)="expandEmoji()" (onHide)="hideEmoji()" 
+[dismissable]="true" [showCloseIcon]="true" appendTo="body">
+    <ng-template pTemplate>
+        <app-emoji (emojiEmitter)="select($event)" (emojiClickEmitter)="op.hide()"></app-emoji>
+    </ng-template>
+</p-overlayPanel>
+
+<p-slideMenu [model]="items" #menu [popup]="true"></p-slideMenu>

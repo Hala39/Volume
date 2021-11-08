@@ -122,7 +122,4 @@ export class AddPostComponent implements OnInit {
     })
   }
 
-  hi() {
-    alert("hi")
-  }
 }

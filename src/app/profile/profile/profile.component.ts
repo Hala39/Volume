@@ -4,12 +4,12 @@ import { UserService } from './../../services/user.service';
 import { FollowService } from './../../services/follow.service';
 import { Observable } from 'rxjs';
 import { UserCard } from 'src/app/models/userCard';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ProfileService } from 'src/app/services/profile.service';
 import { Profile } from 'src/app/models/userProfile';
 import { AppUser } from 'src/app/models/appUser';
 import { File } from 'src/app/models/file';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MenuItem, PrimeIcons } from 'primeng/api';
 
 @Component({
@@ -19,14 +19,23 @@ import { MenuItem, PrimeIcons } from 'primeng/api';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor(private profileService: ProfileService, private followService: FollowService, 
+  constructor(private profileService: ProfileService, private followService: FollowService, private router: Router,
     private userService: UserService, public presenceService: PresenceService, private chatService: ChatService,
-    private activatedRoute : ActivatedRoute) {
+    private activatedRoute : ActivatedRoute, private cdr: ChangeDetectorRef) {
       this.user$ = this.userService.user$;
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     }
 
   ngOnInit(): void {
     this.getProfile();
+
+  }
+
+  ngAfterViewInit() {
+    this.cdr.detectChanges();
+    if (this.activatedRoute.toString().includes('messages')) {
+      this.loadThread();
+    }
   }
 
   profile$: Observable<Profile>;
@@ -79,14 +88,14 @@ export class ProfileComponent implements OnInit {
   loadThread() {
     this.profileService.getAppUser(this.userId).subscribe(
       response => {
-        this.chatService.createHubConnection(response.userName);
+        this.chatService.createHubConnection(response);
       }
     );
     
   }
 
   // TabView
-  index = 0;
+  index = this.activatedRoute.toString().includes('messages')? 4 : 0;
 
   indexChanged(index: number) {
     this.index++;

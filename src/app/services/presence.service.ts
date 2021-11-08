@@ -20,7 +20,7 @@ export class PresenceService {
   private onlineUsersSource = new BehaviorSubject<string[]>([]);
   onlineUsers$ = this.onlineUsersSource.asObservable();
 
-  createHubConnection(userCard: UserCard) {
+  createHubConnection() {
     this.hubConnection = new HubConnectionBuilder()
       .withUrl(this.hubUrl, {
         accessTokenFactory: () => localStorage.getItem("access_token")
@@ -33,11 +33,11 @@ export class PresenceService {
     .catch(error => console.log(error))
 
     this.hubConnection.on('UserIsOnline', id => {
-      this.messageService.add({severity: 'warn', summary: '${id} is online'})
+      this.messageService.add({severity: 'warn', summary: id + 'is online'})
     })
 
     this.hubConnection.on('UserIsOffline', id => {
-      this.messageService.add({severity: 'warn', summary: '${id} is offline'})
+      this.messageService.add({severity: 'warn', summary: id + ' is offline'})
     })
 
     this.hubConnection.on("GetOnlineUsers", (ids: string[]) => {
@@ -45,8 +45,10 @@ export class PresenceService {
       console.log(ids)
     })
 
+  
     this.hubConnection.on("NewMessageReceived", ({id, displayName}) => {
-      this.messageService.add({severity: 'info', summary: displayName + ' has sent you a message.'});
+      this.messageService.add({severity: 'info', key: 'c', summary: 'New message', data: id,
+      detail: displayName + ' sent you a message.', sticky: true})
     })
 
   }

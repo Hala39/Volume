@@ -31,7 +31,7 @@ export class UserService {
         if (response) {
           this.setUserCard(response);
           this.router.navigateByUrl("/home");
-          this.presenceService.createHubConnection(response);
+          this.presenceService.createHubConnection();
         }
       })
     )
@@ -42,7 +42,7 @@ export class UserService {
       map(response => {
         if (response) {
           this.setUserCard(response);
-          this.presenceService.createHubConnection(response);
+          this.presenceService.createHubConnection();
         } 
       })
     );

@@ -11,15 +11,14 @@ import { map, take } from 'rxjs/operators';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { UserCard } from '../models/userCard';
 import { MessageService } from 'primeng/api';
+import { Group } from '../models/group';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
 
-  constructor(private apiCaller: HttpClient, private userService: UserService,
-    private profileService: ProfileService,
-    private messageService: MessageService) { }
+  constructor(private apiCaller: HttpClient) { }
 
   baseUrl = environment.apiUrl + 'message/';
   hubUrl = environment.hubUrl;
@@ -29,7 +28,10 @@ export class ChatService {
   thread$ = this.threadSource.asObservable();
   paginatedThreadResult = new PaginatedResult<Message[]>();
 
-  async addMessage(recipientId: string, content: string, file: File, isPhoto: any) {
+  groupSource = new BehaviorSubject<Group>(null);
+
+  async addMessage(recipientId: string, content: string) {
+    // console.log(recipientId, content)
     this.hubConnection.invoke("SendMessage", {RecipientId: recipientId, content})
     .catch(error => console.log(error))
   }
@@ -37,17 +39,17 @@ export class ChatService {
   deleteMessage(id: number) {
     return this.apiCaller.delete(this.baseUrl + id.toString()).pipe(
       map(response => {
-        var currentThreadValue = this.threadSource.value;    
+        var currentThreadValue = this.threadSource.value;
         currentThreadValue = currentThreadValue.filter(m => m.id !== id);
         this.threadSource.next(currentThreadValue);
       })
     );
   }
 
-  createHubConnection(otherUsername: string) {
+  createHubConnection(other: AppUser) {
 
     this.hubConnection = new HubConnectionBuilder()
-      .withUrl(this.hubUrl + 'message?user=' + otherUsername, {
+      .withUrl(this.hubUrl + 'message?user=' + other.id, {
         accessTokenFactory: () => localStorage.getItem("access_token")
       })
       .withAutomaticReconnect()
@@ -67,18 +69,23 @@ export class ChatService {
       })
     })
 
-    // this.hubConnection.on('UpdatedGroup', (group: Group) => {
-    //   if (group.connections.some(x => x.username === otherUsername)) {
-    //     this.messageThread$.pipe(take(1)).subscribe(messages => {
-    //       messages.forEach(message => {
-    //         if (!message.dateRead) {
-    //           message.dateRead = new Date(Date.now())
-    //         }
-    //       })
-    //       this.messageThreadSource.next([...messages]);
-    //     })
-    //   }
-    // })
+    this.hubConnection.on('UpdatedGroup', (group: Group) => {
+      this.groupSource.next(group)
+      // console.log(group.connections)
+      // console.log(other.id)
+      // if (group.connections.some(x => x.userId === other.id)) {
+      //   this.threadSource.pipe(take(1)).subscribe(messages => {
+      //     console.log(messages)
+      //     messages.forEach(message => {
+
+      //       if (message.seenAt === null) {
+      //         message.seenAt = new Date(Date.now())
+      //       }
+      //     })
+      //     this.threadSource.next([...messages]);
+      //   })
+      // }
+    })
   }
 
   stopHubConnection() {
@@ -87,6 +94,13 @@ export class ChatService {
       this.hubConnection.stop();
     }
   }
+
+  // getMessages(pageNumber, pageSize, container) {
+  //   let params = getPaginationHeaders(pageNumber, pageSize);
+  //   params = params.append('Container', container);
+  //   return getPaginatedResult<Message[]>(this.baseUrl + 'messages', params, this.http);
+
+
 
 
 }
