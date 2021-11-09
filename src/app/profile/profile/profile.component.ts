@@ -121,6 +121,10 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  stopHub($event: any) {
+    this.chatService.stopHubConnection();
+  }
+
   //Menu
   items : MenuItem[] = [
     { label: 'Sign out', icon: PrimeIcons.SIGN_OUT, command: () => {

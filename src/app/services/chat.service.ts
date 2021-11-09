@@ -1,3 +1,4 @@
+import { PresenceService } from './presence.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { Message } from './../models/message';
 import { PaginatedResult } from './../models/paginatedResult';
@@ -18,7 +19,7 @@ import { Group } from '../models/group';
 })
 export class ChatService {
 
-  constructor(private apiCaller: HttpClient) { }
+  constructor(private apiCaller: HttpClient, private presenceService: PresenceService) { }
 
   baseUrl = environment.apiUrl + 'message/';
   hubUrl = environment.hubUrl;
@@ -27,6 +28,9 @@ export class ChatService {
   threadSource = new BehaviorSubject<Message[]>([]);
   thread$ = this.threadSource.asObservable();
   paginatedThreadResult = new PaginatedResult<Message[]>();
+
+  contactsSource = new BehaviorSubject<AppUser[]>([]);
+  contacts$ = this.contactsSource.asObservable();
 
   groupSource = new BehaviorSubject<Group>(null);
 
@@ -95,12 +99,22 @@ export class ChatService {
     }
   }
 
-  // getMessages(pageNumber, pageSize, container) {
-  //   let params = getPaginationHeaders(pageNumber, pageSize);
-  //   params = params.append('Container', container);
-  //   return getPaginatedResult<Message[]>(this.baseUrl + 'messages', params, this.http);
+  paginatedResult = new PaginatedResult<AppUser[]>();
 
+  getContacts() {
+    let params = new HttpParams();
+    return this.apiCaller.get<AppUser[]>(this.baseUrl + 'contact', {observe: 'response', params}).pipe(
+      map(response => {
+        this.paginatedResult.result = response.body;
+        this.contactsSource.next(response.body);
+        
+        if (response.headers.get("Pagination") !== null) {
+          this.paginatedResult.pagination = JSON.parse(response.headers.get("Pagination"));
+        }
 
-
+        return response.body;
+      })
+    )
+  }
 
 }

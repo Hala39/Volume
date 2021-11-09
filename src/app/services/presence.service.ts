@@ -20,6 +20,9 @@ export class PresenceService {
   private onlineUsersSource = new BehaviorSubject<string[]>([]);
   onlineUsers$ = this.onlineUsersSource.asObservable();
 
+  inboxNotificationSource = new BehaviorSubject<boolean>(false);
+  inbox$ = this.inboxNotificationSource.asObservable();
+
   createHubConnection() {
     this.hubConnection = new HubConnectionBuilder()
       .withUrl(this.hubUrl, {
@@ -49,6 +52,7 @@ export class PresenceService {
     this.hubConnection.on("NewMessageReceived", ({id, displayName}) => {
       this.messageService.add({severity: 'info', key: 'c', summary: 'New message', data: id,
       detail: displayName + ' sent you a message.', sticky: true})
+      this.inboxNotificationSource.next(true)
     })
 
   }

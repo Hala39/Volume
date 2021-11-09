@@ -1,3 +1,4 @@
+import { BadgeModule } from 'primeng/badge';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { EditorModule } from 'primeng/editor';
@@ -87,6 +88,7 @@ import { ThreadComponent } from '../profile/thread/thread.component';
     RadioButtonModule,
     EditorModule,
     InputTextareaModule,
+    BadgeModule
   ],
   exports: [
     PostCardComponent,

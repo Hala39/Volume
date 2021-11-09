@@ -118,8 +118,11 @@ export class ThreadComponent implements OnInit, OnDestroy {
 
 
   items: MenuItem[] = [
-    { label: 'Delete', icon: PrimeIcons.TRASH },
+    { label: 'Delete', icon: PrimeIcons.TRASH, command: () => {
+      this.deleteMessage(this.selectedMessage.id);
+    }},
     { label: 'info', icon: PrimeIcons.INFO_CIRCLE, command: () => {
+      console.log(this.selectedMessage)
       this.items[1].items[0].label = 'Seen @' + this.DatePipe.transform(this.selectedMessage.seenAt, 'shortTime'),
       this.items[1].items[1].label = 'Sent @' + this.DatePipe.transform(this.selectedMessage.sentAt, 'shortTime')
     },

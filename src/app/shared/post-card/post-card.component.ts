@@ -70,7 +70,15 @@ export class PostCardComponent implements OnInit {
 
   followToggle() {
     this.followService.followToggle(this.post.appUser.id).subscribe(
-      response => this.post.isFollowing = !this.post.isFollowing
+      response => {
+        var currentValue = this.postService.postsSource.value;
+        currentValue.forEach(element => {
+          if (element.appUser.id === this.post.appUser.id) {
+            element.isFollowing = !element.isFollowing
+          }
+        });
+        this.postService.postsSource.next(currentValue);
+      }
     );
   }
 

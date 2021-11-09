@@ -4,6 +4,7 @@ export interface Message {
     content: string;
     sentAt?: Date;
     seenAt?: Date;
+    seen?: boolean;
     senderDisplayName: string;
     recipientId: string;
     senderId?: string;

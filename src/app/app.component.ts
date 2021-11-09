@@ -21,12 +21,13 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    this.primengConfig.ripple = true;
     window.scrollTo(0,0);
+    this.primengConfig.ripple = true;
   }
 
   navigate(id: string) {
-    this.router.navigateByUrl("/profile/messages/" + id)
+    this.router.navigateByUrl("/profile/messages/" + id);
+    this.presenceService.inboxNotificationSource.next(false);
   }
 
 

@@ -1,3 +1,5 @@
+import { ChatService } from 'src/app/services/chat.service';
+import { PresenceService } from './../../services/presence.service';
 import { SearchService } from './../../services/search.service';
 import { SearchOperation } from './../../models/searchOperation';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -16,17 +18,20 @@ import { AppUser } from 'src/app/models/appUser';
 export class NavbarComponent implements OnInit {
 
   constructor(private router: Router, private userService: UserService, 
+    private chatService: ChatService,
+    public presenceService: PresenceService,
     private searchService: SearchService,
     private profileService: ProfileService) {
     this.user$ = this.userService.user$
   }
 
   ngOnInit(): void {
-    
   }
 
   user: UserCard = JSON.parse(localStorage.getItem('userCard'));
   user$: Observable<UserCard>;
+
+  contacts$: Observable<AppUser[]>;
 
   searchOperations$: Observable<SearchOperation[]>;
 
@@ -79,4 +84,20 @@ export class NavbarComponent implements OnInit {
   }
 
   hideRecent: boolean = false;
+
+
+  getContacts() {
+    this.chatService.getContacts().subscribe(
+      response => {
+        this.contacts$ = this.chatService.contacts$;
+        console.log(response)
+      }
+    )
+  }
+
+  navigate(id: string) {
+    this.presenceService.inboxNotificationSource.next(false);
+    this.router.navigateByUrl("/profile/messages/" + id);
+  }
+ 
 }

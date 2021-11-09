@@ -68,7 +68,7 @@
                     </div>
                 </ng-template>
             </p-tabPanel>
-            <p-tabPanel header="Messaging" *ngIf="(user$ | async)?.id !== userId">
+            <p-tabPanel header="Messaging" *ngIf="(user$ | async)?.id !== userId" controlClose="true" (onClose)="stopHub($event)">
                 <ng-template pTemplate="content">
                     <app-thread [contactId]="userId"></app-thread>
                 </ng-template>

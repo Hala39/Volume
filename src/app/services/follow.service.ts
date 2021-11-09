@@ -22,7 +22,11 @@ export class FollowService {
   followings$ = this.followingsSource.asObservable();
 
   followToggle(id: string) {
-    return this.apiCaller.post(this.baseUrl + id.toString(), {});
+    return this.apiCaller.post(this.baseUrl + id.toString(), {}).pipe(
+      map(response => {
+        
+      })
+    );
   }
 
   getUserFollowing(userId: string, predicate: string) {

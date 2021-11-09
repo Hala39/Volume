@@ -8,7 +8,9 @@
         <div class="p-toolbar-group-right">
             <i class="right-icons pi pi-link pi-search p-mr-4" (click)="op.toggle($event)"></i>
             <i class="right-icons pi pi-link pi-bell p-mr-4"></i>
-            <i class="right-icons pi pi-link pi-envelope p-mr-4" [routerLink]="['/messaging']"></i>
+            <i class="right-icons pi pi-envelope p-mr-4" (click)="op2.toggle($event)" pBadge severity="danger" *ngIf="(presenceService.inbox$ | async)"></i>
+            <i class="right-icons pi pi-envelope p-mr-4" (click)="op2.toggle($event)" *ngIf="!(presenceService.inbox$ | async)"></i>
+            <!-- <i class="pi pi-link pi-envelope p-mr-4" [routerLink]="['/messaging']"></i> -->
             <p-avatar [image]="(user$ | async)?.profilePhotoUrl? (user$ | async)?.profilePhotoUrl : ''"
             [icon]="(user$ | async)?.profilePhotoUrl? '' : 'pi pi-user'" 
             (click)="goToProfile()"
@@ -17,7 +19,7 @@
     </p-toolbar>
 </div>
 
-<p-overlayPanel #op [dismissable]="true" [showCloseIcon]="true" (onShow)="onShow()">
+<p-overlayPanel #op [dismissable]="false" [showCloseIcon]="true" (onShow)="onShow()">
     <ng-template pTemplate>
         <p-card header="Search">
             <p-chips [(ngModel)]="keyword" [style]="{width: '100%'}" 
@@ -55,3 +57,36 @@
         </p-card>
     </ng-template>
 </p-overlayPanel>
+
+
+<p-overlayPanel #op2 [dismissable]="false" [showCloseIcon]="true" (onShow)="getContacts()">
+    <ng-template pTemplate>
+    <p-card header="Inbox">
+        <div *ngFor="let contact of (contacts$ | async)" (click)="navigate(contact.id)"
+        [ngClass]="contact.lastMessageReceived.id > contact.lastMessageSent.id? contact.lastMessageReceived.seen? 'read' : 'unread' 
+            : contact.lastMessageSent.seen? 'read' : 'unread'">
+            <div class="d-flex flex-row p-pt-3 px-3"> 
+                <p-avatar [image]="contact.profilePhotoUrl? contact.profilePhotoUrl : ''" 
+                [icon]="contact.profilePhotoUrl? '' : 'pi pi-user'"
+                styleClass="p-mr-2" size="large" shape="circle"></p-avatar>
+                <div class="ml-2 w-100">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex flex-row align-items-center"> 
+                            <span class="name">
+                                <h6 [innerText]="contact.displayName"></h6> 
+                            </span> 
+                            <small class="text-muted p-pl-2">{{(contact.lastMessageReceived.id > contact.lastMessageSent.id? 
+                                contact.lastMessageReceived.sentAt : contact.lastMessageSent.sentAt) | date: "shortTime"}}</small>
+                        </div> 
+                    </div>
+                    <p class="text-justify"><span>{{contact.lastMessageReceived.id > contact.lastMessageSent.id? 
+                        contact.lastMessageReceived.senderDisplayName : contact.lastMessageSent.senderDisplayName}}</span>
+                        : {{contact.lastMessageReceived.id > contact.lastMessageSent.id? contact.lastMessageReceived.content : contact.lastMessageSent.content}}</p>
+                </div>
+    
+            </div>
+        </div>
+    </p-card>
+    </ng-template>
+</p-overlayPanel>
+
