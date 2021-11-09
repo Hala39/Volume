@@ -5,18 +5,18 @@
                 <div class="d-flex justify-content-between">
                     <div class="d-flex flex-row align-items-center">
                         <div class="profilePhotoUrl"> 
-                            <p-avatar [image]="post.appUser.profilePhotoUrl? post.appUser.profilePhotoUrl: ''" 
-                            [icon]="post.appUser.profilePhotoUrl? '': 'pi pi-user'" (click)="goToProfile(post.appUser.id)"
+                            <p-avatar [image]="post?.appUser?.profilePhotoUrl? post?.appUser?.profilePhotoUrl: ''" 
+                            [icon]="post?.appUser?.profilePhotoUrl? '': 'pi pi-user'" (click)="goToProfile(post?.appUser?.id)"
                             styleClass="p-mr-2" size="large" shape="circle" class="pointer"></p-avatar>
                         </div>
                         <div class="ms-2 c-details">
-                            <h6 class="mb-0 pointer" (click)="goToProfile(post.appUser.id)">{{ post.appUser.displayName }}</h6> <span>{{ post.date | date}}</span>
+                            <h6 class="mb-0 pointer" (click)="goToProfile(post?.appUser?.id)">{{ post?.appUser?.displayName }}</h6> <span>{{ post?.date | date}}</span>
                         </div>
                     </div>
-                    <span *ngIf="(user$ | async)?.id === post.appUser.id" class="pi pi-ellipsis-v" (click)="menu.toggle($event)"></span>
-                    <p-button *ngIf="(user$ | async)?.id !== post.appUser.id"
-                        pRipple type="button" [label]="post.isFollowing? 'Following' : 'Follow'" 
-                        [icon]="post.isFollowing? 'pi pi-check' : 'pi pi-plus'" 
+                    <span *ngIf="(user$ | async)?.id === post?.appUser?.id" class="pi pi-ellipsis-v" (click)="menu.toggle($event)"></span>
+                    <p-button *ngIf="(user$ | async)?.id !== post?.appUser?.id"
+                        pRipple type="button" [label]="post?.isFollowing? 'Following' : 'Follow'" 
+                        [icon]="post?.isFollowing? 'pi pi-check' : 'pi pi-plus'" 
                         (click)="followToggle()"
                         styleClass="p-button-outlined p-button-rounded p-button-sm">
                     </p-button>
@@ -24,24 +24,24 @@
                 <div class="mt-5">
 
                     <!-- Post Body -->
-                    <p [innerHtml]="post.description"></p>
+                    <p [innerHtml]="post?.description"></p>
                     <div class="mt-3">
-                        <img *ngIf="post.file" [src]="post.file.url" alt="" class="postImage">
+                        <img *ngIf="post?.file" [src]="post?.file.url" alt="" class="postImage">
                         <div class="mt-3"> 
-                            <span class="text1" (click)="op.toggle($event)">{{ post.likesCount}} like, </span>
-                            <span class="text2" *ngIf="post.commentsCount === 1 || post.commentsCount === 0"  
-                            (click)="expandComments(post.id)">{{ post.commentsCount }} comment</span> 
-                            <span class="text2" *ngIf="post.commentsCount > 1" (click)="expandComments(post.id)">
-                                {{ post.commentsCount }} comments</span> 
+                            <span class="text1" (click)="op.toggle($event)">{{ post?.likesCount}} like, </span>
+                            <span class="text2" *ngIf="post?.commentsCount === 1 || post?.commentsCount === 0"  
+                            (click)="expandComments(post?.id)">{{ post?.commentsCount }} comment</span> 
+                            <span class="text2" *ngIf="post?.commentsCount > 1" (click)="expandComments(post?.id)">
+                                {{ post?.commentsCount }} comments</span> 
                         </div>
 
                         <!-- Action buttons -->
                         <p-toolbar [style]="{'margin-top': '15px'}">   
-                            <button pButton pRipple type="button" styleClass="p-button-lg" [label]="post.isLikedByUser? 'Liked' : 'Like'" 
+                            <button pButton pRipple type="button" styleClass="p-button-lg" [label]="post?.isLikedByUser? 'Liked' : 'Like'" 
                             icon="pi pi-heart" (click)="likeToggle()"
                             class="p-button-rounded p-button-danger p-button-text"></button>
                             <button pButton pRipple type="button" styleClass="p-button-lg" label="Comment" 
-                            [icon]="commentsExpanded? 'pi pi-times' : 'pi pi-comment'" (click)="expandComments(post.id)"
+                            [icon]="commentsExpanded? 'pi pi-times' : 'pi pi-comment'" (click)="expandComments(post?.id)"
                             class="p-button-rounded p-button-warning p-button-text"></button>
                             <button pButton pRipple type="button" styleClass="p-button-lg" label="Share" 
                             icon="pi pi-send"
@@ -52,14 +52,14 @@
                         <div class="mt-2" *ngIf="commentsExpanded">
                             <div *ngFor="let comment of (comments$ | async )">
                                 <div class="d-flex flex-row mt-4"> 
-                                    <p-avatar [image]="comment.appUser.profilePhotoUrl? comment.appUser.profilePhotoUrl : ''" 
-                                    [icon]="comment.appUser.profilePhotoUrl? '' : 'pi pi-user'" (click)="goToProfile(comment.appUser.id)"
+                                    <p-avatar [image]="comment.appUser?.profilePhotoUrl? comment.appUser?.profilePhotoUrl : ''" 
+                                    [icon]="comment.appUser?.profilePhotoUrl? '' : 'pi pi-user'" (click)="goToProfile(comment.appUser?.id)"
                                     styleClass="p-mr-2" size="large" shape="circle" class="pointer"></p-avatar>
                                     <div class="ml-2 w-100">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="d-flex flex-row align-items-center"> 
                                                 <span class="name">
-                                                    <h6 class="pointer" (click)="goToProfile(comment.appUser.id)">{{ comment.appUser.displayName }}</h6> 
+                                                    <h6 class="pointer" (click)="goToProfile(comment.appUser?.id)">{{ comment.appUser?.displayName }}</h6> 
                                                 </span> 
                                                 <small class="text-muted time-text"> {{ comment.date | date }}</small>
                                             </div> 
@@ -67,7 +67,7 @@
                                         <p class="user-comment-text text-justify">{{ comment.content }}</p>
                                     </div>
                                     <p-button (click)="deleteComment(comment.id)"
-                                    *ngIf="comment.appUser.id === (user$ | async)?.id" 
+                                    *ngIf="comment.appUser?.id === (user$ | async)?.id" 
                                     icon="pi pi-trash" 
                                     styleClass="p-button-rounded p-button-warning p-button-text"></p-button>
                                 </div>
@@ -102,6 +102,6 @@
     <textarea [rows]="3" pInputTextarea placeholder="Post description" required [(ngModel)]="description"></textarea>
     <div class="d-flex justify-content-end mt-2">
         <p-button label="Save Changes" (click)="saveChanges()" 
-        [disabled]="description === null || description === '' || description === post.description"></p-button>
+        [disabled]="description === null || description === '' || description === post?.description"></p-button>
     </div>
 </p-dialog>

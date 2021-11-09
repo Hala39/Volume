@@ -1,3 +1,6 @@
+import { MessageService } from 'primeng/api';
+import { PresenceService } from './presence.service';
+import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { UserService } from './user.service';
 import { PaginatedResult } from './../models/paginatedResult';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -5,7 +8,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { AppUser } from '../models/appUser';
-import { map } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 import { UserCard } from '../models/userCard';
 
 @Injectable({
@@ -13,21 +16,52 @@ import { UserCard } from '../models/userCard';
 })
 export class LikeService {
 
-  constructor(private apiCaller: HttpClient, private userService: UserService) { 
-    this.user$ = this.userService.user$;
+  constructor(private apiCaller: HttpClient) { 
+    
   }
 
   baseUrl = environment.apiUrl + 'like/';
+  hubUrl = environment.hubUrl + 'like';
 
   likersSource = new BehaviorSubject<AppUser[]>([]);
   likers$ = this.likersSource.asObservable();
   
   paginatedResult = new PaginatedResult<AppUser[]>();
 
-  user$: Observable<UserCard>;
+  hubConnection: HubConnection;
 
-  likeToggle(id: number) {
-    return this.apiCaller.post(this.baseUrl + id.toString(), {});
+  createHubConnection(postId: number) {
+    this.hubConnection = new HubConnectionBuilder()
+      .withUrl(this.hubUrl + '?postId=' + postId, {
+        accessTokenFactory: () => localStorage.getItem("access_token")
+      })
+      .withAutomaticReconnect()
+      .build()
+
+    this.hubConnection 
+    .start()
+    .catch(error => console.log(error))
+
+  }
+
+  stopHubConnection() {
+    if (this.hubConnection) {
+      this.hubConnection.stop();
+    }
+  }
+
+  likeToggle(id: number)  {
+    return this.apiCaller.post<boolean>(this.baseUrl + id.toString(), {}).pipe(
+      map(response => {
+        if (response) {
+          this.createHubConnection(id);
+        }
+      },
+      finalize(() => {
+        this.stopHubConnection();
+      })
+    )
+    );
   }
 
   getLikes(id: number) {

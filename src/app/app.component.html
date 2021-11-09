@@ -3,9 +3,27 @@
 </div>    
 <p-toast></p-toast>
 
-<p-toast key="c" [baseZIndex]="5000">
+<p-toast key="new-message" [baseZIndex]="5000">
     <ng-template let-message pTemplate="message">
-        <div class="p-flex p-flex-column" style="flex: 1"   (click)="navigate(message.data)">
+        <div class="p-flex p-flex-column" style="flex: 1"   (click)="navigateToMessage(message.data)">
+            <h5>{{message.summary}}</h5>
+            <p>{{message.detail}}</p>
+        </div>
+    </ng-template>
+</p-toast>
+
+<p-toast key="new-comment" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div class="p-flex p-flex-column" style="flex: 1" (click)="navigateToPost(message.data)">
+            <h5>{{message.summary}}</h5>
+            <p>{{message.detail}}</p>
+        </div>
+    </ng-template>
+</p-toast>
+
+<p-toast key="new-follower" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div class="p-flex p-flex-column" style="flex: 1" (click)="navigateToProfile(message.data)">
             <h5>{{message.summary}}</h5>
             <p>{{message.detail}}</p>
         </div>

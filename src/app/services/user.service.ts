@@ -1,3 +1,4 @@
+import { LikeService } from './like.service';
 import { PresenceService } from './presence.service';
 import { UserRegister } from './../models/userRegister';
 import { UserCard } from './../models/userCard';
@@ -17,7 +18,7 @@ import { BehaviorSubject } from 'rxjs';
 export class UserService {
 
   constructor(private apiCaller: HttpClient, private jwtHelper: JwtHelperService, 
-    private presenceService: PresenceService,
+    private presenceService: PresenceService, private likeService: LikeService,
     private router: Router) { }
     
   baseUrl = environment.apiUrl + 'account/';

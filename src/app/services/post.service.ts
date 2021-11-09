@@ -71,4 +71,7 @@ export class PostService {
     return this.apiCaller.put(this.baseUrl + id.toString() +'?description=' + description, {});
   }
   
+  getPostDetails(id: number) {
+    return this.apiCaller.get<Post>(this.baseUrl + id.toString());
+  }
 }

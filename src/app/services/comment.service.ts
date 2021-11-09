@@ -1,31 +1,67 @@
+import { UserService } from './user.service';
+import { MessageService } from 'primeng/api';
 import { Comment } from './../models/comment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { PaginatedResult } from '../models/paginatedResult';
 import { BehaviorSubject } from 'rxjs';
+import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommentService {
 
-  constructor(private apiCaller: HttpClient) { }
+  constructor(private apiCaller: HttpClient, private messageService: MessageService, private userService: UserService) { }
 
   baseUrl = environment.apiUrl + 'comment/';
   paginatedResult = new PaginatedResult<Comment[]>();
   commentsSource = new BehaviorSubject<Comment[]>([]);
   comments$ = this.commentsSource.asObservable();
 
-  addComment(postId: number, content: string) {
-    return this.apiCaller.post(this.baseUrl + postId.toString() + '?content=' + content, {}).pipe(
-      map(response => {
-        if (response) {
-          this.listComments(postId).subscribe();
-        }
+  hubUrl = environment.hubUrl;
+  private hubConnection: HubConnection;
+
+  async addComment(postId: number, content: string) {
+    this.hubConnection.invoke("AddComment", {PostId: postId, content})
+    .catch(error => console.log(error))
+  }
+
+  createHubConnection(postId: number) {
+
+    this.hubConnection = new HubConnectionBuilder()
+      .withUrl(this.hubUrl + 'comment?postId=' + postId, {
+        accessTokenFactory: () => localStorage.getItem("access_token")
       })
-    );
+      .withAutomaticReconnect()
+      .build()
+
+    this.hubConnection.start()
+      .catch(error => console.log(error));
+      // .finally(() => this.busyService.idle());
+
+    this.hubConnection.on('LoadComments', comments => {
+      this.commentsSource.next(comments);
+      console.log(comments)
+    })
+
+    this.hubConnection.on('ReceiveComment', comment => {
+      console.log(comment)
+      this.comments$.pipe(take(1)).subscribe(comments => {
+        this.commentsSource.next([...comments, comment]);
+        this.messageService.add({severity: 'info', summary: "New comment", sticky: true})
+      })
+    })
+
+  }
+
+  stopHubConnection() {
+    if (this.hubConnection) {
+      this.commentsSource.next([]);
+      this.hubConnection.stop();
+    }
   }
 
   deleteComment(id: number) {
@@ -37,22 +73,5 @@ export class CommentService {
       })
     );
   }
-
-  listComments(id: number) {
-    let params = new HttpParams();
-
-    return this.apiCaller.get<Comment[]>(this.baseUrl + id.toString(), {observe: 'response', params}).pipe(
-      map(response => {
-        this.paginatedResult.result = response.body;
-        this.commentsSource.next(response.body);
-
-        if (response.headers.get("Pagination") !== null) {
-          this.paginatedResult.pagination = JSON.parse(response.headers.get("Pagination"));
-        }
-
-        return response.body;
-      })
-    );
-  } 
       
 }

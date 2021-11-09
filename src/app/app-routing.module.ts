@@ -1,3 +1,5 @@
+import { CanActivateGuard } from './guards/can-activate.guard';
+import { PostComponent } from './shared/post/post.component';
 import { CanLoadGuard } from './guards/can-load.guard';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -17,6 +19,9 @@ const routes: Routes = [
     path: 'profile', loadChildren: () => import('../app/profile/profile.module')
       .then(m => m.ProfileModule),
       canLoad: [CanLoadGuard]
+  },
+  {
+    path: 'post/:id', component: PostComponent, canActivate: [CanActivateGuard]
   }
 ];
 

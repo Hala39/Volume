@@ -19,7 +19,7 @@ import { Group } from '../models/group';
 })
 export class ChatService {
 
-  constructor(private apiCaller: HttpClient, private presenceService: PresenceService) { }
+  constructor(private apiCaller: HttpClient) { }
 
   baseUrl = environment.apiUrl + 'message/';
   hubUrl = environment.hubUrl;
@@ -35,7 +35,6 @@ export class ChatService {
   groupSource = new BehaviorSubject<Group>(null);
 
   async addMessage(recipientId: string, content: string) {
-    // console.log(recipientId, content)
     this.hubConnection.invoke("SendMessage", {RecipientId: recipientId, content})
     .catch(error => console.log(error))
   }

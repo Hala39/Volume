@@ -7,10 +7,10 @@
 
         <div class="p-toolbar-group-right">
             <i class="right-icons pi pi-link pi-search p-mr-4" (click)="op.toggle($event)"></i>
-            <i class="right-icons pi pi-link pi-bell p-mr-4"></i>
+            <i class="right-icons pi pi-link pi-bell p-mr-4" pBadge severity="danger" *ngIf="(presenceService.notification$ | async)"></i>
+            <i class="right-icons pi pi-link pi-bell p-mr-4" *ngIf="!(presenceService.notification$ | async)" ></i>
             <i class="right-icons pi pi-envelope p-mr-4" (click)="op2.toggle($event)" pBadge severity="danger" *ngIf="(presenceService.inbox$ | async)"></i>
             <i class="right-icons pi pi-envelope p-mr-4" (click)="op2.toggle($event)" *ngIf="!(presenceService.inbox$ | async)"></i>
-            <!-- <i class="pi pi-link pi-envelope p-mr-4" [routerLink]="['/messaging']"></i> -->
             <p-avatar [image]="(user$ | async)?.profilePhotoUrl? (user$ | async)?.profilePhotoUrl : ''"
             [icon]="(user$ | async)?.profilePhotoUrl? '' : 'pi pi-user'" 
             (click)="goToProfile()"

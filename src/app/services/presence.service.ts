@@ -1,3 +1,5 @@
+import { FollowService } from './follow.service';
+import { LikeService } from './like.service';
 import { UserCard } from './../models/userCard';
 import { MessageService } from 'primeng/api';
 import { catchError } from 'rxjs/operators';
@@ -12,7 +14,8 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class PresenceService {
 
-  constructor(private messageService: MessageService) { }
+  constructor(private messageService: MessageService, private followService: FollowService,
+    private likeService: LikeService) { }
 
   hubUrl = environment.hubUrl + 'presence';
   private hubConnection: HubConnection;
@@ -22,6 +25,9 @@ export class PresenceService {
 
   inboxNotificationSource = new BehaviorSubject<boolean>(false);
   inbox$ = this.inboxNotificationSource.asObservable();
+
+  notificationSource = new BehaviorSubject<boolean>(false);
+  notification$ = this.notificationSource.asObservable();
 
   createHubConnection() {
     this.hubConnection = new HubConnectionBuilder()
@@ -48,11 +54,30 @@ export class PresenceService {
       console.log(ids)
     })
 
-  
     this.hubConnection.on("NewMessageReceived", ({id, displayName}) => {
-      this.messageService.add({severity: 'info', key: 'c', summary: 'New message', data: id,
-      detail: displayName + ' sent you a message.', sticky: true})
+      this.messageService.add({severity: 'info', key: 'new-message', summary: 'New message', data: id,
+      detail: displayName + ' sent you a message.', sticky: true});
       this.inboxNotificationSource.next(true)
+    })
+
+    this.hubConnection.on("NewComment", ({postId, displayName}) => {
+      this.messageService.add({severity: 'info', key: 'new-comment', summary: 'New Comment', data: postId,
+       detail: displayName + ' commented on your post', sticky: true});
+       this.notificationSource.next(true)
+    })
+
+    this.hubConnection.on("NewFollower", ({observerId, displayName}) => {
+      this.messageService.add({severity: 'info', key: 'new-follower', summary: 'New Follower', data: observerId,
+       detail: displayName + ' followed you', sticky: true});
+       this.notificationSource.next(true);
+       this.followService.stopHubConnection();
+    })
+
+    this.hubConnection.on("NewLike", ({postId, displayName}) => {
+      this.messageService.add({severity: 'info', key: 'new-comment', summary: 'New Like', data: postId,
+       detail: displayName + ' liked your post', sticky: true});
+       this.notificationSource.next(true);
+       this.likeService.stopHubConnection();
     })
 
   }

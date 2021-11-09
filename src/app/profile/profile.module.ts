@@ -35,7 +35,7 @@ const routes : Routes = [
   declarations: [
     ProfileComponent,
     UserAboutComponent,
-    ThreadComponent
+    ThreadComponent,
   ],
   imports: [
     CommonModule,

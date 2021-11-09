@@ -1,7 +1,7 @@
 import { AppUser } from './appUser';
 
 export interface Comment { 
-    id: number;
+    id?: number;
     postId: number;
     appUser: AppUser;
     content: string;

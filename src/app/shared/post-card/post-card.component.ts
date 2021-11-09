@@ -1,3 +1,4 @@
+import { PresenceService } from './../../services/presence.service';
 import { UserService } from './../../services/user.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { PostService } from './../../services/post.service';
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
 import { CommentService } from './../../services/comment.service';
 import { Comment } from './../../models/comment';
 import { Post } from './../../models/post';
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit, Output, OnDestroy } from '@angular/core';
 import { AppUser } from 'src/app/models/appUser';
 import { MenuItem } from 'primeng/api';
 import { Router } from '@angular/router';
@@ -18,21 +19,27 @@ import { Router } from '@angular/router';
   templateUrl: './post-card.component.html',
   styleUrls: ['./post-card.component.scss']
 })
-export class PostCardComponent implements OnInit {
+export class PostCardComponent implements OnInit, OnDestroy {
 
   constructor(private commentService: CommentService, private likeService: LikeService,
     private profileService: ProfileService, private userService: UserService,
     private router: Router,
     private followService: FollowService, private postService: PostService) {
-    this.user$ = this.userService.user$
+    this.user$ = this.userService.user$;
+    this.comments$ = this.commentService.comments$;
+
   }
 
   ngOnInit(): void {
   }
 
+  ngOnDestroy() {
+    this.commentService.stopHubConnection();
+  }
+
   displayDialog = false;
 
-  commentsExpanded: boolean = false;
+  @Input() commentsExpanded: boolean = false;
   comments$: Observable<Comment[]>;
 
   content: string;
@@ -47,10 +54,12 @@ export class PostCardComponent implements OnInit {
   }
 
   expandComments(postId: number) {
-    this.commentService.listComments(postId).subscribe(
-      response => this.comments$ = this.commentService.comments$
-    );
     this.commentsExpanded = !this.commentsExpanded;
+    if (this.commentsExpanded === true) {
+      this.commentService.createHubConnection(postId);
+    } else {
+      this.commentService.stopHubConnection();
+    }
   }
 
   deleteComment(id: number) {
@@ -60,7 +69,7 @@ export class PostCardComponent implements OnInit {
   }
 
   addComment() {
-    this.commentService.addComment(this.post.id, this.content).subscribe(
+    this.commentService.addComment(this.post.id, this.content).then(
       response => {
         this.content = "";
         this.post.commentsCount++;

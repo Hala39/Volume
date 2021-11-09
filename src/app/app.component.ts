@@ -1,3 +1,4 @@
+import { LikeService } from './services/like.service';
 import { PresenceService } from './services/presence.service';
 import { UserService } from './services/user.service';
 import { Component } from '@angular/core';
@@ -12,11 +13,14 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'Volume';
   
-  constructor(private primengConfig: PrimeNGConfig, private userService: UserService, private router: Router,
+  constructor(private primengConfig: PrimeNGConfig, private userService: UserService, 
+    private router: Router, private likeService: LikeService,
     private presenceService: PresenceService) {
     this.userService.userSource.next(JSON.parse(localStorage.getItem("userCard")));
     if (this.userService.loggedIn) {
-      this.presenceService.createHubConnection()
+      this.presenceService.createHubConnection();
+      // this.likeService.createHubConnection();
+
     }
   }
 
@@ -25,10 +29,18 @@ export class AppComponent {
     this.primengConfig.ripple = true;
   }
 
-  navigate(id: string) {
+  navigateToMessage(id: string) {
     this.router.navigateByUrl("/profile/messages/" + id);
     this.presenceService.inboxNotificationSource.next(false);
   }
 
+  navigateToPost(id: string) {
+    this.router.navigateByUrl("/post/" + id);
+    this.presenceService.notificationSource.next(false);
+  }
 
+  navigateToProfile(id: string) {
+    this.router.navigateByUrl("/profile/" + id);
+    this.presenceService.notificationSource.next(false);
+  }
 }
