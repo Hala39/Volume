@@ -6,7 +6,7 @@
         <p-card>
             <app-add-post></app-add-post>
         </p-card>
-        <div *ngIf="(posts$ | async) as posts">
+        <div *ngIf="(posts$ | async) as posts" infiniteScroll [infiniteScrollDistance]="0.5" (scrolled)="onScroll($event)">
             <div *ngFor="let post of posts">
                 <app-post-card [post]="post"></app-post-card>
             </div>

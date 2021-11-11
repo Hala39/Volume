@@ -51,12 +51,29 @@ export class PostService {
     );
   }
 
-  getPosts() {
+
+  getPosts(pageNumber: number, scroll: boolean) {
     let params = new HttpParams();
+    params = params.append("pageNumber", pageNumber.toString())
+    params = params.append("pageSize", "2")
     return this.apiCaller.get<Post[]>(this.baseUrl, {observe: 'response', params}).pipe(
       map(response => {
-        this.paginatedResult.result = response.body;
-        this.postsSource.next(response.body);
+          if (scroll === true)
+          {
+            var initialValue = this.postsSource.value;
+            initialValue = initialValue.concat(response.body);
+            this.postsSource.next(initialValue);
+            console.log(response.body)
+            console.log(pageNumber)
+            
+            // console.log(initialValue);
+          }
+          else 
+          {
+            this.postsSource.next(response.body);
+            // console.log(response.body)
+            // console.log(pageNumber)
+          }
         
         if (response.headers.get("Pagination") !== null) {
           this.paginatedResult.pagination = JSON.parse(response.headers.get("Pagination"));
@@ -66,6 +83,7 @@ export class PostService {
       })
     )
   }
+
 
   updatePost(id: number, description: string) {
     return this.apiCaller.put(this.baseUrl + id.toString() +'?description=' + description, {});

@@ -13,23 +13,27 @@ import { PostService } from 'src/app/services/post.service';
 export class HomeComponent implements OnInit {
 
   constructor(private postService: PostService, private router: Router) {
-    this.getPosts();
-    this.posts$ = this.postService.posts$;
   }
 
   ngOnInit() {
+    this.getPosts(1);
   }
 
+  pageNumber = 2;
   posts$: Observable<Post[]>;
 
   user: UserCard = JSON.parse(localStorage.getItem('userCard'));
 
-  getPosts() {
-    this.postService.getPosts().subscribe(
+  getPosts(pageNumber: number) {
+    this.postService.getPosts(1, false).subscribe(
       response => {
         this.posts$ = this.postService.posts$;
       }
-    )
+    ) 
+  }
+
+  onScroll(e: any) {
+    this.postService.getPosts(this.pageNumber++, true).subscribe();
 
   }
 

@@ -15,6 +15,7 @@ import {ToggleButtonModule} from 'primeng/togglebutton';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 const routes: Routes = [
   {path: '', component: HomeComponent, canActivate: [CanActivateGuard]}
@@ -27,6 +28,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     SharedModule,
+    InfiniteScrollModule,
     ButtonModule,
     CardModule,
     InputTextModule,
