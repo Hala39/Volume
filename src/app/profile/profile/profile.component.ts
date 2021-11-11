@@ -1,3 +1,4 @@
+import { NotificationService } from './../../services/notification.service';
 import { ChatService } from './../../services/chat.service';
 import { PresenceService } from './../../services/presence.service';
 import { UserService } from './../../services/user.service';
@@ -11,6 +12,7 @@ import { AppUser } from 'src/app/models/appUser';
 import { File } from 'src/app/models/file';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MenuItem, PrimeIcons } from 'primeng/api';
+import { Notification } from '../../models/notification';
 
 @Component({
   selector: 'app-profile',
@@ -21,6 +23,7 @@ export class ProfileComponent implements OnInit {
 
   constructor(private profileService: ProfileService, private followService: FollowService, private router: Router,
     private userService: UserService, public presenceService: PresenceService, private chatService: ChatService,
+    private notificationService: NotificationService,
     private activatedRoute : ActivatedRoute, private cdr: ChangeDetectorRef) {
       this.user$ = this.userService.user$;
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -43,6 +46,7 @@ export class ProfileComponent implements OnInit {
   followings$: Observable<AppUser[]>;
   photos$: Observable<File[]>;
   user$: Observable<UserCard>;
+  activities$: Observable<Notification[]>;
   contact: AppUser;
 
   userId = this.activatedRoute.snapshot.paramMap.get('id')? 
@@ -55,7 +59,6 @@ export class ProfileComponent implements OnInit {
         var currentProfile = this.profileService.profileSource.value;
         currentProfile.isFollowing = !currentProfile.isFollowing;
         this.profileService.profileSource.next(currentProfile);
-        console.log(currentProfile.isFollowing)
       }
     );
   }
@@ -84,14 +87,14 @@ export class ProfileComponent implements OnInit {
     )
   }
 
-
   loadThread() {
-    this.profileService.getAppUser(this.userId).subscribe(
-      response => {
-        this.chatService.createHubConnection(response);
-      }
-    );
-    
+    this.chatService.createHubConnection(this.userId);    
+  }
+
+  getActivities() {
+    this.notificationService.getActivities().subscribe(
+      response => this.activities$ = this.notificationService.activities$
+    )
   }
 
   // TabView
@@ -111,8 +114,11 @@ export class ProfileComponent implements OnInit {
       case 3:
         this.getFollowers();
         break;
-
       case 4:
+        this.getActivities();
+        break;
+
+      case 5:
         this.loadThread();
         break;
 

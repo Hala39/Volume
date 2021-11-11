@@ -7,8 +7,8 @@
 
         <div class="p-toolbar-group-right">
             <i class="right-icons pi pi-link pi-search p-mr-4" (click)="op.toggle($event)"></i>
-            <i class="right-icons pi pi-link pi-bell p-mr-4" pBadge severity="danger" *ngIf="(presenceService.notification$ | async)"></i>
-            <i class="right-icons pi pi-link pi-bell p-mr-4" *ngIf="!(presenceService.notification$ | async)" ></i>
+            <i class="right-icons pi pi-link pi-bell p-mr-4" (click)="op3.toggle($event)" pBadge severity="danger" *ngIf="(presenceService.alert$ | async)"></i>
+            <i class="right-icons pi pi-link pi-bell p-mr-4"  (click)="op3.toggle($event)" *ngIf="!(presenceService.alert$ | async)" ></i>
             <i class="right-icons pi pi-envelope p-mr-4" (click)="op2.toggle($event)" pBadge severity="danger" *ngIf="(presenceService.inbox$ | async)"></i>
             <i class="right-icons pi pi-envelope p-mr-4" (click)="op2.toggle($event)" *ngIf="!(presenceService.inbox$ | async)"></i>
             <p-avatar [image]="(user$ | async)?.profilePhotoUrl? (user$ | async)?.profilePhotoUrl : ''"
@@ -34,23 +34,25 @@
                         <a class="primary-link" (click)="clearAll()">Clear All</a>
                     </div>
                 </p-toolbar>
-                <div *ngFor="let searchOperation of (searchOperations$ | async)">
-                    <p-toolbar [style]="{border: 'none', cursor: 'pointer'}">
-                        <div class="p-toolbar-group-left"  (click)="search(searchOperation.keyword)">
-                            {{ searchOperation.keyword }}
-                        </div>
-                        <div class="p-toolbar-group-right">
-                            <i class="pi pi-times" (click)="removeOneOperation(searchOperation.id)" ></i>
-                        </div>
-                    </p-toolbar>
-                </div>
+                    <div *ngFor="let searchOperation of (searchOperations$ | async)">
+                        <p-toolbar [style]="{border: 'none', cursor: 'pointer'}">
+                            <div class="p-toolbar-group-left"  (click)="search(searchOperation.keyword)">
+                                {{ searchOperation.keyword }}
+                            </div>
+                            <div class="p-toolbar-group-right">
+                                <i class="pi pi-times" (click)="removeOneOperation(searchOperation.id)" ></i>
+                            </div>
+                        </p-toolbar>
+                    </div>
                 <div class="p-pl-3" *ngIf="(searchOperations$ | async)?.length === 0">
                     <p>Nothing to show.</p>
                 </div>
             </div>
-            <div *ngFor="let result of (searchResults$ | async)" class="mt-4">
-                <app-user-card [user]="result"></app-user-card>
-            </div>
+            <p-scrollPanel [style]="{height: '250px'}">
+                <div *ngFor="let result of (searchResults$ | async)" class="mt-4">
+                    <app-user-card [user]="result" [search]="true"></app-user-card>
+                </div>
+            </p-scrollPanel>
             <div *ngIf="(searchResults$ | async)?.length === 0" class="mt-4">
                 No results found. Try with other keywords.
             </div>
@@ -59,11 +61,12 @@
 </p-overlayPanel>
 
 
-<p-overlayPanel #op2 [dismissable]="false" [showCloseIcon]="true" (onShow)="getContacts()">
+<p-overlayPanel #op2 [dismissable]="false" [showCloseIcon]="true">
     <ng-template pTemplate>
     <p-card header="Inbox">
-        <div *ngFor="let contact of (contacts$ | async)" (click)="navigate(contact.id)"
-        [ngClass]="contact.lastMessageReceived.id > contact.lastMessageSent.id? contact.lastMessageReceived.seen? 'read' : 'unread' 
+        <p-scrollPanel [style]="{height: '300px'}">
+            <div *ngFor="let contact of (contacts$ | async)" (click)="navigateToMessages(contact.id)"
+                [ngClass]="contact.lastMessageReceived.id > contact.lastMessageSent.id? contact.lastMessageReceived.seen? 'read' : 'unread' 
             : contact.lastMessageSent.seen? 'read' : 'unread'">
             <div class="d-flex flex-row p-pt-3 px-3"> 
                 <p-avatar [image]="contact.profilePhotoUrl? contact.profilePhotoUrl : ''" 
@@ -83,10 +86,31 @@
                         contact.lastMessageReceived.senderDisplayName : contact.lastMessageSent.senderDisplayName}}</span>
                         : {{contact.lastMessageReceived.id > contact.lastMessageSent.id? contact.lastMessageReceived.content : contact.lastMessageSent.content}}</p>
                 </div>
-    
             </div>
         </div>
+        </p-scrollPanel>
     </p-card>
     </ng-template>
 </p-overlayPanel>
 
+<p-overlayPanel #op3 [dismissable]="false" [showCloseIcon]="true" (onHide)="onNotificationsHide()">
+    <ng-template pTemplate>
+        <p-card header="Notifications">
+            <p-scrollPanel [style]="{height: '300px'}">
+                <p-toolbar [style]="{border: 'none'}">
+                    <div class="p-toolbar-group-left">
+                        <h6 class="mt-4" ></h6>
+                    </div>
+                    <div class="p-toolbar-group-right">
+                        <a class="primary-link" (click)="clearAllNotifications()">Clear All</a>
+                    </div>
+                </p-toolbar>
+                <div  *ngFor="let notification of (presenceService.notification$ | async)" 
+                (click)="navigate(notification)" 
+                [ngClass]="notification.seen? 'read' : 'unread'" class="p-mb-1">
+                    <app-notification [notification]="notification"></app-notification>
+                </div>
+            </p-scrollPanel>
+        </p-card>
+    </ng-template>
+</p-overlayPanel>

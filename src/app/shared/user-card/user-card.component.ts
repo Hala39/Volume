@@ -17,6 +17,7 @@ export class UserCardComponent implements OnInit {
   }
 
   @Input() user: AppUser;
+  @Input() search: boolean = false;
   @Output() removeFromSuggestionsEmitter = new EventEmitter<string>();
   
   followToggle(id: string) {

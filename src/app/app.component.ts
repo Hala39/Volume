@@ -17,10 +17,8 @@ export class AppComponent {
     private router: Router, private likeService: LikeService,
     private presenceService: PresenceService) {
     this.userService.userSource.next(JSON.parse(localStorage.getItem("userCard")));
-    if (this.userService.loggedIn) {
+    if (this.userService.loggedIn && !this.userService.isExpired) {
       this.presenceService.createHubConnection();
-      // this.likeService.createHubConnection();
-
     }
   }
 
@@ -31,16 +29,13 @@ export class AppComponent {
 
   navigateToMessage(id: string) {
     this.router.navigateByUrl("/profile/messages/" + id);
-    this.presenceService.inboxNotificationSource.next(false);
   }
 
   navigateToPost(id: string) {
     this.router.navigateByUrl("/post/" + id);
-    this.presenceService.notificationSource.next(false);
   }
 
   navigateToProfile(id: string) {
     this.router.navigateByUrl("/profile/" + id);
-    this.presenceService.notificationSource.next(false);
   }
 }

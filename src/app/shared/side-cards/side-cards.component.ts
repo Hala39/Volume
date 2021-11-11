@@ -18,13 +18,13 @@ export class SideCardsComponent implements OnInit {
   }
 
   suggestions$: Observable<AppUser[]>;
-
+  pageSize = 5;
   trends: string[] = [
     'AspNetCore', 'C#', 'Angular12', 'UI/UX', 'Programming', 'React', 'Ionic5', 'PrimeNg', 'Bootstrap'
   ];
 
   getSuggestions() {
-    this.profileService.getSuggestedUsersList().subscribe(
+    this.profileService.getSuggestedUsersList(this.pageSize).subscribe(
       response => this.suggestions$ = this.profileService.suggestions$
     )
   }
@@ -33,6 +33,5 @@ export class SideCardsComponent implements OnInit {
     var currentValue = this.profileService.suggestionsSource.value;
     currentValue = currentValue.filter(v => v.id !== $event);
     this.profileService.suggestionsSource.next(currentValue);
-    console.log(this.profileService.suggestionsSource.value)
   }
 }

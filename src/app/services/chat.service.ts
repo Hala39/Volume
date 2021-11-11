@@ -49,10 +49,10 @@ export class ChatService {
     );
   }
 
-  createHubConnection(other: AppUser) {
+  createHubConnection(otherId: string) {
 
     this.hubConnection = new HubConnectionBuilder()
-      .withUrl(this.hubUrl + 'message?user=' + other.id, {
+      .withUrl(this.hubUrl + 'message?user=' + otherId, {
         accessTokenFactory: () => localStorage.getItem("access_token")
       })
       .withAutomaticReconnect()
@@ -73,9 +73,7 @@ export class ChatService {
     })
 
     this.hubConnection.on('UpdatedGroup', (group: Group) => {
-      this.groupSource.next(group)
-      // console.log(group.connections)
-      // console.log(other.id)
+      this.groupSource.next(group);
       // if (group.connections.some(x => x.userId === other.id)) {
       //   this.threadSource.pipe(take(1)).subscribe(messages => {
       //     console.log(messages)

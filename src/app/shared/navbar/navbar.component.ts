@@ -1,3 +1,4 @@
+import { NotificationService } from './../../services/notification.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { PresenceService } from './../../services/presence.service';
 import { SearchService } from './../../services/search.service';
@@ -9,7 +10,13 @@ import { Router } from '@angular/router';
 import { UserCard } from './../../models/userCard';
 import { Component, OnInit } from '@angular/core';
 import { AppUser } from 'src/app/models/appUser';
+import { Notification } from 'src/app/models/notification';
 
+export enum phrases {
+  ' has liked your post.',
+  ' has commented on your post.',
+  ' has followed you.'
+}
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -21,8 +28,10 @@ export class NavbarComponent implements OnInit {
     private chatService: ChatService,
     public presenceService: PresenceService,
     private searchService: SearchService,
+    private notificationService: NotificationService,
     private profileService: ProfileService) {
-    this.user$ = this.userService.user$
+    this.user$ = this.userService.user$;
+    this.contacts$ = this.chatService.contacts$;
   }
 
   ngOnInit(): void {
@@ -85,19 +94,42 @@ export class NavbarComponent implements OnInit {
 
   hideRecent: boolean = false;
 
-
-  getContacts() {
-    this.chatService.getContacts().subscribe(
-      response => {
-        this.contacts$ = this.chatService.contacts$;
-        console.log(response)
-      }
-    )
-  }
-
-  navigate(id: string) {
+  navigateToMessages(id: string) {
     this.presenceService.inboxNotificationSource.next(false);
     this.router.navigateByUrl("/profile/messages/" + id);
   }
  
+  navigate(notification: Notification) {
+    switch (notification.stimulation) {
+      case 0 || 1:
+        this.router.navigateByUrl('/post/' + notification.path);
+        break;
+      case 2: 
+        this.router.navigateByUrl('/profile/' + notification.path);
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  onNotificationsShow() {
+    
+  }
+
+  onNotificationsHide() {
+    this.notificationService.markRead().subscribe(
+      response => {
+        this.presenceService.notificationAlertSource.next(false);
+      }
+    );
+  }
+
+  deleteOne(id: number) {
+    this.notificationService.deleteOne(id).subscribe();
+  }
+
+  clearAllNotifications() {
+    this.notificationService.clearAll("notifications").subscribe();
+  }
 }

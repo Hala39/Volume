@@ -100,10 +100,10 @@ export class ProfileService {
     )
   }
 
-  getSuggestedUsersList() {
+  getSuggestedUsersList(pageSize: number) {
     let params = new HttpParams();
     params = params.append("Suggest", true);
-    params = params.append("PageSize", 5);
+    params = params.append("PageSize", pageSize);
     return this.apiCaller.get<AppUser[]>(this.baseUrl, {observe: 'response', params}).pipe(
       map(response => {
         this.paginatedSuggestionsResult.result = response.body; 

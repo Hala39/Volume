@@ -44,11 +44,9 @@ export class CommentService {
 
     this.hubConnection.on('LoadComments', comments => {
       this.commentsSource.next(comments);
-      console.log(comments)
     })
 
     this.hubConnection.on('ReceiveComment', comment => {
-      console.log(comment)
       this.comments$.pipe(take(1)).subscribe(comments => {
         this.commentsSource.next([...comments, comment]);
         this.messageService.add({severity: 'info', summary: "New comment", sticky: true})

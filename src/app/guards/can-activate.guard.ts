@@ -14,7 +14,7 @@ export class CanActivateGuard implements CanActivate {
                 state: RouterStateSnapshot): boolean {
  
         //check some condition  
-        if (this.userService.loggedIn === false)  {
+        if (this.userService.loggedIn === false || this.userService.isExpired === true)  {
             this.messageService.add({severity: 'warn', summary: 'Unauthorized', detail: 'Please login first!'});
             this.router.navigateByUrl("/");
             return false;

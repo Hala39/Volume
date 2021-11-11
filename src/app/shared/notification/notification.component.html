@@ -1,0 +1,21 @@
+<p-toolbar [style]="{border: 'none'}">
+    <div class="p-toolbar-group-left">
+        <h6 class="mt-2" >
+            <b>{{notification.stimulatorName}}</b> 
+        <span [ngSwitch]="notification.stimulation">
+            <span class="p-ml-1" *ngSwitchCase="0">
+                has liked your post.
+            </span>
+            <span class="p-ml-1" *ngSwitchCase="1">
+                has commented on your post.
+            </span>
+            <span class="p-ml-1" *ngSwitchCase="2">
+                has followed you.
+            </span>
+        </span>
+        </h6>
+    </div>
+    <div class="p-toolbar-group-right">
+        <small style="font-size: x-small;">@{{notification.date | date:"shortTime"}}</small>
+    </div>
+</p-toolbar>

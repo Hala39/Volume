@@ -8,11 +8,17 @@
             </p-button>
             </div>
         </div>
-        <p *ngIf="(profile$ | async)?.hometown !== null" ><i class="pi pi-home p-mr-2 mt-2"></i>From {{ (profile$ | async)?.hometown }}</p>
-        <p *ngIf="(profile$ | async)?.dob  !== null" ><i class="pi pi-calendar p-mr-2"></i>Born in {{ (profile$ | async)?.dob  }}</p>
-        <p *ngIf="(profile$ | async)?.title  !== null"><i class="pi pi-briefcase p-mr-2"></i>Works as {{ (profile$ | async)?.title  }}</p>
-        <p *ngIf="(profile$ | async)?.phoneNumber !== null"><i class="pi pi-mobile p-mr-2"></i>Call at {{ (profile$ | async)?.phoneNumber  }}</p>
-        <p *ngIf="(profile$ | async)?.gender !== null"><i class="pi pi-user p-mr-2"></i>{{ (profile$ | async)?.gender }}</p>
+        <p-scrollPanel [style]="{height: '200px'}">
+            <p *ngIf="(profile$ | async)?.hometown !== null" ><i class="pi pi-home p-mr-2 mt-2"></i>From {{ (profile$ | async)?.hometown }}</p>
+            <p *ngIf="(profile$ | async)?.dob  !== null" ><i class="pi pi-calendar p-mr-2"></i>Born in {{ (profile$ | async)?.dob  }}</p>
+            <p *ngIf="(profile$ | async)?.title  !== null"><i class="pi pi-briefcase p-mr-2"></i>Works as {{ (profile$ | async)?.title  }}</p>
+            <p *ngIf="(profile$ | async)?.phoneNumber !== null"><i class="pi pi-mobile p-mr-2"></i>Call at {{ (profile$ | async)?.phoneNumber  }}</p>
+            <p *ngIf="(profile$ | async)?.gender !== null"><i class="pi pi-user p-mr-2"></i>{{ (profile$ | async)?.gender }}</p>
+            <p *ngIf="!((profile$ | async)?.gender && (profile$ | async)?.phoneNumber
+            && (profile$ | async)?.title && (profile$ | async)?.dob && (profile$ | async)?.hometown)">
+                Nothing to show.
+            </p>
+        </p-scrollPanel>
     </div>
 </div>
 

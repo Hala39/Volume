@@ -69,9 +69,13 @@ export class UserService {
     this.presenceService.stopHubConnection();
   }
   
-  getExpiration() {
-    return localStorage.getItem("expirationDate");
+  getExpiration() : Date {
+    return JSON.parse(localStorage.getItem("expirationDate"));
   } 
+
+  public get isExpired() : boolean {
+    return JSON.parse(localStorage.getItem("expirationDate")) > Date.now;
+  }
 
   refreshPage() {
     var currentRoute: string = this.router.url;

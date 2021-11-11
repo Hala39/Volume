@@ -28,6 +28,7 @@
             styleClass="p-button-rounded p-button-warning p-button-text"></p-button>
             <i class="pi pi-ellipsis-v"
             *ngIf="(user$ | async)?.id === userId"
+            #followButton
             (click)="menu.toggle($event)">
             </i>
         </div>
@@ -41,18 +42,22 @@
             </p-tabPanel>
             <p-tabPanel header="Photos">
                 <ng-template pTemplate="content">
-                    <app-galleria [photos]="(photos$ | async)"></app-galleria>
+                    <p-scrollPanel [style]="{height: '200px'}">
+                        <app-galleria [photos]="(photos$ | async)"></app-galleria>
+                    </p-scrollPanel>
                 </ng-template>
             </p-tabPanel>
             <p-tabPanel header="Followings">
                 <ng-template pTemplate="content">
+                    <p-scrollPanel [style]="{height: '200px'}">
+                        <div class="row">
+                            <div class="col-12 col-md-6 pt-1" *ngFor="let user of (followings$ | async)">
+                                <app-user-card [user]="user"></app-user-card>
+                            </div>
+                        </div>
+                    </p-scrollPanel>
                     <div *ngIf="(followings$ | async)?.length === 0">
                         Nothing to show.
-                    </div>
-                    <div class="row">
-                        <div class="col-12 col-md-6 pt-1" *ngFor="let user of (followings$ | async)">
-                            <app-user-card [user]="user"></app-user-card>
-                        </div>
                     </div>
                 </ng-template>
             </p-tabPanel>
@@ -61,11 +66,20 @@
                     <div *ngIf="(followers$ | async)?.length === 0">
                         Nothing to show.
                     </div>
-                    <div class="row">
-                        <div class="col-12 col-md-6 pt-1" *ngFor="let user of (followers$ | async)">
-                            <app-user-card [user]="user"></app-user-card>
+                    <p-scrollPanel [style]="{height: '200px'}">
+                        <div class="row">
+                            <div class="col-12 col-md-6 pt-1" *ngFor="let user of (followers$ | async)">
+                                <app-user-card [user]="user"></app-user-card>
+                            </div>
                         </div>
-                    </div>
+                    </p-scrollPanel>
+                </ng-template>
+            </p-tabPanel>
+            <p-tabPanel header="Activities">
+                <ng-template pTemplate="content">
+                    <p-scrollPanel [style]="{height: '200px'}" *ngIf="(user$ | async)?.id === userId">
+                        
+                    </p-scrollPanel>
                 </ng-template>
             </p-tabPanel>
             <p-tabPanel header="Messaging" *ngIf="(user$ | async)?.id !== userId" controlClose="true" (onClose)="stopHub($event)">

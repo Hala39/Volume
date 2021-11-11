@@ -1,3 +1,4 @@
+import { CanActivateGuard } from './../guards/can-activate.guard';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -26,9 +27,9 @@ import { ThreadComponent } from './thread/thread.component';
 import { SlideMenuModule } from 'primeng/slidemenu';
 
 const routes : Routes = [
-  { path: ':id', component: ProfileComponent},
-  { path: '', component: ProfileComponent},
-  { path: 'messages/:id', component: ProfileComponent}
+  { path: ':id', component: ProfileComponent, canActivate: [CanActivateGuard]},
+  { path: '', component: ProfileComponent, canActivate: [CanActivateGuard]},
+  { path: 'messages/:id', component: ProfileComponent, canActivate: [CanActivateGuard]}
 ]
 
 @NgModule({

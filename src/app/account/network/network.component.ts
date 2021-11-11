@@ -17,6 +17,7 @@ export class NetworkComponent implements OnInit {
   }
 
   suggestions$: Observable<AppUser[]>;
+  pageSize = 3;
 
   @Output() activeIndexEmitter = new EventEmitter<number>();
 
@@ -25,12 +26,12 @@ export class NetworkComponent implements OnInit {
   }
 
   getSuggestions() {
-    this.profileService.getSuggestedUsersList().subscribe(
+    this.profileService.getSuggestedUsersList(this.pageSize).subscribe(
       response => this.suggestions$ = this.profileService.suggestions$
     )
   }
 
   remove($event: string) {
-    this.profileService.getSuggestedUsersList().subscribe()
+    this.profileService.getSuggestedUsersList(this.pageSize).subscribe()
   }
 }

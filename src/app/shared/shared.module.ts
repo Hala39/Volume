@@ -1,3 +1,4 @@
+import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { PostComponent } from './post/post.component';
 import { BadgeModule } from 'primeng/badge';
 import { InputTextareaModule } from 'primeng/inputtextarea';
@@ -40,6 +41,7 @@ import { FileUploaderComponent } from './file-uploader/file-uploader.component';
 import { InputMaskModule } from 'primeng/inputmask';
 import {ChipsModule} from 'primeng/chips';
 import { AddProfilePhotoComponent } from './add-profile-photo/add-profile-photo.component';
+import { NotificationComponent } from './notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,8 @@ import { AddProfilePhotoComponent } from './add-profile-photo/add-profile-photo.
     AddPostComponent,
     FileUploaderComponent,
     AddProfilePhotoComponent,
-    PostComponent
+    PostComponent,
+    NotificationComponent
   ],
   imports: [
     CommonModule,
@@ -88,7 +91,8 @@ import { AddProfilePhotoComponent } from './add-profile-photo/add-profile-photo.
     RadioButtonModule,
     EditorModule,
     InputTextareaModule,
-    BadgeModule
+    BadgeModule,
+    ScrollPanelModule
   ],
   exports: [
     PostCardComponent,

@@ -19,6 +19,7 @@
     </div>
     <div class="p-toolbar-group-right">
         <p-button pRipple type="button" 
+        *ngIf="!search"
         [label]="user.isFollowing? 'Following' : 'Follow'" 
         [icon]="user.isFollowing? 'pi pi-check' : 'pi pi-plus'" 
         (click)="followToggle(user.id)"
