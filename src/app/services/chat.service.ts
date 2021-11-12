@@ -49,10 +49,12 @@ export class ChatService {
     );
   }
 
-  createHubConnection(otherId: string) {
-
+  createHubConnection(otherId: string, pageNumber?: number, scroll?: boolean) {
+    if (scroll !== true) {
+      pageNumber = 1;
+    }
     this.hubConnection = new HubConnectionBuilder()
-      .withUrl(this.hubUrl + 'message?user=' + otherId, {
+      .withUrl(this.hubUrl + 'message?user=' + otherId + '&pageNumber=' + pageNumber.toString(), {
         accessTokenFactory: () => localStorage.getItem("access_token")
       })
       .withAutomaticReconnect()
@@ -62,8 +64,18 @@ export class ChatService {
       .catch(error => console.log(error));
       // .finally(() => this.busyService.idle());
 
-    this.hubConnection.on('ReceiveMessageThread', messages => {
-      this.threadSource.next(messages);
+    this.hubConnection.on('ReceiveMessageThread', (messages: Message[]) => {
+      if (scroll === true)
+          {
+            var initialValue = this.threadSource.value;
+            initialValue = initialValue.concat(messages);
+            this.threadSource.next(initialValue);
+          }
+          else 
+          {
+            this.threadSource.next(messages.reverse());
+          }
+
     })
 
     this.hubConnection.on('NewMessage', message => {
@@ -98,12 +110,24 @@ export class ChatService {
 
   paginatedResult = new PaginatedResult<AppUser[]>();
 
-  getContacts() {
+  getContacts(pageNumber: number, scroll: boolean) {
     let params = new HttpParams();
+    params = params.append("pageNumber", pageNumber.toString());
+    params = params.append("pageSize", 5);
     return this.apiCaller.get<AppUser[]>(this.baseUrl + 'contact', {observe: 'response', params}).pipe(
       map(response => {
-        this.paginatedResult.result = response.body;
-        this.contactsSource.next(response.body);
+        if (scroll === true)
+          {
+            var initialValue = this.contactsSource.value;
+            initialValue = initialValue.concat(response.body);
+            this.contactsSource.next(initialValue);
+          }
+          else 
+          {
+            this.contactsSource.next(response.body);
+          }
+          
+          this.paginatedResult.result = response.body;
         
         if (response.headers.get("Pagination") !== null) {
           this.paginatedResult.pagination = JSON.parse(response.headers.get("Pagination"));

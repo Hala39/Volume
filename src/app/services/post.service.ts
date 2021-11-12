@@ -63,16 +63,10 @@ export class PostService {
             var initialValue = this.postsSource.value;
             initialValue = initialValue.concat(response.body);
             this.postsSource.next(initialValue);
-            console.log(response.body)
-            console.log(pageNumber)
-            
-            // console.log(initialValue);
           }
           else 
           {
             this.postsSource.next(response.body);
-            // console.log(response.body)
-            // console.log(pageNumber)
           }
         
         if (response.headers.get("Pagination") !== null) {

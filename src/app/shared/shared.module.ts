@@ -42,6 +42,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 import {ChipsModule} from 'primeng/chips';
 import { AddProfilePhotoComponent } from './add-profile-photo/add-profile-photo.component';
 import { NotificationComponent } from './notification/notification.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { NotificationComponent } from './notification/notification.component';
   ],
   imports: [
     CommonModule,
+    InfiniteScrollModule,
     ReactiveFormsModule,
     OverlayPanelModule,
     ChipsModule,

@@ -20,7 +20,7 @@
         <i class="pi pi-ellipsis-h"></i>
     </div>
 </p-toolbar>
-<p-scrollPanel #sc [style]="{height: '600px', border: '1px solid #304562'}">
+<p-scrollPanel #sc [style]="{height: '600px', border: '1px solid #304562'}" infiniteScroll [infiniteScrollDistance]="2" (scrolledUp)="onScroll($event)">
     <div *ngIf="(messages$ | async).length === 0">
         <div class="col-12 d-flex justify-content-center pt-5">
             No messages yet. Say "Hello" to begin.

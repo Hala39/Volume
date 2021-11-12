@@ -64,7 +64,7 @@
 <p-overlayPanel #op2 [dismissable]="false" [showCloseIcon]="true">
     <ng-template pTemplate>
     <p-card header="Inbox">
-        <p-scrollPanel [style]="{height: '300px'}">
+        <p-scrollPanel [style]="{height: '300px'}" infiniteScroll [infiniteScrollDistance]="0.5" (scrolled)="onScroll($event)">
             <div *ngFor="let contact of (contacts$ | async)" (click)="navigateToMessages(contact.id)"
                 [ngClass]="contact.lastMessageReceived.id > contact.lastMessageSent.id? contact.lastMessageReceived.seen? 'read' : 'unread' 
             : contact.lastMessageSent.seen? 'read' : 'unread'">

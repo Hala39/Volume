@@ -116,7 +116,6 @@ export class ThreadComponent implements OnInit, OnDestroy {
     this.form.patchValue({"message": data + $event.native});
   }
 
-
   items: MenuItem[] = [
     { label: 'Delete', icon: PrimeIcons.TRASH, command: () => {
       this.deleteMessage(this.selectedMessage.id);
@@ -143,5 +142,10 @@ export class ThreadComponent implements OnInit, OnDestroy {
 
   }
 
+  pageNumber = 2;
+  onScroll(e: any) {
+    // this.chatService.createHubConnection(this.contactId, this.pageNumber++, true);
+    console.log("hi")
+  }
 
 }

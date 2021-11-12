@@ -132,4 +132,11 @@ export class NavbarComponent implements OnInit {
   clearAllNotifications() {
     this.notificationService.clearAll("notifications").subscribe();
   }
+
+  pageNumber = 2;
+
+  onScroll(e: any) {
+    this.chatService.getContacts(this.pageNumber++, true).subscribe();
+
+  }
 }
