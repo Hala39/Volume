@@ -1,3 +1,4 @@
+import { PresenceService } from './presence.service';
 import { PaginatedResult } from './../models/paginatedResult';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -11,7 +12,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class NotificationService {
 
-  constructor(private apiCaller: HttpClient) { }
+  constructor(private apiCaller: HttpClient, private presenceService: PresenceService) { }
 
   baseUrl = environment.apiUrl + 'notification/';
 
@@ -20,11 +21,21 @@ export class NotificationService {
   activitiesSource = new BehaviorSubject<Notification[]>([]);
   activities$ = this.activitiesSource.asObservable();
 
-  getActivities() {
+  getActivities(pageNumber?: number, scroll?: boolean) {
     let params = new HttpParams();
     return this.apiCaller.get<Notification[]>(this.baseUrl + 'activities', {observe: 'response', params}).pipe(
       map(response => {
-        this.activitiesSource.next(response.body);
+        if (scroll === true)
+        {
+          var initialValue = this.activitiesSource.value;
+          initialValue = initialValue.concat(response.body);
+          this.activitiesSource.next(initialValue);
+        }
+        else 
+        {
+          this.activitiesSource.next(response.body);
+        }
+        
         this.paginatedResult.result = response.body;
 
         if (response.headers.get("Pagination") !== null) {
@@ -45,6 +56,14 @@ export class NotificationService {
   }
 
   clearAll(predicate: string) {
-    return this.apiCaller.delete(this.baseUrl + "?predicate=" + predicate);
+    return this.apiCaller.delete(this.baseUrl + "?predicate=" + predicate).pipe(
+      map(response => {
+        if (predicate === 'activities') {
+          this.activitiesSource.next([]);
+        } else if (predicate === 'notifications') {
+          this.presenceService.notificationsSource.next([]);
+        }
+      })
+    );
   }
 }

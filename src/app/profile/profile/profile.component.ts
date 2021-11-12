@@ -5,7 +5,7 @@ import { UserService } from './../../services/user.service';
 import { FollowService } from './../../services/follow.service';
 import { Observable } from 'rxjs';
 import { UserCard } from 'src/app/models/userCard';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ProfileService } from 'src/app/services/profile.service';
 import { Profile } from 'src/app/models/userProfile';
 import { AppUser } from 'src/app/models/appUser';
@@ -97,6 +97,10 @@ export class ProfileComponent implements OnInit {
     )
   }
 
+  clearAllActivities() {
+    this.notificationService.clearAll('activities').subscribe();
+  }
+
   // TabView
   index = this.activatedRoute.toString().includes('messages')? 4 : 0;
 
@@ -114,6 +118,7 @@ export class ProfileComponent implements OnInit {
       case 3:
         this.getFollowers();
         break;
+
       case 4:
         this.getActivities();
         break;
@@ -149,4 +154,5 @@ export class ProfileComponent implements OnInit {
     this.displayDialog = false;
     this.profile$ = this.profileService.profile$;
   }
+
 }

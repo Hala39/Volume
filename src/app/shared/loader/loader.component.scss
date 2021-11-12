@@ -1,0 +1,13 @@
+
+
+.core {
+    cursor: pointer;
+    background-color: #304562;
+    color: rgba(255, 255, 255, 0.6);
+    border-radius: 30px;
+    width: 100%;
+}
+
+.core:hover, .core:active, .core::after, .core:focus {
+    color: rgba(255, 255, 255, 0.87);
+}

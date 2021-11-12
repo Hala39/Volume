@@ -1,5 +1,5 @@
 import { PresenceService } from '../../services/presence.service';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { faGrinAlt, faImage } from '@fortawesome/free-regular-svg-icons';
 import { faTimes, faPaperclip } from '@fortawesome/free-solid-svg-icons';
@@ -15,7 +15,6 @@ import { DatePipe } from '@angular/common';
 import { take } from 'rxjs/operators';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-thread',
   templateUrl: './thread.component.html',
   styleUrls: ['./thread.component.scss'],
@@ -31,31 +30,60 @@ export class ThreadComponent implements OnInit, OnDestroy {
     this.messages$ = this.chatService.thread$;
     this.user$ = this.userService.user$;
   }
+  
 
-  @ViewChild('sc') private myScrollContainer: any;
-
+  @ViewChild('scrollframe', {static: false}) scrollFrame: ElementRef;
+  @ViewChildren('item') itemElements: QueryList<any>;
 
     ngAfterViewChecked() {  
       this.cdr.detectChanges();
-      this.scrollToBottom();   
     } 
 
-  scrollToBottom(): void {
-    try {
-      this.myScrollContainer.scrollTop(10000)
-    } catch(err) { }                 
-}
+  private scrollContainer: any;
+  private isNearBottom = true;
+
+  ngAfterViewInit() {
+    this.scrollContainer = this.scrollFrame;
+    this.itemElements.changes.subscribe(_ => this.onItemElementsChanged());    
+  }
+  
+  private onItemElementsChanged(): void {
+    if (this.isNearBottom) {
+      this.scrollToBottom();
+    }
+  }
 
   scrollTop(scrollTop: any) {
     this.contentViewChild.nativeElement.scrollTop = scrollTop;
-    
   }
+
+  scrollToBottom() {
+    this.scrollContainer.scrollTop(30000);
+  }
+
+  private isUserNearBottom(): boolean {
+    const threshold = 150;
+    const position = this.scrollContainer.scrollTop + this.scrollContainer.offsetHeight;
+    const height = this.scrollContainer.scrollHeight;
+    return position > height - threshold;
+  }
+
+  scrolled(event: any): void {
+    this.isNearBottom = this.isUserNearBottom();
+  }
+
+  //Infinite scroll
+  pageNumber = 2;
+
+  onScroll(e: any) {
+    console.log('scrolled up!', e);
+    console.log("hi")
+  }
+  
   
   ngOnInit(): void {
     this.getContact();
     this.build();
-    this.scrollToBottom();  
-
   }
 
   ngOnDestroy() {
@@ -142,10 +170,5 @@ export class ThreadComponent implements OnInit, OnDestroy {
 
   }
 
-  pageNumber = 2;
-  onScroll(e: any) {
-    // this.chatService.createHubConnection(this.contactId, this.pageNumber++, true);
-    console.log("hi")
-  }
 
 }

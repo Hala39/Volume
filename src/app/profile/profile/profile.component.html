@@ -55,6 +55,7 @@
                                 <app-user-card [user]="user"></app-user-card>
                             </div>
                         </div>
+                        <app-loader *ngIf="(followings$ | async)?.length > 10"></app-loader>
                     </p-scrollPanel>
                     <div *ngIf="(followings$ | async)?.length === 0">
                         Nothing to show.
@@ -72,13 +73,25 @@
                                 <app-user-card [user]="user"></app-user-card>
                             </div>
                         </div>
+                        <app-loader *ngIf="(followers$ | async)?.length > 10"></app-loader>
                     </p-scrollPanel>
                 </ng-template>
             </p-tabPanel>
-            <p-tabPanel header="Activities">
+            <p-tabPanel header="Activities"  *ngIf="(user$ | async)?.id === userId">
                 <ng-template pTemplate="content">
-                    <p-scrollPanel [style]="{height: '200px'}" *ngIf="(user$ | async)?.id === userId">
-                        
+                    <p-scrollPanel [style]="{height: '200px'}">
+                        <p-toolbar [style]="{border: 'none'}">
+                            <div class="p-toolbar-group-left">
+                                <h6 class="mt-4" ></h6>
+                            </div>
+                            <div class="p-toolbar-group-right">
+                                <a class="primary-link" (click)="clearAllActivities()">Clear All</a>
+                            </div>
+                        </p-toolbar>
+                        <div *ngFor="let notification of (activities$ | async)">
+                            <app-notification [notification]="notification" [predicate]="'activities'"></app-notification>
+                        </div>
+                        <app-loader *ngIf="(activities$ | async)?.length > 10"></app-loader>
                     </p-scrollPanel>
                 </ng-template>
             </p-tabPanel>

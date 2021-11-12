@@ -55,7 +55,7 @@ export class PostService {
   getPosts(pageNumber: number, scroll: boolean) {
     let params = new HttpParams();
     params = params.append("pageNumber", pageNumber.toString())
-    params = params.append("pageSize", "2")
+    params = params.append("pageSize", "5")
     return this.apiCaller.get<Post[]>(this.baseUrl, {observe: 'response', params}).pipe(
       map(response => {
           if (scroll === true)

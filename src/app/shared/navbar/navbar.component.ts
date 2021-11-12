@@ -98,24 +98,6 @@ export class NavbarComponent implements OnInit {
     this.presenceService.inboxNotificationSource.next(false);
     this.router.navigateByUrl("/profile/messages/" + id);
   }
- 
-  navigate(notification: Notification) {
-    switch (notification.stimulation) {
-      case 0 || 1:
-        this.router.navigateByUrl('/post/' + notification.path);
-        break;
-      case 2: 
-        this.router.navigateByUrl('/profile/' + notification.path);
-        break;
-
-      default:
-        break;
-    }
-  }
-
-  onNotificationsShow() {
-    
-  }
 
   onNotificationsHide() {
     this.notificationService.markRead().subscribe(
@@ -137,6 +119,5 @@ export class NavbarComponent implements OnInit {
 
   onScroll(e: any) {
     this.chatService.getContacts(this.pageNumber++, true).subscribe();
-
   }
 }

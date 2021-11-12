@@ -43,6 +43,7 @@ import {ChipsModule} from 'primeng/chips';
 import { AddProfilePhotoComponent } from './add-profile-photo/add-profile-photo.component';
 import { NotificationComponent } from './notification/notification.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     FileUploaderComponent,
     AddProfilePhotoComponent,
     PostComponent,
-    NotificationComponent
+    NotificationComponent,
+    LoaderComponent
   ],
   imports: [
     CommonModule,
@@ -106,7 +108,9 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     IdentityComponent,
     UserCardComponent,
     AddPostComponent,
-    AddProfilePhotoComponent
+    AddProfilePhotoComponent,
+    NotificationComponent,
+    LoaderComponent
   ]
 })
 export class SharedModule { }

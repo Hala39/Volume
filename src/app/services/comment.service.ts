@@ -30,7 +30,6 @@ export class CommentService {
   }
 
   createHubConnection(postId: number) {
-
     this.hubConnection = new HubConnectionBuilder()
       .withUrl(this.hubUrl + 'comment?postId=' + postId, {
         accessTokenFactory: () => localStorage.getItem("access_token")
@@ -47,10 +46,9 @@ export class CommentService {
     })
 
     this.hubConnection.on('ReceiveComment', comment => {
-      this.comments$.pipe(take(1)).subscribe(comments => {
-        this.commentsSource.next([...comments, comment]);
-        this.messageService.add({severity: 'info', summary: "New comment", sticky: true})
-      })
+      var currentValue = this.commentsSource.value;
+      currentValue.unshift(comment);
+      this.commentsSource.next(currentValue);
     })
 
   }

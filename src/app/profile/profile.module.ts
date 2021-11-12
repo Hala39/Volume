@@ -27,6 +27,7 @@ import { ThreadComponent } from './thread/thread.component';
 import { SlideMenuModule } from 'primeng/slidemenu';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
+
 const routes : Routes = [
   { path: ':id', component: ProfileComponent, canActivate: [CanActivateGuard]},
   { path: '', component: ProfileComponent, canActivate: [CanActivateGuard]},
@@ -42,9 +43,9 @@ const routes : Routes = [
   imports: [
     CommonModule,
     SharedModule,
+    InfiniteScrollModule,
     FileUploadModule,
     OverlayPanelModule,
-    InfiniteScrollModule,
     SlideMenuModule,
     DialogModule,
     InputTextModule,

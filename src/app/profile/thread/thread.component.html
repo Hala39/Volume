@@ -20,13 +20,14 @@
         <i class="pi pi-ellipsis-h"></i>
     </div>
 </p-toolbar>
-<p-scrollPanel #sc [style]="{height: '600px', border: '1px solid #304562'}" infiniteScroll [infiniteScrollDistance]="2" (scrolledUp)="onScroll($event)">
+<p-scrollPanel [style]="{height: '600px', border: '1px solid #304562'}" class="frame" (scroll)="scrolled($event)" #scrollframe
+infiniteScroll [infiniteScrollDistance]="2" (scrolled)="onScroll($event)">
     <div *ngIf="(messages$ | async).length === 0">
         <div class="col-12 d-flex justify-content-center pt-5">
             No messages yet. Say "Hello" to begin.
         </div>
     </div>
-    <div *ngFor="let message of (messages$ | async)">
+    <div *ngFor="let message of (messages$ | async)" #item>
         <div class="d-flex flex-row p-pt-5 px-3"> 
             <p-avatar [image]="message.senderId === contact?.id? contact?.profilePhotoUrl : (user$ | async)?.profilePhotoUrl" 
             [icon]="(message.senderId === contact?.id && contact?.profilePhotoUrl === null)? 'pi pi-user' : '' "

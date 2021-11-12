@@ -49,12 +49,9 @@ export class ChatService {
     );
   }
 
-  createHubConnection(otherId: string, pageNumber?: number, scroll?: boolean) {
-    if (scroll !== true) {
-      pageNumber = 1;
-    }
+  createHubConnection(otherId: string) {
     this.hubConnection = new HubConnectionBuilder()
-      .withUrl(this.hubUrl + 'message?user=' + otherId + '&pageNumber=' + pageNumber.toString(), {
+      .withUrl(this.hubUrl + 'message?user=' + otherId, {
         accessTokenFactory: () => localStorage.getItem("access_token")
       })
       .withAutomaticReconnect()
@@ -65,17 +62,7 @@ export class ChatService {
       // .finally(() => this.busyService.idle());
 
     this.hubConnection.on('ReceiveMessageThread', (messages: Message[]) => {
-      if (scroll === true)
-          {
-            var initialValue = this.threadSource.value;
-            initialValue = initialValue.concat(messages);
-            this.threadSource.next(initialValue);
-          }
-          else 
-          {
-            this.threadSource.next(messages.reverse());
-          }
-
+      this.threadSource.next(messages.reverse());
     })
 
     this.hubConnection.on('NewMessage', message => {

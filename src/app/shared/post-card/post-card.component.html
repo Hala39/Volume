@@ -50,9 +50,8 @@
 
                         <!-- Comments -->
                         <div class="mt-2" *ngIf="commentsExpanded">
-                            <p-scrollPanel [style]="{ height: '200px'}">
-
-                            <div *ngFor="let comment of (comments$ | async )">
+                            <p-scrollPanel [style]="{ height: '300px'}" *ngIf="(comments$ | async ).length > 0">
+                                <div *ngFor="let comment of (comments$ | async )">
                                     <div class="d-flex flex-row mt-4"> 
                                         <p-avatar [image]="comment.appUser?.profilePhotoUrl? comment.appUser?.profilePhotoUrl : ''" 
                                         [icon]="comment.appUser?.profilePhotoUrl? '' : 'pi pi-user'" (click)="goToProfile(comment.appUser?.id)"
@@ -73,8 +72,8 @@
                                         icon="pi pi-trash" 
                                         styleClass="p-button-rounded p-button-warning p-button-text"></p-button>
                                     </div>
-                            </div>
-                        </p-scrollPanel>
+                                </div>
+                            </p-scrollPanel>
 
                             <div class="d-flex flex-row mt-4">
                                 <p-avatar [image]="(user$ | async)?.profilePhotoUrl? (user$ | async)?.profilePhotoUrl : ''" 

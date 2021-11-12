@@ -105,8 +105,7 @@
                         <a class="primary-link" (click)="clearAllNotifications()">Clear All</a>
                     </div>
                 </p-toolbar>
-                <div  *ngFor="let notification of (presenceService.notification$ | async)" 
-                (click)="navigate(notification)" 
+                <div  *ngFor="let notification of (presenceService.notification$ | async)"  
                 [ngClass]="notification.seen? 'read' : 'unread'" class="p-mb-1">
                     <app-notification [notification]="notification"></app-notification>
                 </div>

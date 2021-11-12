@@ -17,7 +17,7 @@ import { AppUser } from '../models/appUser';
 export class PresenceService {
 
   constructor(private messageService: MessageService, private followService: FollowService,
-    private chatService: ChatService, private apiCaller: HttpClient,
+    private chatService: ChatService,
     private likeService: LikeService) { }
 
   baseUrl = environment.apiUrl + 'notification/';  
