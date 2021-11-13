@@ -10,9 +10,8 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./notification.component.scss']
 })
 export class NotificationComponent implements OnInit {
-
-  constructor(private router: Router, private notificationService: NotificationService, 
-      private presenceService: PresenceService) { }
+ 
+  constructor(private router: Router, private notificationService: NotificationService) {}
 
   ngOnInit(): void {
   }
@@ -38,9 +37,9 @@ export class NotificationComponent implements OnInit {
     this.notificationService.deleteOne(this.notification.id).subscribe(
       response => {
         if (this.predicate === 'notification') {
-          var currentValue = this.presenceService.notificationsSource.value;
+          var currentValue = this.notificationService.notificationsSource.value;
           currentValue = currentValue.filter(n => n.id !== this.notification.id);
-          this.presenceService.notificationsSource.next(currentValue);
+          this.notificationService.notificationsSource.next(currentValue);
         } else if (this.predicate === 'activities') {
           var currentValue = this.notificationService.activitiesSource.value;
           currentValue = currentValue.filter(a => a.id !== this.notification.id);

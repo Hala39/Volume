@@ -61,10 +61,10 @@
 </p-overlayPanel>
 
 
-<p-overlayPanel #op2 [dismissable]="false" [showCloseIcon]="true">
+<p-overlayPanel #op2 [dismissable]="false" [showCloseIcon]="true" (onShow)="onContactsShow()">
     <ng-template pTemplate>
     <p-card header="Inbox">
-        <p-scrollPanel [style]="{height: '300px'}" infiniteScroll [infiniteScrollDistance]="0.5" (scrolled)="onScroll($event)">
+        <p-scrollPanel [style]="{height: '300px'}">
             <div *ngFor="let contact of (contacts$ | async)" (click)="navigateToMessages(contact.id)"
                 [ngClass]="contact.lastMessageReceived.id > contact.lastMessageSent.id? contact.lastMessageReceived.seen? 'read' : 'unread' 
             : contact.lastMessageSent.seen? 'read' : 'unread'">
@@ -93,7 +93,8 @@
     </ng-template>
 </p-overlayPanel>
 
-<p-overlayPanel #op3 [dismissable]="false" [showCloseIcon]="true" (onHide)="onNotificationsHide()">
+<p-overlayPanel #op3 [dismissable]="false" [showCloseIcon]="true" 
+(onHide)="onNotificationsHide()" (onShow)="onNotificationsShow()">
     <ng-template pTemplate>
         <p-card header="Notifications">
             <p-scrollPanel [style]="{height: '300px'}">
@@ -105,7 +106,7 @@
                         <a class="primary-link" (click)="clearAllNotifications()">Clear All</a>
                     </div>
                 </p-toolbar>
-                <div  *ngFor="let notification of (presenceService.notification$ | async)"  
+                <div  *ngFor="let notification of (notifications$ | async)"  
                 [ngClass]="notification.seen? 'read' : 'unread'" class="p-mb-1">
                     <app-notification [notification]="notification"></app-notification>
                 </div>

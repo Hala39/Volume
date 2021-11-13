@@ -1,4 +1,4 @@
-
+import { Guid } from "guid-typescript";
 export interface Message {
     id: number;
     content: string;
@@ -9,4 +9,5 @@ export interface Message {
     senderId?: string;
     senderDeleted?: boolean;
     recipientDeleted?: boolean;
+    guid?: Guid;
 }

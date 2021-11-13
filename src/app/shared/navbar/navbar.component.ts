@@ -42,6 +42,8 @@ export class NavbarComponent implements OnInit {
 
   contacts$: Observable<AppUser[]>;
 
+  notifications$: Observable<Notification[]>;
+
   searchOperations$: Observable<SearchOperation[]>;
 
   searchResults$: Observable<AppUser[]>;
@@ -99,6 +101,12 @@ export class NavbarComponent implements OnInit {
     this.router.navigateByUrl("/profile/messages/" + id);
   }
 
+  onNotificationsShow() {
+    this.notificationService.getNotifications().subscribe(
+      response => this.notifications$ = this.notificationService.notifications$
+    );
+  }
+
   onNotificationsHide() {
     this.notificationService.markRead().subscribe(
       response => {
@@ -115,9 +123,12 @@ export class NavbarComponent implements OnInit {
     this.notificationService.clearAll("notifications").subscribe();
   }
 
-  pageNumber = 2;
 
-  onScroll(e: any) {
-    this.chatService.getContacts(this.pageNumber++, true).subscribe();
+  onContactsShow() {
+    this.getContacts();
+  }
+
+  getContacts() {
+    this.chatService.getContacts().subscribe();
   }
 }

@@ -16,8 +16,8 @@ import { AppUser } from '../models/appUser';
 })
 export class PresenceService {
 
-  constructor(private messageService: MessageService, private followService: FollowService,
-    private chatService: ChatService,
+  constructor(private messageService: MessageService, 
+    private followService: FollowService,
     private likeService: LikeService) { }
 
   baseUrl = environment.apiUrl + 'notification/';  
@@ -32,9 +32,6 @@ export class PresenceService {
 
   notificationAlertSource = new BehaviorSubject<boolean>(false);
   alert$ = this.notificationAlertSource.asObservable();
-
-  notificationsSource = new BehaviorSubject<Notification[]>([]);
-  notification$ = this.notificationsSource.asObservable();
 
   createHubConnection() {
     this.hubConnection = new HubConnectionBuilder()
@@ -64,8 +61,7 @@ export class PresenceService {
       this.onlineUsersSource.next(ids);
     })
 
-    this.hubConnection.on("NewMessageReceived", ({id, displayName, messageId}) => {
-      console.log(messageId)
+    this.hubConnection.on("NewMessageReceived", ({id, displayName, guid}) => {
       this.messageService.add({severity: 'info', key: 'new-message', summary: 'New message', data: id,
       detail: displayName + ' sent you a message.', sticky: true});
       this.inboxNotificationSource.next(true)
@@ -94,14 +90,11 @@ export class PresenceService {
     this.hubConnection.on("CheckNotifications", bool => {
       console.log(bool)
        if (bool) {
-        
         this.notificationAlertSource.next(true);
        }
     })
 
     this.hubConnection.on("CheckMessages", bool => {
-      console.log(bool)
-
       if (bool) {
         this.inboxNotificationSource.next(true);
       }

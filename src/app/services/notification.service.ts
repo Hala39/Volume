@@ -1,9 +1,9 @@
+import { Notification } from 'src/app/models/notification';
 import { PresenceService } from './presence.service';
 import { PaginatedResult } from './../models/paginatedResult';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
-import { Notification } from '../models/notification';
 import { map } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 
@@ -16,10 +16,13 @@ export class NotificationService {
 
   baseUrl = environment.apiUrl + 'notification/';
 
-  paginatedResult = new PaginatedResult<Notification[]>();
-
+  paginatedActivitiesResult = new PaginatedResult<Notification[]>();
   activitiesSource = new BehaviorSubject<Notification[]>([]);
   activities$ = this.activitiesSource.asObservable();
+
+  paginatedNotificationsResult = new PaginatedResult<Notification[]>();
+  notificationsSource = new BehaviorSubject<Notification[]>([]);
+  notifications$ = this.notificationsSource.asObservable();
 
   getActivities(pageNumber?: number, scroll?: boolean) {
     let params = new HttpParams();
@@ -36,13 +39,29 @@ export class NotificationService {
           this.activitiesSource.next(response.body);
         }
         
-        this.paginatedResult.result = response.body;
+        this.paginatedActivitiesResult.result = response.body;
 
         if (response.headers.get("Pagination") !== null) {
-          this.paginatedResult.pagination = JSON.parse(response.headers.get("Pagination"));
+          this.paginatedActivitiesResult.pagination = JSON.parse(response.headers.get("Pagination"));
         }
 
         return response.body;
+      })
+    )
+  }
+
+  getNotifications() {
+    let params = new HttpParams();
+    return this.apiCaller.get<Notification[]>(this.baseUrl, {observe: 'response', params}).pipe(
+      map(response => {
+        this.paginatedNotificationsResult.result = response.body;
+        this.notificationsSource.next(response.body);
+        if (response.headers.get("Pagination") !== null) {
+          this.paginatedNotificationsResult.pagination = JSON.parse(response.headers.get("Pagination"));
+        }
+
+        return response.body;
+
       })
     )
   }
@@ -61,7 +80,7 @@ export class NotificationService {
         if (predicate === 'activities') {
           this.activitiesSource.next([]);
         } else if (predicate === 'notifications') {
-          this.presenceService.notificationsSource.next([]);
+          this.notificationsSource.next([]);
         }
       })
     );
