@@ -43,6 +43,7 @@ const routes : Routes = [
   imports: [
     CommonModule,
     SharedModule,
+    FontAwesomeModule,
     InfiniteScrollModule,
     FileUploadModule,
     OverlayPanelModule,

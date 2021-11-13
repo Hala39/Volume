@@ -133,7 +133,7 @@
 <div class="d-flex justify-content-center mt-3">
     <div class="col-12 col-sm-6 col-md-6">
         <p-card styleClass="joined">
-            <h3 style="text-align: center;">Joined in 19/02/1999 </h3>
+            <h3 style="text-align: center;">Joined in {{(profile$ | async)?.joinedAt | date}} </h3>
         </p-card>
     </div>
 </div>

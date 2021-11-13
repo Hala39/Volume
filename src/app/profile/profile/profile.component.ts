@@ -120,11 +120,12 @@ export class ProfileComponent implements OnInit {
         break;
 
       case 4:
-        this.getActivities();
-        break;
-
-      case 5:
-        this.loadThread();
+        if (this.userService.userSource.value.id === this.userId) {
+          this.getActivities();
+        } else {
+          this.loadThread();
+        }
+        
         break;
 
       default:

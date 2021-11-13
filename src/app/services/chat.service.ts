@@ -62,6 +62,7 @@ export class ChatService {
       // .finally(() => this.busyService.idle());
 
     this.hubConnection.on('ReceiveMessageThread', (messages: Message[]) => {
+      console.log(messages)
       this.threadSource.next(messages.reverse());
     })
 
@@ -78,8 +79,8 @@ export class ChatService {
       //     console.log(messages)
       //     messages.forEach(message => {
 
-      //       if (message.seenAt === null) {
-      //         message.seenAt = new Date(Date.now())
+      //       if (message.seen === false) {
+      //         message.seen = true
       //       }
       //     })
       //     this.threadSource.next([...messages]);

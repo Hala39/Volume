@@ -1,8 +1,9 @@
 import { PresenceService } from '../../services/presence.service';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { faGrinAlt, faImage } from '@fortawesome/free-regular-svg-icons';
-import { faTimes, faPaperclip } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faGrinAlt, faImage } from '@fortawesome/free-regular-svg-icons';
+import { faCheckCircle as farCheckCircle} from '@fortawesome/free-regular-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { AppUser } from 'src/app/models/appUser';
 import { Message } from 'src/app/models/message';
@@ -22,7 +23,6 @@ import { take } from 'rxjs/operators';
 })
 export class ThreadComponent implements OnInit, OnDestroy {
 
-  contentViewChild: any;
 
   constructor(private chatService: ChatService, private userService: UserService,
     private profileService: ProfileService, private DatePipe: DatePipe,
@@ -31,13 +31,16 @@ export class ThreadComponent implements OnInit, OnDestroy {
     this.user$ = this.userService.user$;
   }
   
+  contentViewChild: any;
+  Sent = faCheckCircle;
+  Seen = farCheckCircle;
 
   @ViewChild('scrollframe', {static: false}) scrollFrame: ElementRef;
   @ViewChildren('item') itemElements: QueryList<any>;
 
-    ngAfterViewChecked() {  
-      this.cdr.detectChanges();
-    } 
+  ngAfterViewChecked() {  
+    this.cdr.detectChanges();
+  } 
 
   private scrollContainer: any;
   private isNearBottom = true;
@@ -70,14 +73,6 @@ export class ThreadComponent implements OnInit, OnDestroy {
 
   scrolled(event: any): void {
     this.isNearBottom = this.isUserNearBottom();
-  }
-
-  //Infinite scroll
-  pageNumber = 2;
-
-  onScroll(e: any) {
-    console.log('scrolled up!', e);
-    console.log("hi")
   }
   
   
@@ -147,16 +142,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
   items: MenuItem[] = [
     { label: 'Delete', icon: PrimeIcons.TRASH, command: () => {
       this.deleteMessage(this.selectedMessage.id);
-    }},
-    { label: 'info', icon: PrimeIcons.INFO_CIRCLE, command: () => {
-      this.items[1].items[0].label = 'Seen @' + this.DatePipe.transform(this.selectedMessage.seenAt, 'shortTime'),
-      this.items[1].items[1].label = 'Sent @' + this.DatePipe.transform(this.selectedMessage.sentAt, 'shortTime')
-    },
-      items: [
-        {label: ''},
-        {label: ''}
-      ]
-    }
+    }}
   ] 
 
 

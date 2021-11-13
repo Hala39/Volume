@@ -13,4 +13,5 @@ export class Profile {
     lastActive?: Date;
     profilePhotoUrl?: string;
     posts?: Post[] = [];
+    joinedAt?: Date;
 }

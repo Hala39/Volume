@@ -64,7 +64,8 @@ export class PresenceService {
       this.onlineUsersSource.next(ids);
     })
 
-    this.hubConnection.on("NewMessageReceived", ({id, displayName}) => {
+    this.hubConnection.on("NewMessageReceived", ({id, displayName, messageId}) => {
+      console.log(messageId)
       this.messageService.add({severity: 'info', key: 'new-message', summary: 'New message', data: id,
       detail: displayName + ' sent you a message.', sticky: true});
       this.inboxNotificationSource.next(true)
@@ -90,16 +91,18 @@ export class PresenceService {
        this.likeService.stopHubConnection();
     })
 
-    this.hubConnection.on("ReceiveNotifications", (notifications: Notification[]) => {
-       this.notificationsSource.next(notifications);
-       if (notifications[0].seen === false) {
+    this.hubConnection.on("CheckNotifications", bool => {
+      console.log(bool)
+       if (bool) {
+        
         this.notificationAlertSource.next(true);
        }
     })
 
-    this.hubConnection.on("ReceiveContacts", (contacts: AppUser[]) => {
-      this.chatService.contactsSource.next(contacts);
-      if (contacts[0].lastMessageReceived.seen === false) {
+    this.hubConnection.on("CheckMessages", bool => {
+      console.log(bool)
+
+      if (bool) {
         this.inboxNotificationSource.next(true);
       }
    })

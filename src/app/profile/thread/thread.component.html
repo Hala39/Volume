@@ -20,8 +20,7 @@
         <i class="pi pi-ellipsis-h"></i>
     </div>
 </p-toolbar>
-<p-scrollPanel [style]="{height: '600px', border: '1px solid #304562'}" class="frame" (scroll)="scrolled($event)" #scrollframe
-infiniteScroll [infiniteScrollDistance]="2" (scrolled)="onScroll($event)">
+<p-scrollPanel [style]="{height: '600px', border: '1px solid #304562'}" class="frame" (scroll)="scrolled($event)" #scrollframe>
     <div *ngIf="(messages$ | async).length === 0">
         <div class="col-12 d-flex justify-content-center pt-5">
             No messages yet. Say "Hello" to begin.
@@ -44,7 +43,9 @@ infiniteScroll [infiniteScrollDistance]="2" (scrolled)="onScroll($event)">
                 <p class="text-justify">{{message.content}}</p>
             </div>
 
-        <i (click)="selectMessage($event, message)" class="pi pi-ellipsis-v"></i>
+        <!-- <i (click)="selectMessage($event, message)" class="pi pi-ellipsis-v"></i> -->
+        <fa-icon [icon]="Sent" style="font-size: smaller" *ngIf="message.seen === false"></fa-icon>
+        <fa-icon [icon]="Seen" style="font-size: smaller;" *ngIf="message.seen === true"></fa-icon>
         </div>
     </div>
 </p-scrollPanel>
@@ -62,4 +63,4 @@ infiniteScroll [infiniteScrollDistance]="2" (scrolled)="onScroll($event)">
     </ng-template>
 </p-overlayPanel>
 
-<p-slideMenu [model]="items" #menu [popup]="true"></p-slideMenu>
+<p-menu [model]="items" #menu [popup]="true"></p-menu>
