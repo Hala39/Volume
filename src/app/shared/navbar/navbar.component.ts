@@ -107,6 +107,15 @@ export class NavbarComponent implements OnInit {
     );
   }
 
+  pageNumber = 2;
+
+  onNotificationsLoad() {
+    this.notificationService.getNotifications(this.pageNumber++, true).subscribe(
+      response => this.notifications$ = this.notificationService.notifications$
+    );
+
+  }
+
   onNotificationsHide() {
     this.notificationService.markRead().subscribe(
       response => {
@@ -131,4 +140,5 @@ export class NavbarComponent implements OnInit {
   getContacts() {
     this.chatService.getContacts().subscribe();
   }
+
 }

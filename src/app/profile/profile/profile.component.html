@@ -55,7 +55,10 @@
                                 <app-user-card [user]="user"></app-user-card>
                             </div>
                         </div>
-                        <app-loader *ngIf="(followings$ | async)?.length > 10"></app-loader>
+                        <app-loader *ngIf="(followings$ | async)?.length >= 10 && !noMoreFollowings"></app-loader>
+                        <div *ngIf="noMoreFollowings" class="d-flex justify-content-center">
+                            <small>No more results</small>    
+                        </div>
                     </p-scrollPanel>
                     <div *ngIf="(followings$ | async)?.length === 0">
                         Nothing to show.
@@ -73,7 +76,10 @@
                                 <app-user-card [user]="user"></app-user-card>
                             </div>
                         </div>
-                        <app-loader *ngIf="(followers$ | async)?.length > 10"></app-loader>
+                        <app-loader *ngIf="(followers$ | async)?.length >= 10 && !noMoreFollowers"></app-loader>
+                        <div *ngIf="noMoreFollowers" class="d-flex justify-content-center">
+                            <small>No more results</small>    
+                        </div>
                     </p-scrollPanel>
                 </ng-template>
             </p-tabPanel>
@@ -91,7 +97,10 @@
                         <div *ngFor="let notification of (activities$ | async)">
                             <app-notification [notification]="notification" [predicate]="'activities'"></app-notification>
                         </div>
-                        <app-loader *ngIf="(activities$ | async)?.length > 10"></app-loader>
+                        <app-loader (click)="onActivitiesLoad()" *ngIf="(activities$ | async)?.length >= 10 && !noMoreActivities"></app-loader>
+                        <div *ngIf="noMoreActivities" class="d-flex justify-content-center">
+                            <small>No more results</small>    
+                        </div>
                     </p-scrollPanel>
                 </ng-template>
             </p-tabPanel>

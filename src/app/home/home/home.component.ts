@@ -19,7 +19,6 @@ export class HomeComponent implements OnInit {
     this.getPosts(1);
   }
 
-  pageNumber = 2;
   posts$: Observable<Post[]>;
 
   user: UserCard = JSON.parse(localStorage.getItem('userCard'));
@@ -31,6 +30,8 @@ export class HomeComponent implements OnInit {
       }
     ) 
   }
+
+  pageNumber = 2;
 
   onScroll(e: any) {
     this.postService.getPosts(this.pageNumber++, true).subscribe();

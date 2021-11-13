@@ -156,4 +156,45 @@ export class ProfileComponent implements OnInit {
     this.profile$ = this.profileService.profile$;
   }
 
+
+  //Pagination
+  pageNumber = 2;
+
+  noMoreActivities = false;
+  onActivitiesLoad() {
+    this.notificationService.getActivities(this.pageNumber++, true).subscribe(
+      response => {
+        if (this.notificationService.paginatedActivitiesResult.pagination.currentPage === 
+          this.notificationService.paginatedActivitiesResult.pagination.totalPages) {
+          this.noMoreActivities = true;
+        }
+      }
+    );
+  }
+
+  noMoreFollowers = false;
+  onFollowersLoad() {
+    this.followService.getUserFollowing(this.userId, 'followers', this.pageNumber++, true).subscribe(
+      response => {
+        this.followers$ = this.followService.followers$;
+        if (this.followService.paginatedFollowers.pagination.currentPage === 
+          this.followService.paginatedFollowers.pagination.totalPages) {
+            this.noMoreFollowings = true;
+          }
+      }
+    )
+  }
+
+  noMoreFollowings = false;
+  onFollowingsLoad() {
+    this.followService.getUserFollowing(this.userId, 'followings', this.pageNumber++, true).subscribe(
+      response => {
+        this.followings$ = this.followService.followings$;
+        if (this.followService.paginatedFollowings.pagination.currentPage === 
+          this.followService.paginatedFollowings.pagination.totalPages) {
+            this.noMoreFollowings = true;
+          }
+      }
+    )
+  }
 }

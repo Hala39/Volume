@@ -110,6 +110,7 @@
                 [ngClass]="notification.seen? 'read' : 'unread'" class="p-mb-1">
                     <app-notification [notification]="notification"></app-notification>
                 </div>
+                <app-loader *ngIf="(notifications$ | async)?.length > 10" (click)="onNotificationsLoad()"></app-loader>
             </p-scrollPanel>
         </p-card>
     </ng-template>

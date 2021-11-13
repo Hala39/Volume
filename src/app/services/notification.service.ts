@@ -26,6 +26,9 @@ export class NotificationService {
 
   getActivities(pageNumber?: number, scroll?: boolean) {
     let params = new HttpParams();
+    if (pageNumber) {
+      params = params.append("pageNumber", pageNumber.toString());
+    }
     return this.apiCaller.get<Notification[]>(this.baseUrl + 'activities', {observe: 'response', params}).pipe(
       map(response => {
         if (scroll === true)
@@ -43,6 +46,7 @@ export class NotificationService {
 
         if (response.headers.get("Pagination") !== null) {
           this.paginatedActivitiesResult.pagination = JSON.parse(response.headers.get("Pagination"));
+          console.log(JSON.parse(response.headers.get("Pagination")));
         }
 
         return response.body;
@@ -50,12 +54,24 @@ export class NotificationService {
     )
   }
 
-  getNotifications() {
+  getNotifications(pageNumber?: number, scroll?: boolean) {
     let params = new HttpParams();
+    if (pageNumber) {
+      params = params.append("pageNumber", pageNumber.toString());
+    }
     return this.apiCaller.get<Notification[]>(this.baseUrl, {observe: 'response', params}).pipe(
       map(response => {
-        this.paginatedNotificationsResult.result = response.body;
-        this.notificationsSource.next(response.body);
+        if (scroll === true)
+          {
+            var initialValue = this.notificationsSource.value;
+            initialValue = initialValue.concat(response.body);
+            this.notificationsSource.next(initialValue);
+          }
+          else 
+          {
+            this.notificationsSource.next(response.body);
+          }
+            this.paginatedNotificationsResult.result = response.body;
         if (response.headers.get("Pagination") !== null) {
           this.paginatedNotificationsResult.pagination = JSON.parse(response.headers.get("Pagination"));
         }
