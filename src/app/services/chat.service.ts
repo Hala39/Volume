@@ -35,24 +35,9 @@ export class ChatService {
 
   groupSource = new BehaviorSubject<Group>(null);
 
-  async addMessage(recipientId: string, content: string) {
-    this.hubConnection.invoke("SendMessage", {RecipientId: recipientId, content})
-    .catch(error => console.log(error))
-  }
-
-  deleteMessage(id: number) {
-    return this.apiCaller.delete(this.baseUrl + id.toString()).pipe(
-      map(response => {
-        var currentThreadValue = this.threadSource.value;
-        currentThreadValue = currentThreadValue.filter(m => m.id !== id);
-        this.threadSource.next(currentThreadValue);
-      })
-    );
-  }
-
-  createHubConnection(otherId: string) {
+  createHubConnection(contactId: string) {
     this.hubConnection = new HubConnectionBuilder()
-      .withUrl(this.hubUrl + 'message?user=' + otherId, {
+      .withUrl(this.hubUrl + 'message?contactId=' + contactId, {
         accessTokenFactory: () => localStorage.getItem("access_token")
       })
       .withAutomaticReconnect()
@@ -61,15 +46,10 @@ export class ChatService {
     this.hubConnection.start()
       .catch(error => console.log(error));
 
-    this.getMessageThread(otherId).subscribe(
+    this.getMessageThread(contactId).subscribe(
       res => console.log(res)
     );
       // .finally(() => this.busyService.idle());
-
-    // this.hubConnection.on('ReceiveMessageThread', (messages: Message[]) => {
-    //   console.log(messages)
-    //   this.threadSource.next(messages.reverse());
-    // })
 
     this.hubConnection.on('NewMessage', message => {
       this.thread$.pipe(take(1)).subscribe(messages => {
@@ -78,17 +58,14 @@ export class ChatService {
     })
 
     this.hubConnection.on('UpdatedGroup', (group: Group) => {
-      this.groupSource.next(group);
-      if (group.connections.some(x => x.userId === otherId)) {
-        this.threadSource.pipe(take(1)).subscribe(messages => {
-          messages.forEach(message => {
-            if (message.seen === false) {
-              message.seen = true
-            }
-          })
-          this.threadSource.next([...messages]);
-        })
+      if (group.connections.some(x => x.userId === contactId)) {
+        this.threadSource.value.forEach(message => {
+           if (message.seen === false) {
+             message.seen = true
+           } 
+        });
       }
+      
     })
   }
 
@@ -99,12 +76,28 @@ export class ChatService {
     }
   }
 
+  async addMessage(recipientId: string, content: string) {
+    this.hubConnection.invoke("SendMessage", {RecipientId: recipientId, content})
+    .catch(error => console.log(error))
+  }
+
+  deleteMessage(id: Guid) {
+    return this.apiCaller.delete(this.baseUrl + id.toString()).pipe(
+      map(response => {
+        var currentThreadValue = this.threadSource.value;
+        currentThreadValue = currentThreadValue.filter(m => m.id !== id);
+        this.threadSource.next(currentThreadValue);
+      })
+    );
+  }
+
   paginatedResult = new PaginatedResult<AppUser[]>();
 
   getContacts(pageNumber?: number, scroll?: boolean) {
     let params = new HttpParams();
-    // params = params.append("pageNumber", pageNumber.toString());
-    // params = params.append("pageSize", 5);
+    if (pageNumber) {
+      params = params.append("pageNumber", pageNumber.toString());
+    }
     return this.apiCaller.get<AppUser[]>(this.baseUrl + 'contact', {observe: 'response', params}).pipe(
       map(response => {
         if (scroll === true)
@@ -140,14 +133,24 @@ export class ChatService {
     )
   }
 
-  getMessageThread(contactId: string) {
+  getMessageThread(contactId: string, pageNumber?: number, scroll?: boolean) {
     let params = new HttpParams();
+    if (pageNumber) {
+      params = params.append("pageNumber", pageNumber.toString());
+    }
     return this.apiCaller.get<Message[]>(this.baseUrl + contactId.toString(), {observe: 'response', params}).pipe(
       map(response => {
-        console.log(response)
-        this.paginatedThreadResult.result = response.body;
-        this.threadSource.next(response.body);
-
+        if (scroll === true)
+          {
+            var initialValue = this.threadSource.value;
+            initialValue = response.body.reverse().concat(initialValue.concat());
+            this.threadSource.next(initialValue);
+          }
+          else 
+          {
+            this.threadSource.next(response.body.reverse());
+          }
+          
         if (response.headers.get("Pagination") !== null) {
           this.paginatedThreadResult.pagination = JSON.parse(response.headers.get("Pagination"));
         }

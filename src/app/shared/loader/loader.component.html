@@ -1,3 +1,9 @@
-<div class="core d-flex justify-content-center py-2 mt-2">
-    Load more {{predicate}}
+<div class="px-5">
+    <div *ngIf="!noMore" class="core d-flex justify-content-center py-2 mt-2">
+        Load more {{predicate}}
+    </div>
+    
+    <div *ngIf="noMore" class="d-flex justify-content-center py-2 mt-2 mx-2">
+        <small>No more results.</small>
+    </div>
 </div>

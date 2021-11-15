@@ -1,7 +1,8 @@
+import { Guid } from 'guid-typescript';
 import { AppUser } from './appUser';
 
 export interface Comment { 
-    id?: number;
+    id?: Guid;
     postId: number;
     appUser: AppUser;
     content: string;

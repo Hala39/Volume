@@ -7,5 +7,14 @@
     .p-toast {
         cursor: pointer;
     }
+
+    .p-overlaypanel .p-overlaypanel-content {
+        max-width: 100% !important;
+    }
 }
 
+@media screen and (max-width: 300px) {
+    body {
+        font-size: small;
+    }
+}

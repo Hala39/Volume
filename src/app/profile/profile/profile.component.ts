@@ -1,3 +1,4 @@
+import { PostService } from 'src/app/services/post.service';
 import { NotificationService } from './../../services/notification.service';
 import { ChatService } from './../../services/chat.service';
 import { PresenceService } from './../../services/presence.service';
@@ -5,7 +6,7 @@ import { UserService } from './../../services/user.service';
 import { FollowService } from './../../services/follow.service';
 import { Observable } from 'rxjs';
 import { UserCard } from 'src/app/models/userCard';
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { ProfileService } from 'src/app/services/profile.service';
 import { Profile } from 'src/app/models/userProfile';
 import { AppUser } from 'src/app/models/appUser';
@@ -13,17 +14,19 @@ import { File } from 'src/app/models/file';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MenuItem, PrimeIcons } from 'primeng/api';
 import { Notification } from '../../models/notification';
+import { Post } from 'src/app/models/post';
+import { SavedPost } from 'src/app/models/savedPost';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
 
   constructor(private profileService: ProfileService, private followService: FollowService, private router: Router,
     private userService: UserService, public presenceService: PresenceService, private chatService: ChatService,
-    private notificationService: NotificationService,
+    private notificationService: NotificationService, private postService: PostService,
     private activatedRoute : ActivatedRoute, private cdr: ChangeDetectorRef) {
       this.user$ = this.userService.user$;
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -31,7 +34,11 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProfile();
+    this.getPosts();
+  }
 
+  ngOnDestroy() {
+    this.stopHub();
   }
 
   ngAfterViewInit() {
@@ -45,8 +52,10 @@ export class ProfileComponent implements OnInit {
   followers$: Observable<AppUser[]>;
   followings$: Observable<AppUser[]>;
   photos$: Observable<File[]>;
+  posts$: Observable<Post[]>;
   user$: Observable<UserCard>;
   activities$: Observable<Notification[]>;
+  saved$: Observable<SavedPost[]>;
   contact: AppUser;
 
   userId = this.activatedRoute.snapshot.paramMap.get('id')? 
@@ -67,6 +76,13 @@ export class ProfileComponent implements OnInit {
     this.profileService.getProfileForUser(this.userId).subscribe(
       response => this.profile$ = this.profileService.profile$
     );
+  }
+
+
+  getPosts() {
+    this.profileService.getPostsForUser(this.userId).subscribe(
+      response => this.posts$ = this.profileService.posts$
+    )
   }
 
   getFollowers() {
@@ -101,6 +117,12 @@ export class ProfileComponent implements OnInit {
     this.notificationService.clearAll('activities').subscribe();
   }
 
+  getSavedPosts() {
+    this.postService.getSavedPosts().subscribe(
+      response => this.saved$ = this.postService.saved$
+    );
+  }
+
   // TabView
   index = this.activatedRoute.toString().includes('messages')? 4 : 0;
 
@@ -109,22 +131,30 @@ export class ProfileComponent implements OnInit {
     switch (index) {
       case 1:
         this.getPhotos();
+        this.stopHub();
         break;
 
       case 2:
         this.getFollowings();
+        this.stopHub();
         break;
 
       case 3:
         this.getFollowers();
+        this.stopHub();
         break;
 
       case 4:
         if (this.userService.userSource.value.id === this.userId) {
-          this.getActivities();
+          this.getSavedPosts();
+          this.stopHub();
         } else {
           this.loadThread();
         }
+        break;  
+
+      case 5:
+        this.getActivities();
         
         break;
 
@@ -133,7 +163,7 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  stopHub($event: any) {
+  stopHub() {
     this.chatService.stopHubConnection();
   }
 
@@ -160,12 +190,24 @@ export class ProfileComponent implements OnInit {
   //Pagination
   pageNumber = 2;
 
+  noMorePhotos = false;
+  onPhotosLoad() {
+    this.profileService.getPhotosForUser(this.userId, this.pageNumber++, true).subscribe(
+      response => {
+        var pagination = this.profileService.paginatedPhotos.pagination;
+        if (pagination.currentPage === pagination.totalPages) {
+          this.noMorePhotos = true;
+        }
+      }
+    )
+  }
+
   noMoreActivities = false;
   onActivitiesLoad() {
     this.notificationService.getActivities(this.pageNumber++, true).subscribe(
       response => {
-        if (this.notificationService.paginatedActivitiesResult.pagination.currentPage === 
-          this.notificationService.paginatedActivitiesResult.pagination.totalPages) {
+        var pagination = this.notificationService.paginatedActivitiesResult.pagination;
+        if (pagination.currentPage === pagination.totalPages) {
           this.noMoreActivities = true;
         }
       }
@@ -177,8 +219,8 @@ export class ProfileComponent implements OnInit {
     this.followService.getUserFollowing(this.userId, 'followers', this.pageNumber++, true).subscribe(
       response => {
         this.followers$ = this.followService.followers$;
-        if (this.followService.paginatedFollowers.pagination.currentPage === 
-          this.followService.paginatedFollowers.pagination.totalPages) {
+        var pagination = this.followService.paginatedFollowers.pagination;
+        if (pagination.currentPage === pagination.totalPages) {
             this.noMoreFollowings = true;
           }
       }
@@ -190,11 +232,15 @@ export class ProfileComponent implements OnInit {
     this.followService.getUserFollowing(this.userId, 'followings', this.pageNumber++, true).subscribe(
       response => {
         this.followings$ = this.followService.followings$;
-        if (this.followService.paginatedFollowings.pagination.currentPage === 
-          this.followService.paginatedFollowings.pagination.totalPages) {
+        var pagination = this.followService.paginatedFollowings.pagination;
+        if (pagination.currentPage === pagination.totalPages) {
             this.noMoreFollowings = true;
           }
       }
     )
+  }
+
+  onScroll(e: any) {
+    this.profileService.getPostsForUser(this.userId, this.pageNumber++, true).subscribe();
   }
 }

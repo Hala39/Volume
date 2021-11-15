@@ -34,16 +34,19 @@
                         <a class="primary-link" (click)="clearAll()">Clear All</a>
                     </div>
                 </p-toolbar>
-                    <div *ngFor="let searchOperation of (searchOperations$ | async)">
-                        <p-toolbar [style]="{border: 'none', cursor: 'pointer'}">
-                            <div class="p-toolbar-group-left"  (click)="search(searchOperation.keyword)">
-                                {{ searchOperation.keyword }}
-                            </div>
-                            <div class="p-toolbar-group-right">
-                                <i class="pi pi-times" (click)="removeOneOperation(searchOperation.id)" ></i>
-                            </div>
-                        </p-toolbar>
-                    </div>
+                    <p-scrollPanel>
+                        <div *ngFor="let searchOperation of (searchOperations$ | async)">
+                            <p-toolbar [style]="{border: 'none', cursor: 'pointer'}">
+                                <div class="p-toolbar-group-left"  (click)="search(searchOperation.keyword)">
+                                    {{ searchOperation.keyword }}
+                                </div>
+                                <div class="p-toolbar-group-right">
+                                    <i class="pi pi-times" (click)="removeOneOperation(searchOperation.id)" ></i>
+                                </div>
+                            </p-toolbar>
+                            <app-loader *ngIf="(searchOperations$ | async)?.length >= 10" (click)="onKeywordsLoad()" [noMore]="noMoreKeywords"></app-loader>
+                        </div>
+                    </p-scrollPanel>
                 <div class="p-pl-3" *ngIf="(searchOperations$ | async)?.length === 0">
                     <p>Nothing to show.</p>
                 </div>
@@ -64,10 +67,13 @@
 <p-overlayPanel #op2 [dismissable]="false" [showCloseIcon]="true" (onShow)="onContactsShow()">
     <ng-template pTemplate>
     <p-card header="Inbox">
+        <div *ngIf="(contacts$ | async)?.length === 0">
+            Nothing to show.
+        </div>
         <p-scrollPanel [style]="{height: '300px'}">
             <div *ngFor="let contact of (contacts$ | async)" (click)="navigateToMessages(contact.id)"
-                [ngClass]="contact.lastMessageReceived.id > contact.lastMessageSent.id? contact.lastMessageReceived.seen? 'read' : 'unread' 
-            : contact.lastMessageSent.seen? 'read' : 'unread'">
+                [ngClass]="contact.lastMessageReceived?.id > contact.lastMessageSent?.id? contact.lastMessageReceived?.seen? 'read' : 'unread' 
+            : contact.lastMessageSent?.seen? 'read' : 'unread'">
             <div class="d-flex flex-row p-pt-3 px-3"> 
                 <p-avatar [image]="contact.profilePhotoUrl? contact.profilePhotoUrl : ''" 
                 [icon]="contact.profilePhotoUrl? '' : 'pi pi-user'"
@@ -78,13 +84,13 @@
                             <span class="name">
                                 <h6 [innerText]="contact.displayName"></h6> 
                             </span> 
-                            <small class="text-muted p-pl-2">{{(contact.lastMessageReceived.id > contact.lastMessageSent.id? 
-                                contact.lastMessageReceived.sentAt : contact.lastMessageSent.sentAt) | date: "shortTime"}}</small>
+                            <small class="text-muted p-pl-2">{{(contact.lastMessageReceived?.id > contact.lastMessageSent?.id? 
+                                contact.lastMessageReceived?.sentAt : contact.lastMessageSent?.sentAt) | date: "shortTime"}}</small>
                         </div> 
                     </div>
-                    <p class="text-justify"><span>{{contact.lastMessageReceived.id > contact.lastMessageSent.id? 
-                        contact.lastMessageReceived.senderDisplayName : contact.lastMessageSent.senderDisplayName}}</span>
-                        : {{contact.lastMessageReceived.id > contact.lastMessageSent.id? contact.lastMessageReceived.content : contact.lastMessageSent.content}}</p>
+                    <p class="text-justify"><span>{{contact.lastMessageReceived?.id > contact.lastMessageSent?.id? 
+                        contact.lastMessageReceived?.senderDisplayName : contact.lastMessageSent?.senderDisplayName}}</span>
+                        : {{contact.lastMessageReceived?.id > contact.lastMessageSent?.id? contact.lastMessageReceived?.content : contact.lastMessageSent?.content}}</p>
                 </div>
             </div>
         </div>
@@ -94,11 +100,14 @@
 </p-overlayPanel>
 
 <p-overlayPanel #op3 [dismissable]="false" [showCloseIcon]="true" 
-(onHide)="onNotificationsHide()" (onShow)="onNotificationsShow()">
+(onShow)="onNotificationsShow()" (onHide)="onNotificationsHide()">
     <ng-template pTemplate>
         <p-card header="Notifications">
             <p-scrollPanel [style]="{height: '300px'}">
-                <p-toolbar [style]="{border: 'none'}">
+                <div *ngIf="(notifications$ | async)?.length === 0">
+                    Nothing to show.
+                </div>
+                <p-toolbar *ngIf="(notifications$ | async)?.length > 0" [style]="{border: 'none'}">
                     <div class="p-toolbar-group-left">
                         <h6 class="mt-4" ></h6>
                     </div>
@@ -106,11 +115,10 @@
                         <a class="primary-link" (click)="clearAllNotifications()">Clear All</a>
                     </div>
                 </p-toolbar>
-                <div  *ngFor="let notification of (notifications$ | async)"  
-                [ngClass]="notification.seen? 'read' : 'unread'" class="p-mb-1">
-                    <app-notification [notification]="notification"></app-notification>
+                <div  *ngFor="let notification of (notifications$ | async)" class="p-mb-1">
+                    <app-notification [notification]="notification" (hideOverlayEmitter)="op3.hide()"></app-notification>
                 </div>
-                <app-loader *ngIf="(notifications$ | async)?.length > 10" (click)="onNotificationsLoad()"></app-loader>
+                <app-loader *ngIf="(notifications$ | async)?.length >= 10" [noMore]="noMoreNotifications" (click)="onNotificationsLoad()"></app-loader>
             </p-scrollPanel>
         </p-card>
     </ng-template>

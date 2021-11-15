@@ -64,12 +64,23 @@ export class LikeService {
     );
   }
 
-  getLikes(id: number) {
+  getLikes(id: number, pageNumber?: number, scroll?: boolean) {
     let params = new HttpParams();
+    if (pageNumber) {
+      params = params.append("pageNumber", pageNumber.toString());
+    }
     return this.apiCaller.get<AppUser[]>(this.baseUrl + id.toString() , {observe: 'response', params}).pipe(
       map(response => {
-        this.paginatedResult.result = response.body;
-        this.likersSource.next(response.body);
+        if (scroll === true)
+        {
+          var initialValue = this.likersSource.value;
+          initialValue = initialValue.concat(response.body);
+          this.likersSource.next(initialValue);
+        }
+        else 
+        {
+          this.likersSource.next(response.body);
+        }        
 
         if (response.headers.get("Pagination") !== null) {
           this.paginatedResult.pagination = JSON.parse(response.headers.get("Pagination"));

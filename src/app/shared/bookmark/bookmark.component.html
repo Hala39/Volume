@@ -1,0 +1,11 @@
+<p-card [subheader]="post.ownerDisplayName" styleClass="p-card-shadow" (click)="navigate(post.id)">
+    <ng-template pTemplate="header">
+        <div class="d-flex justify-content-end">
+            <p-button icon="pi pi-bookmark" styleClass="p-button-text"></p-button>
+        </div>
+        <img alt="Card" *ngIf="post?.file" [src]="post?.file?.url">
+    </ng-template>
+    <ng-template pTemplate="content">
+    <p [innerHtml]="post.description"></p>
+    </ng-template>
+</p-card>

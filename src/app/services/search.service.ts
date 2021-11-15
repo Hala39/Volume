@@ -27,12 +27,20 @@ export class SearchService {
     );
   }
 
-  getRecentSearches() {
+  getRecentSearches(pageNumber?: number, scroll?: boolean) {
     let params = new HttpParams();
+    if(pageNumber) {
+      params = params.append("pageNumber", pageNumber.toString());
+    }
     return this.apiCaller.get<SearchOperation[]>(this.baseUrl, {observe: 'response', params}).pipe(
       map(response => {
-        this.paginatedResult.result = response.body;
-        this.searchOperationsSource.next(response.body);
+        if (scroll === true) {
+          var initialValue = this.searchOperationsSource.value;
+            initialValue = initialValue.concat(response.body);
+            this.searchOperationsSource.next(initialValue);
+        } else {
+          this.searchOperationsSource.next(response.body);
+        }
 
         if (response.headers.get("Pagination") !== null) {
           this.paginatedResult.pagination = JSON.parse(response.headers.get("Pagination"));

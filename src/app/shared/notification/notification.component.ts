@@ -1,8 +1,8 @@
-import { PresenceService } from './../../services/presence.service';
+import { Guid } from 'guid-typescript';
 import { NotificationService } from './../../services/notification.service';
 import { Router } from '@angular/router';
 import { Notification } from 'src/app/models/notification';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-notification',
@@ -18,36 +18,29 @@ export class NotificationComponent implements OnInit {
 
   @Input() notification: Notification;
   @Input() predicate: string = 'notification';
+  @Output() hideOverlayEmitter = new EventEmitter();
 
-  navigate() {
+  navigate(id: Guid) {
+    this.hideOverlayEmitter.emit();
+    if (this.predicate === 'notification') {
+      this.notificationService.readOne(id).subscribe();
+    }
     switch (this.notification.stimulation) {
-      case 0 || 1:
+      case 0:
         this.router.navigateByUrl('/post/' + this.notification.path);
         break;
+
+      case 1: 
+      this.router.navigateByUrl('/post/' + this.notification.path);
+      break;
+
       case 2: 
-        this.router.navigateByUrl('/profile/' + this.notification.path);
+        this.router.navigateByUrl('/profile/' + this.notification.stimulatorId);
         break;
 
       default:
         break;
     }
   }
-
-  delete() {
-    this.notificationService.deleteOne(this.notification.id).subscribe(
-      response => {
-        if (this.predicate === 'notification') {
-          var currentValue = this.notificationService.notificationsSource.value;
-          currentValue = currentValue.filter(n => n.id !== this.notification.id);
-          this.notificationService.notificationsSource.next(currentValue);
-        } else if (this.predicate === 'activities') {
-          var currentValue = this.notificationService.activitiesSource.value;
-          currentValue = currentValue.filter(a => a.id !== this.notification.id);
-          this.notificationService.activitiesSource.next(currentValue);
-        }
-      }
-    );
-  }
-
   
 }

@@ -1,4 +1,4 @@
-import { LikeService } from './services/like.service';
+import { NotificationService } from './services/notification.service';
 import { PresenceService } from './services/presence.service';
 import { UserService } from './services/user.service';
 import { Component } from '@angular/core';
@@ -14,7 +14,7 @@ export class AppComponent {
   title = 'Volume';
   
   constructor(private primengConfig: PrimeNGConfig, private userService: UserService, 
-    private router: Router, private likeService: LikeService,
+    private router: Router, private notificationService: NotificationService,
     private presenceService: PresenceService) {
     this.userService.userSource.next(JSON.parse(localStorage.getItem("userCard")));
     if (this.userService.loggedIn && !this.userService.isExpired) {
@@ -31,11 +31,13 @@ export class AppComponent {
     this.router.navigateByUrl("/profile/messages/" + id);
   }
 
-  navigateToPost(id: string) {
-    this.router.navigateByUrl("/post/" + id);
+  navigateToPost(data: any) {
+    this.router.navigateByUrl("/post/" + data.postId);
+    this.notificationService.readOne(data.notificationId).subscribe();
   }
 
-  navigateToProfile(id: string) {
-    this.router.navigateByUrl("/profile/" + id);
+  navigateToProfile(data: any) {
+    this.router.navigateByUrl("/profile/" + data.observerId);
+    this.notificationService.readOne(data.notificationId).subscribe();
   }
 }

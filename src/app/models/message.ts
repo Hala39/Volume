@@ -1,6 +1,6 @@
 import { Guid } from "guid-typescript";
 export interface Message {
-    id: number;
+    id: Guid;
     content: string;
     sentAt?: Date;
     seen?: boolean;

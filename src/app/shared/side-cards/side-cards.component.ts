@@ -19,6 +19,7 @@ export class SideCardsComponent implements OnInit {
 
   suggestions$: Observable<AppUser[]>;
   pageSize = 5;
+  pageNumber = 2;
   trends: string[] = [
     'AspNetCore', 'C#', 'Angular12', 'UI/UX', 'Programming', 'React', 'Ionic5', 'PrimeNg', 'Bootstrap'
   ];
@@ -34,4 +35,19 @@ export class SideCardsComponent implements OnInit {
     currentValue = currentValue.filter(v => v.id !== $event);
     this.profileService.suggestionsSource.next(currentValue);
   }
+
+  onSuggestionsLoad() {
+    this.profileService.getSuggestedUsersList(this.pageSize, this.pageNumber++, true).subscribe(
+      response => {
+        this.suggestions$ = this.profileService.suggestions$;
+        var pagination = this.profileService.paginatedSuggestionsResult.pagination;
+        if (pagination.currentPage === pagination.totalPages) {
+          this.noMorePeople = true;
+        }
+      }
+    )
+  }
+
+  noMorePeople = false;
+  
 }

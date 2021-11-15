@@ -26,6 +26,7 @@
             No messages yet. Say "Hello" to begin.
         </div>
     </div>
+    <app-loader *ngIf="(messages$ | async).length >= 10" [noMore]="noMoreMessages" (click)="loadMore();"></app-loader>
     <div *ngFor="let message of (messages$ | async)" #item>
         <div class="d-flex flex-row p-pt-5 px-3"> 
             <p-avatar [image]="message.senderId === contact?.id? contact?.profilePhotoUrl : (user$ | async)?.profilePhotoUrl" 
@@ -40,12 +41,14 @@
                         <small class="text-muted p-pl-2">{{message.sentAt | date: "shortTime"}}</small>
                     </div> 
                 </div>
-                <p class="text-justify">{{message.content}}</p>
+                <p class="text-justify">
+                    <fa-icon [icon]="seen" class="p-mr-1"  style="font-size: smaller;" *ngIf="message.senderId !== contactId && message.seen"></fa-icon>
+                    <fa-icon [icon]="sent" class="p-mr-1"  style="font-size: smaller;" *ngIf="message.senderId !== contactId && !message.seen"></fa-icon>
+                    {{message.content}}
+                </p>
             </div>
 
-        <!-- <i (click)="selectMessage($event, message)" class="pi pi-ellipsis-v"></i> -->
-        <fa-icon [icon]="Sent" style="font-size: smaller" *ngIf="message.seen === false"></fa-icon>
-        <fa-icon [icon]="Seen" style="font-size: smaller;" *ngIf="message.seen === true"></fa-icon>
+        <i (click)="selectMessage($event, message)" class="pi pi-ellipsis-v"></i>
         </div>
     </div>
 </p-scrollPanel>

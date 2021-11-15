@@ -13,4 +13,5 @@ export class LoaderComponent implements OnInit {
   }
 
   @Input() predicate: string;
+  @Input() noMore: boolean = false;
 }

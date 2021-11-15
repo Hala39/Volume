@@ -44,6 +44,7 @@ import { AddProfilePhotoComponent } from './add-profile-photo/add-profile-photo.
 import { NotificationComponent } from './notification/notification.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { LoaderComponent } from './loader/loader.component';
+import { BookmarkComponent } from './bookmark/bookmark.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { LoaderComponent } from './loader/loader.component';
     AddProfilePhotoComponent,
     PostComponent,
     NotificationComponent,
-    LoaderComponent
+    LoaderComponent,
+    BookmarkComponent,
   ],
   imports: [
     CommonModule,
@@ -110,7 +112,8 @@ import { LoaderComponent } from './loader/loader.component';
     AddPostComponent,
     AddProfilePhotoComponent,
     NotificationComponent,
-    LoaderComponent
+    LoaderComponent,
+    BookmarkComponent
   ]
 })
 export class SharedModule { }

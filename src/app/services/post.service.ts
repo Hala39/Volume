@@ -8,6 +8,7 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { PaginatedResult } from '../models/paginatedResult';
+import { SavedPost } from '../models/savedPost';
 
 @Injectable({
   providedIn: 'root'
@@ -21,10 +22,13 @@ export class PostService {
 
     baseUrl = environment.apiUrl + 'post/';
 
-  paginatedResult: PaginatedResult<Post[]> = new PaginatedResult<Post[]>();
-
+  paginatedResult = new PaginatedResult<Post[]>();
   postsSource = new BehaviorSubject<Post[]>([]);
   posts$ = this.postsSource.asObservable();
+
+  paginatedSaved = new PaginatedResult<SavedPost[]>();
+  savedSource = new BehaviorSubject<SavedPost[]>([]);
+  saved$ = this.savedSource.asObservable();
   
   addPost(post: any) {
     var formData: any = new FormData();
@@ -34,7 +38,7 @@ export class PostService {
     return this.apiCaller.post(this.baseUrl, formData).pipe(
       map(response => {
         if (response) {
-          this.profileService.getProfileForUser(this.currentUser.id).subscribe()
+          this.profileService.getPostsForUser(this.currentUser.id).subscribe()
         }
       })
     );
@@ -43,9 +47,9 @@ export class PostService {
   deletePost(id: number) {
     return this.apiCaller.delete(this.baseUrl + id.toString()).pipe(
       map(response => {
-        const value = this.profileService.profileSource.value;
-        value.posts = value.posts.filter(p => p.id !== id);
-        this.profileService.profileSource.next(value);
+        var value = this.profileService.postsSource.value;
+        value = value.filter(p => p.id !== id);
+        this.profileService.postsSource.next(value);
         this.messageService.add({severity: 'success', summary: 'Success', detail: 'Post deleted successfully!'})
       })
     );
@@ -77,6 +81,37 @@ export class PostService {
     )
   }
 
+  getSavedPosts(pageNumber?: number, scroll?: boolean) {
+    let params = new HttpParams();
+    if (pageNumber)
+    {
+      params = params.append("pageNumber", pageNumber.toString())
+    }
+    return this.apiCaller.get<SavedPost[]>(this.baseUrl + 'saved', {observe: 'response', params}).pipe(
+      map(response => {
+        if (scroll === true)
+          {
+            var initialValue = this.savedSource.value;
+            initialValue = initialValue.concat(response.body);
+            this.savedSource.next(initialValue);
+          }
+          else 
+          {
+            this.savedSource.next(response.body);
+          }
+        
+        if (response.headers.get("Pagination") !== null) {
+          this.paginatedSaved.pagination = JSON.parse(response.headers.get("Pagination"));
+        }
+
+        return response.body;
+      })
+    )
+  }
+
+  savePostToggle(id: number) {
+    return this.apiCaller.post<boolean>(this.baseUrl + 'save/' + id.toString(), {});
+  }
 
   updatePost(id: number, description: string) {
     return this.apiCaller.put(this.baseUrl + id.toString() +'?description=' + description, {});

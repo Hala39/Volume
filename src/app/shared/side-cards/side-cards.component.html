@@ -13,5 +13,6 @@
         <div *ngFor="let user of (suggestions$ | async)">
             <app-user-card [user]="user" (removeFromSuggestionsEmitter)="remove($event)"></app-user-card>
         </div>
+        <app-loader *ngIf="(suggestions$ | async)?.length >= 10" (click)="onSuggestionsLoad()" [noMore]="noMorePeople"></app-loader>
     </p-card>
 </p-scrollPanel>

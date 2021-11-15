@@ -1,3 +1,4 @@
+import { Guid } from 'guid-typescript';
 import { UserService } from './user.service';
 import { MessageService } from 'primeng/api';
 import { Comment } from './../models/comment';
@@ -41,9 +42,7 @@ export class CommentService {
       .catch(error => console.log(error));
       // .finally(() => this.busyService.idle());
 
-    this.hubConnection.on('LoadComments', comments => {
-      this.commentsSource.next(comments);
-    })
+    this.loadComments(postId).subscribe();
 
     this.hubConnection.on('ReceiveComment', comment => {
       var currentValue = this.commentsSource.value;
@@ -60,7 +59,31 @@ export class CommentService {
     }
   }
 
-  deleteComment(id: number) {
+  loadComments(id: number, pageNumber?: number, scroll?: boolean) {
+    let params = new HttpParams();
+    if (pageNumber) {
+      params = params.append("pageNumber", pageNumber.toString());
+    }
+    return this.apiCaller.get<Comment[]>(this.baseUrl + id.toString(), {observe: 'response', params}).pipe(
+      map(response => {
+        if (scroll === true) {
+          var initialValue = this.commentsSource.value;
+            initialValue = initialValue.concat(response.body);
+            this.commentsSource.next(initialValue);
+        } else {
+          this.commentsSource.next(response.body);
+        }
+
+        if (response.headers.get("Pagination") !== null) {
+          this.paginatedResult.pagination = JSON.parse(response.headers.get("Pagination"));
+        }
+
+        return response.body;
+      })
+    )
+  }
+
+  deleteComment(id: Guid) {
     return this.apiCaller.delete(this.baseUrl + id.toString()).pipe(
       map(response => {
         if (response) {

@@ -103,17 +103,31 @@ export class NavbarComponent implements OnInit {
 
   onNotificationsShow() {
     this.notificationService.getNotifications().subscribe(
-      response => this.notifications$ = this.notificationService.notifications$
+      response => 
+      {
+        this.notifications$ = this.notificationService.notifications$
+      }
     );
   }
 
   pageNumber = 2;
 
+  noMoreNotifications = false;
   onNotificationsLoad() {
     this.notificationService.getNotifications(this.pageNumber++, true).subscribe(
-      response => this.notifications$ = this.notificationService.notifications$
+      response => {
+        this.notifications$ = this.notificationService.notifications$;
+        var pagination = this.notificationService.paginatedNotificationsResult.pagination;
+        if (pagination.currentPage === pagination.totalPages) {
+            this.noMoreNotifications = true;
+        }
+      }
     );
 
+  }
+
+  clearAllNotifications() {
+    this.notificationService.clearAll("notifications").subscribe();
   }
 
   onNotificationsHide() {
@@ -124,21 +138,38 @@ export class NavbarComponent implements OnInit {
     );
   }
 
-  deleteOne(id: number) {
-    this.notificationService.deleteOne(id).subscribe();
-  }
-
-  clearAllNotifications() {
-    this.notificationService.clearAll("notifications").subscribe();
-  }
-
-
   onContactsShow() {
     this.getContacts();
   }
 
+  noMoreContacts = false;
+
+  onContactsLoad() {
+    this.chatService.getContacts(this.pageNumber++, true).subscribe(
+      response => {
+        this.contacts$ = this.chatService.contacts$;
+        var pagination = this.chatService.paginatedResult.pagination;
+        if (pagination.currentPage === pagination.totalPages) {
+          this.noMoreContacts = true;
+        }
+      }
+    )
+  }
+
   getContacts() {
     this.chatService.getContacts().subscribe();
+  }
+
+  noMoreKeywords = false;
+  onKeywordsLoad() {
+    this.searchService.getRecentSearches(this.pageNumber++, true).subscribe(
+      response => {
+        var pagination = this.searchService.paginatedResult.pagination;
+        if (pagination.currentPage === pagination.totalPages) {
+          this.noMoreKeywords = true;
+        }
+      }
+    )
   }
 
 }

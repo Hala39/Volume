@@ -1,9 +1,10 @@
+import { Guid } from 'guid-typescript';
 import { PresenceService } from '../../services/presence.service';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { faCheckCircle, faGrinAlt, faImage } from '@fortawesome/free-regular-svg-icons';
 import { faCheckCircle as farCheckCircle} from '@fortawesome/free-regular-svg-icons';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faCheckDouble, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { AppUser } from 'src/app/models/appUser';
 import { Message } from 'src/app/models/message';
@@ -13,27 +14,25 @@ import { ProfileService } from 'src/app/services/profile.service';
 import { EmojiData } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { MenuItem, PrimeIcons } from 'primeng/api';
 import { DatePipe } from '@angular/common';
-import { take } from 'rxjs/operators';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-thread',
   templateUrl: './thread.component.html',
   styleUrls: ['./thread.component.scss'],
   providers: [DatePipe]
 })
 export class ThreadComponent implements OnInit, OnDestroy {
-
-
   constructor(private chatService: ChatService, private userService: UserService,
-    private profileService: ProfileService, private DatePipe: DatePipe,
+    private profileService: ProfileService,
     private fb: FormBuilder, public presenceService: PresenceService, private cdr: ChangeDetectorRef) {
     this.messages$ = this.chatService.thread$;
     this.user$ = this.userService.user$;
   }
   
-  contentViewChild: any;
-  Sent = faCheckCircle;
-  Seen = farCheckCircle;
+  loadMode: boolean = false;
+  seen = faCheckDouble;
+  sent = faCheck;
 
   @ViewChild('scrollframe', {static: false}) scrollFrame: ElementRef;
   @ViewChildren('item') itemElements: QueryList<any>;
@@ -41,17 +40,18 @@ export class ThreadComponent implements OnInit, OnDestroy {
   ngAfterViewChecked() {  
     this.cdr.detectChanges();
   } 
-
+  
+  contentViewChild: any;
   private scrollContainer: any;
   private isNearBottom = true;
 
   ngAfterViewInit() {
     this.scrollContainer = this.scrollFrame;
-    this.itemElements.changes.subscribe(_ => this.onItemElementsChanged());    
+    this.itemElements.changes.subscribe(_ => this.onItemElementsChanged());  
   }
   
   private onItemElementsChanged(): void {
-    if (this.isNearBottom) {
+    if (this.isNearBottom && !this.loadMode) {
       this.scrollToBottom();
     }
   }
@@ -107,7 +107,8 @@ export class ThreadComponent implements OnInit, OnDestroy {
     if (this.message.value !== null) {
       this.chatService.addMessage(this.contactId, this.message.value).then(
         response => {
-          this.form.reset();
+          this.form.reset(); 
+          this.loadMode = false;
         }
       )
     }
@@ -119,7 +120,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
     )
   }
 
-  deleteMessage(id: number) {
+  deleteMessage(id: Guid) {
     this.chatService.deleteMessage(id).subscribe();
   }
 
@@ -156,5 +157,20 @@ export class ThreadComponent implements OnInit, OnDestroy {
 
   }
 
+  noMoreMessages = false;
+  pageNumber = 2;
+  loadMore() {
+    this.loadMode = true;
+    this.chatService.getMessageThread(this.contactId, this.pageNumber++, true).subscribe(
+      response => {
+        if (this.chatService.paginatedThreadResult.pagination.currentPage 
+          === this.chatService.paginatedThreadResult.pagination.totalPages) {
+          this.noMoreMessages = true;
+        }
+      }
+    )
+  }
 
+  scrollToTop() {
+  }
 }

@@ -13,23 +13,26 @@
                 <div class="d-flex justify-content-between align-items-center p-pt-3">
                     <div class="d-flex flex-row align-items-center"> 
                         <span class="name">
-                            <h4>{{ profile.displayName }}</h4> 
+                            {{ profile.displayName }}
                         </span>  
                     </div> 
                 </div>
-                <small style="font-size: smaller;" *ngIf="(presenceService.onlineUsers$ | async).includes(profile.id)">Active now</small>
-                <small style="font-size: smaller;" *ngIf="!(presenceService.onlineUsers$ | async).includes(profile.id)">Active {{ profile.lastActive |  timeago }}</small>
+                <small style="font-size: smaller;" 
+                *ngIf="(presenceService.onlineUsers$ | async).includes(profile.id)">Active now</small>
+                <small style="font-size: smaller;" 
+                *ngIf="!(presenceService.onlineUsers$ | async).includes(profile.id)">Active {{ profile.lastActive |  timeago }}</small>
             </div>
             <p-button
-            *ngIf="(user$ | async)?.id !== userId"
-            [icon]="(profile$ | async).isFollowing? 'pi pi-check' : 'pi pi-plus'" 
-            [label]="(profile$ | async).isFollowing? 'following' :'follow'"
-            (click)="followToggle()"
-            styleClass="p-button-rounded p-button-warning p-button-text"></p-button>
+                *ngIf="(user$ | async)?.id !== userId"
+                [icon]="(profile$ | async).isFollowing? 'pi pi-check' : 'pi pi-plus'" 
+                [label]="(profile$ | async).isFollowing? 'following' :'follow'"
+                (click)="followToggle()"
+                styleClass="p-button-rounded p-button-warning p-button-text p-button-sm">
+            </p-button>
             <i class="pi pi-ellipsis-v"
-            *ngIf="(user$ | async)?.id === userId"
-            #followButton
-            (click)="menu.toggle($event)">
+                *ngIf="(user$ | async)?.id === userId"
+                #followButton
+                (click)="menu.toggle($event)">
             </i>
         </div>
     </p-card>
@@ -44,25 +47,27 @@
                 <ng-template pTemplate="content">
                     <p-scrollPanel [style]="{height: '200px'}">
                         <app-galleria [photos]="(photos$ | async)"></app-galleria>
+                        <app-loader *ngIf="(photos$ | async)?.length >= 10" [noMore]="noMorePhotos"></app-loader>
+                        <div *ngIf="(photos$ | async)?.length === 0">
+                            Nothing to show.
+                        </div>
                     </p-scrollPanel>
                 </ng-template>
             </p-tabPanel>
             <p-tabPanel header="Followings">
                 <ng-template pTemplate="content">
+                    <div *ngIf="(followings$ | async)?.length === 0">
+                        Nothing to show.
+                    </div>
                     <p-scrollPanel [style]="{height: '200px'}">
                         <div class="row">
                             <div class="col-12 col-md-6 pt-1" *ngFor="let user of (followings$ | async)">
                                 <app-user-card [user]="user"></app-user-card>
                             </div>
                         </div>
-                        <app-loader *ngIf="(followings$ | async)?.length >= 10 && !noMoreFollowings"></app-loader>
-                        <div *ngIf="noMoreFollowings" class="d-flex justify-content-center">
-                            <small>No more results</small>    
-                        </div>
+                        <app-loader *ngIf="(followings$ | async)?.length >= 10" [noMore]="noMoreFollowings"
+                        (click)="onFollowingsLoad()"></app-loader>
                     </p-scrollPanel>
-                    <div *ngIf="(followings$ | async)?.length === 0">
-                        Nothing to show.
-                    </div>
                 </ng-template>
             </p-tabPanel>
             <p-tabPanel header="Followers">
@@ -72,21 +77,34 @@
                     </div>
                     <p-scrollPanel [style]="{height: '200px'}">
                         <div class="row">
-                            <div class="col-12 col-md-6 pt-1" *ngFor="let user of (followers$ | async)">
+                            <div class="col-12 col-sm-6 col-md-3 pt-1" *ngFor="let user of (followers$ | async)">
                                 <app-user-card [user]="user"></app-user-card>
                             </div>
                         </div>
-                        <app-loader *ngIf="(followers$ | async)?.length >= 10 && !noMoreFollowers"></app-loader>
-                        <div *ngIf="noMoreFollowers" class="d-flex justify-content-center">
-                            <small>No more results</small>    
+                        <app-loader *ngIf="(followers$ | async)?.length >= 10" [noMore]="noMoreFollowers"
+                        (click)="onFollowersLoad()"></app-loader>
+                    </p-scrollPanel>
+                </ng-template>
+            </p-tabPanel>
+            <p-tabPanel header="Bookmarks" *ngIf="(user$ | async)?.id === userId">
+                <div *ngIf="(saved$ | async)?.length === 0">
+                    Nothing to show.
+                </div>
+                <ng-template pTemplate="content">
+                    <p-scrollPanel  [style]="{height: '200px'}">
+                        <div class="col-12 col-sm-6 col-md-3 pt-1" *ngFor="let post of (saved$ | async)">
+                            <app-bookmark [post]="post"></app-bookmark>
                         </div>
                     </p-scrollPanel>
                 </ng-template>
             </p-tabPanel>
             <p-tabPanel header="Activities"  *ngIf="(user$ | async)?.id === userId">
                 <ng-template pTemplate="content">
+                    <div *ngIf="(activities$ | async)?.length === 0">
+                        Nothing to show.
+                    </div>
                     <p-scrollPanel [style]="{height: '200px'}">
-                        <p-toolbar [style]="{border: 'none'}">
+                        <p-toolbar *ngIf="(activities$ | async)?.length > 0" [style]="{border: 'none'}">
                             <div class="p-toolbar-group-left">
                                 <h6 class="mt-4" ></h6>
                             </div>
@@ -97,14 +115,11 @@
                         <div *ngFor="let notification of (activities$ | async)">
                             <app-notification [notification]="notification" [predicate]="'activities'"></app-notification>
                         </div>
-                        <app-loader (click)="onActivitiesLoad()" *ngIf="(activities$ | async)?.length >= 10 && !noMoreActivities"></app-loader>
-                        <div *ngIf="noMoreActivities" class="d-flex justify-content-center">
-                            <small>No more results</small>    
-                        </div>
+                        <app-loader (click)="onActivitiesLoad()" *ngIf="(activities$ | async)?.length >= 10" [noMore]="noMoreActivities"></app-loader>
                     </p-scrollPanel>
                 </ng-template>
             </p-tabPanel>
-            <p-tabPanel header="Messaging" *ngIf="(user$ | async)?.id !== userId" controlClose="true" (onClose)="stopHub($event)">
+            <p-tabPanel header="Messaging" *ngIf="(user$ | async)?.id !== userId">
                 <ng-template pTemplate="content">
                     <app-thread [contactId]="userId"></app-thread>
                 </ng-template>
@@ -123,7 +138,7 @@
         </div>
 </div>
 
-<div *ngFor="let post of (profile$|async)?.posts">
+<div *ngFor="let post of (posts$|async)"  infiniteScroll [infiniteScrollDistance]="0.5" (scrolled)="onScroll($event)">
     <div class="d-flex justify-content-center">
         <div class="col-12 col-md-6">
             <app-post-card [post]="post"></app-post-card>
@@ -131,7 +146,8 @@
     </div>
 </div>
 
-<div class="d-flex justify-content-center mt-4" *ngIf="(profile$|async)?.posts.length === 0">
+
+<div class="d-flex justify-content-center mt-4" *ngIf="(posts$|async)?.length === 0">
     <div class="col-12 col-sm-6 col-md-6">
         <p-card styleClass="no-post">
             <h3 style="text-align: center;">No posts yet.</h3>

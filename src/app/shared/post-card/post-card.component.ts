@@ -1,3 +1,6 @@
+import { Guid } from 'guid-typescript';
+import { faGrinAlt } from '@fortawesome/free-regular-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { PresenceService } from './../../services/presence.service';
 import { UserService } from './../../services/user.service';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -9,10 +12,12 @@ import { Observable } from 'rxjs';
 import { CommentService } from './../../services/comment.service';
 import { Comment } from './../../models/comment';
 import { Post } from './../../models/post';
-import { Component, Input, OnInit, Output, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, Output, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { AppUser } from 'src/app/models/appUser';
 import { MenuItem } from 'primeng/api';
 import { Router } from '@angular/router';
+import { EmojiData } from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-post-card',
@@ -23,7 +28,7 @@ export class PostCardComponent implements OnInit, OnDestroy {
 
   constructor(private commentService: CommentService, private likeService: LikeService,
     private profileService: ProfileService, private userService: UserService,
-    private router: Router,
+    private router: Router, private fb: FormBuilder,
     private followService: FollowService, private postService: PostService) {
     this.user$ = this.userService.user$;
     this.comments$ = this.commentService.comments$;
@@ -31,26 +36,48 @@ export class PostCardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.group();
+    this.buildCommentForm();
   }
 
   ngOnDestroy() {
     this.commentService.stopHubConnection();
   }
 
+
   displayDialog = false;
 
   @Input() commentsExpanded: boolean = false;
   comments$: Observable<Comment[]>;
+  commentForm: FormGroup;
+  content = new FormControl('', Validators.required);
 
-  content: string;
+  buildCommentForm() {
+    this.commentForm = this.fb.group({
+      content: this.content
+    })
+  }
 
   likers$: Observable<AppUser[]>;
   user$: Observable<UserCard>;
 
   @Input() post: Post;
 
+  @ViewChild('scroller', {static: false}) scrollFrame: any;
+
   goToProfile(id: string) {
     this.router.navigateByUrl('/profile/' + id);
+  }
+
+  savePending = false;
+  saveToggle(id: number) {
+    this.savePending = true;
+    this.postService.savePostToggle(id).subscribe(
+      response => {
+        this.savePending = false;
+        this.post.isSavedByUser = !this.post.isSavedByUser;
+      }
+    )
   }
 
   expandComments(postId: number) {
@@ -62,17 +89,18 @@ export class PostCardComponent implements OnInit, OnDestroy {
     }
   }
 
-  deleteComment(id: number) {
+  deleteComment(id: Guid) {
     this.commentService.deleteComment(id).subscribe(
       response => this.post.commentsCount--
     );
   }
 
   addComment() {
-    this.commentService.addComment(this.post.id, this.content).then(
+    this.commentService.addComment(this.post.id, this.content.value).then(
       response => {
-        this.content = "";
+        this.commentForm.reset();
         this.post.commentsCount++;
+        this.scrollFrame.scrollTop(0);
       }
     );
   }
@@ -104,11 +132,42 @@ export class PostCardComponent implements OnInit, OnDestroy {
     )
   }
 
+  displayLikers = false;
+  noMoreLikers = false;
+  pageNumber = 2;
+
+  showLikers() {
+    this.displayLikers = true;
+  }
+
   getLikers() {
     this.likeService.getLikes(this.post.id).subscribe(
       response => this.likers$ = this.likeService.likers$
     );
-    
+  }
+
+  loadMoreLikers() {
+    this.likeService.getLikes(this.post.id, this.pageNumber++, true).subscribe(
+      response => {
+        this.likers$ = this.likeService.likers$;
+        var pagination = this.likeService.paginatedResult.pagination;
+        if (pagination.currentPage === pagination.totalPages) {
+          this.noMoreLikers = true;
+        }
+      }
+    );
+  }
+
+  noMoreComments = false;
+  loadMoreComments() {
+     this.commentService.loadComments(this.post.id, this.pageNumber++, true).subscribe(
+       response => {
+        var pagination = this.commentService.paginatedResult.pagination;
+         if (pagination.currentPage === pagination.totalPages) {
+          this.noMoreComments = true;
+         }
+       }
+     );
   }
 
   items : MenuItem[] = [
@@ -143,14 +202,14 @@ export class PostCardComponent implements OnInit, OnDestroy {
     }
   ]
 
-  description: string;
+  description = new FormControl(Validators.required);
 
   hideDialog() {
     this.displayDialog = false;
   }
 
   onDialogSHow() {
-    this.description = this.post.description;
+    this.description.setValue(this.post.description);
   }
 
   onMenuShow() {
@@ -174,17 +233,51 @@ export class PostCardComponent implements OnInit, OnDestroy {
   }
 
   saveChanges() {
-    if (this.description.length > 0 && this.description !== null)
-    this.postService.updatePost(this.post.id, this.description).subscribe(
+    if (this.description.value.length > 0 && this.description !== null)
+    this.postService.updatePost(this.post.id, this.description.value).subscribe(
       response => {
         this.hideDialog();
-        this.post.description = this.description;
+        this.post.description = this.description.value;
       }
     )
 
   }
 
+  faTimes = faTimes;
+  faGrinAlt = faGrinAlt;
   
+  inputForm: FormGroup;
+
+  group() {
+    this.inputForm = this.fb.group({
+      description: this.description
+    })
+  }
+  
+  emojiExpanded: boolean = false;
+
+  expandEmoji() {
+    this.emojiExpanded = true;
+  }
+
+  hideEmoji() {
+    this.emojiExpanded = false;
+  }
+
+  select($event: EmojiData) {
+    if (this.displayDialog === true) {
+      let data = this.inputForm.get('description').value;
+      if (!data)  data = '';
+      this.inputForm.patchValue({"description": data + $event.native});
+    }
+
+    if (this.displayDialog === false) {
+      let data = this.commentForm.get('content').value;
+      if (!data)  data = '';
+      this.commentForm.patchValue({"content": data + $event.native});
+    }
+    
+  }
 
 }
 

@@ -11,6 +11,7 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { File } from '../models/file';
 import { Profile } from '../models/userProfile';
+import { Post } from '../models/post';
 
 @Injectable({
   providedIn: 'root'
@@ -28,8 +29,13 @@ export class ProfileService {
   profileSource = new BehaviorSubject<Profile>(null);
   profile$ = this.profileSource.asObservable();
 
+  paginatedPhotos = new PaginatedResult<File[]>();
   photosSource = new BehaviorSubject<File[]>([]);
   photos$ = this.photosSource.asObservable();
+
+  paginatedPosts = new PaginatedResult<Post[]>();
+  postsSource = new BehaviorSubject<Post[]>([]);
+  posts$ = this.postsSource.asObservable();
 
   searchResultsSource = new BehaviorSubject<AppUser[]>([]);
   searchResults$ = this.searchResultsSource.asObservable();
@@ -67,7 +73,6 @@ export class ProfileService {
       map(response => {
         var currentProfile: Profile = JSON.parse(localStorage.getItem('profile'));
         if (currentProfile) {
-          profile.posts = currentProfile.posts;
           profile.profilePhotoUrl = currentProfile.profilePhotoUrl;
         }
         this.profileSource.next(profile);
@@ -92,22 +97,68 @@ export class ProfileService {
     );
   }
 
-  getPhotosForUser(id: string) {
-    return this.apiCaller.get<File[]>(this.baseUrl + 'photos/' + id).pipe(
+  getPhotosForUser(id: string, pageNumber?: number, scroll?: boolean) {
+    let params = new HttpParams();
+    if (pageNumber) {
+      params = params.append("pageNumber", pageNumber.toString());
+    }
+    return this.apiCaller.get<File[]>(this.baseUrl + 'photos/' + id, {observe: 'response', params}).pipe(
       map(response => {
-        this.photosSource.next(response)
+        if (scroll === true) {
+          var initialValue = this.photosSource.value;
+            initialValue = initialValue.concat(response.body);
+            this.photosSource.next(initialValue);
+        } else {
+          this.photosSource.next(response.body)
+        }
+        if (response.headers.get("Pagination") !== null) {
+          this.paginatedPhotos = JSON.parse(response.headers.get("Pagination"));
+        }
+
+        return response.body;
       })
     )
   }
 
-  getSuggestedUsersList(pageSize: number) {
+  getPostsForUser(id: string, pageNumber?: number, scroll?: boolean) {
     let params = new HttpParams();
+    if (pageNumber) {
+      params = params.append("pageNumber", pageNumber.toString());
+    }
+    return this.apiCaller.get<Post[]>(this.baseUrl + 'posts/' + id, {observe: 'response', params}).pipe(
+      map(response => {
+        if (scroll === true) {
+          var initialValue = this.postsSource.value;
+            initialValue = initialValue.concat(response.body);
+            this.postsSource.next(initialValue);
+        } else {
+          this.postsSource.next(response.body)
+        }
+        if (response.headers.get("Pagination") !== null) {
+          this.paginatedPosts = JSON.parse(response.headers.get("Pagination"));
+        }
+
+        return response.body;
+      })
+    )
+  }
+
+  getSuggestedUsersList(pageSize: number, pageNumber?: number, scroll?: boolean) {
+    let params = new HttpParams();
+    if (pageNumber) {
+      params = params.append("pageNumber", pageNumber.toString());
+    }
     params = params.append("Suggest", true);
     params = params.append("PageSize", pageSize);
     return this.apiCaller.get<AppUser[]>(this.baseUrl, {observe: 'response', params}).pipe(
       map(response => {
-        this.paginatedSuggestionsResult.result = response.body; 
-        this.suggestionsSource.next(response.body);
+        if (scroll === true) {
+          var initialValue = this.suggestionsSource.value;
+            initialValue = initialValue.concat(response.body);
+            this.suggestionsSource.next(initialValue);
+        } else {
+          this.suggestionsSource.next(response.body);
+        }
 
         if (response.headers.get("Pagination") !== null) {
           this.paginatedResult.pagination = JSON.parse(response.headers.get("Pagination"));
@@ -118,19 +169,28 @@ export class ProfileService {
     )
   }
 
-  getProfilesList(keyword: string) {
+  getProfilesList(keyword: string, pageNumber?: number, scroll?: boolean) {
     let params = new HttpParams();
     params = params.append("Keyword", keyword);
     params = params.append("Suggest", false);
+    if (pageNumber) {
+      params = params.append("pageNumber", pageNumber.toString());
+    }
     return this.apiCaller.get<AppUser[]>(this.baseUrl, {observe: 'response', params}).pipe(
       map(response => {
-        this.paginatedResult.result = response.body; 
-        this.searchResultsSource.next(response.body);
+        if (scroll === true) {
+          var initialValue = this.searchResultsSource.value;
+            initialValue = initialValue.concat(response.body);
+            this.searchResultsSource.next(initialValue);
+        } else { 
+          this.searchResultsSource.next(response.body)
+        }
+
+
         const searchOperation : SearchOperation = {
           keyword: keyword,
           date: new Date
         };
-
         this.searchService.addSearchOperation(searchOperation).subscribe();
     
         if (response.headers.get("Pagination") !== null) {

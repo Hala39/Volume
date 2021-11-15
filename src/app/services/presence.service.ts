@@ -61,37 +61,36 @@ export class PresenceService {
       this.onlineUsersSource.next(ids);
     })
 
-    this.hubConnection.on("NewMessageReceived", ({id, displayName, guid}) => {
+    this.hubConnection.on("NewMessageReceived", ({id, displayName}) => {
       this.messageService.add({severity: 'info', key: 'new-message', summary: 'New message', data: id,
-      detail: displayName + ' sent you a message.', sticky: true});
+      detail: displayName + ' has sent you a message.'});
       this.inboxNotificationSource.next(true)
     })
 
-    this.hubConnection.on("NewComment", ({postId, displayName}) => {
-      this.messageService.add({severity: 'info', key: 'new-comment', summary: 'New Comment', data: postId,
-       detail: displayName + ' commented on your post', sticky: true});
+    this.hubConnection.on("NewComment", ({postId, displayName, notificationId}) => {
+      this.messageService.add({severity: 'info', key: 'new-comment', summary: 'New Comment', data: {postId, notificationId},
+       detail: displayName + ' has commented on your post'});
        this.notificationAlertSource.next(true);
     })
 
-    this.hubConnection.on("NewFollower", ({observerId, displayName}) => {
-      this.messageService.add({severity: 'info', key: 'new-follower', summary: 'New Follower', data: observerId,
-       detail: displayName + ' followed you', sticky: true});
+    this.hubConnection.on("NewFollower", ({observerId, displayName, notificationId}) => {
+      this.messageService.add({severity: 'info', key: 'new-follower', summary: 'New Follower', data: {observerId, notificationId},
+       detail: displayName + ' has followed you'});
        this.notificationAlertSource.next(true);
        this.followService.stopHubConnection();
     })
 
-    this.hubConnection.on("NewLike", ({postId, displayName}) => {
-      this.messageService.add({severity: 'info', key: 'new-comment', summary: 'New Like', data: postId,
-       detail: displayName + ' liked your post', sticky: true});
+    this.hubConnection.on("NewLike", ({postId, displayName, notificationId}) => {
+      this.messageService.add({severity: 'info', key: 'new-comment', summary: 'New Like', data: {postId, notificationId},
+       detail: displayName + ' has liked your post'});
        this.notificationAlertSource.next(true);
        this.likeService.stopHubConnection();
     })
 
     this.hubConnection.on("CheckNotifications", bool => {
-      console.log(bool)
-       if (bool) {
-        this.notificationAlertSource.next(true);
-       }
+      if (bool) {
+       this.notificationAlertSource.next(true);
+      }
     })
 
     this.hubConnection.on("CheckMessages", bool => {

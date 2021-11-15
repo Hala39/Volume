@@ -1,3 +1,4 @@
+import { Guid } from 'guid-typescript';
 import { Notification } from 'src/app/models/notification';
 import { PresenceService } from './presence.service';
 import { PaginatedResult } from './../models/paginatedResult';
@@ -46,7 +47,6 @@ export class NotificationService {
 
         if (response.headers.get("Pagination") !== null) {
           this.paginatedActivitiesResult.pagination = JSON.parse(response.headers.get("Pagination"));
-          console.log(JSON.parse(response.headers.get("Pagination")));
         }
 
         return response.body;
@@ -72,6 +72,7 @@ export class NotificationService {
             this.notificationsSource.next(response.body);
           }
             this.paginatedNotificationsResult.result = response.body;
+
         if (response.headers.get("Pagination") !== null) {
           this.paginatedNotificationsResult.pagination = JSON.parse(response.headers.get("Pagination"));
         }
@@ -83,11 +84,32 @@ export class NotificationService {
   }
 
   markRead() {
-    return this.apiCaller.post(this.baseUrl + 'read', {});
+    return this.apiCaller.post(this.baseUrl + 'read', {}).pipe(
+      map(response => {
+        var currentValue = this.notificationsSource.value;
+        currentValue.forEach(element => {
+          if (element.seen === false) {
+            element.seen = true;
+          }
+        });
+
+        this.notificationsSource.next(currentValue);
+      })
+    );
   }
 
-  deleteOne(id: number) {
-    return this.apiCaller.delete(this.baseUrl + id.toString());
+  readOne(id: Guid) {
+    return this.apiCaller.post(this.baseUrl + 'read/one?id=' + id.toString(), {}).pipe(
+      map(response => {
+        console.log(response)
+        var currentValue = this.notificationsSource.value;
+        var index = currentValue.findIndex(n => n.id === id);
+        if (index) {
+          currentValue[index].seen = true;
+          this.notificationsSource.next(currentValue);
+        }
+      })
+    );
   }
 
   clearAll(predicate: string) {

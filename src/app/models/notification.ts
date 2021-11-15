@@ -1,6 +1,7 @@
+import { Guid } from 'guid-typescript';
 import { AppUser } from './appUser';
 export class Notification {
-    id: number;
+    id: Guid;
     target: AppUser;
     stimulator: AppUser;
     targetId: string;
