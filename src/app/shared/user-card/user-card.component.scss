@@ -23,5 +23,11 @@ p {
 }
 
 h6 {
-    cursor: pointe;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 300px) {
+    .follow {
+        display: none;
+    }
 }

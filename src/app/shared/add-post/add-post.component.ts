@@ -37,28 +37,16 @@ export class AddPostComponent implements OnInit {
   editorToggle: boolean = false;
 
   toggleEditor() {
-    this.fileUploadToggle = false;
     this.photoUploadToggle = false;
     this.editorToggle = !this.editorToggle;
-    this.displayDialog = true;
-  }
-
-  // Files Uploader
-  fileUploadToggle: boolean = false;
-
-  toggleFileUploader() {
-    this.editorToggle = false;
-    this.photoUploadToggle = false;
-    this.fileUploadToggle = !this.fileUploadToggle;
     this.displayDialog = true;
   }
   
   // Photos Uploader
   photoUploadToggle: boolean = false;
-
+ 
   togglePhotoUploader() {
     this.editorToggle = false;
-    this.fileUploadToggle = false;
     this.photoUploadToggle = !this.photoUploadToggle;
     this.displayDialog = true;
   }
@@ -71,7 +59,6 @@ export class AddPostComponent implements OnInit {
   displayDialogFunc() {
     this.editorToggle = false;
     this.photoUploadToggle = false;
-    this.fileUploadToggle = false;
     this.displayDialog = true;
   }
 
@@ -81,16 +68,22 @@ export class AddPostComponent implements OnInit {
 
   displayDialog = false;
 
+  pending = false;
+
   addPost(isPhoto: boolean) {
     const post = {
       isPhoto: isPhoto, 
       fileToUpload: this.file,
-      description: this.description.value
+      description: this.description.value || ''
     };
+    this.pending = true;
     this.inputForm.reset();
     this.postService.addPost(post).subscribe(
       response => {
+        this.pending = false;
         this.displayDialog = false;
+      }, error => {
+        this.pending = false;
       }
     );
   }

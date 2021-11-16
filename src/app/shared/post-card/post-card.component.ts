@@ -76,7 +76,7 @@ export class PostCardComponent implements OnInit, OnDestroy {
       response => {
         this.savePending = false;
         this.post.isSavedByUser = !this.post.isSavedByUser;
-      }
+      }, error => this.savePending = false
     )
   }
 
@@ -100,7 +100,9 @@ export class PostCardComponent implements OnInit, OnDestroy {
       response => {
         this.commentForm.reset();
         this.post.commentsCount++;
-        this.scrollFrame.scrollTop(0);
+        if(this.post.commentsCount >= 10) {
+          this.scrollFrame.scrollTop(0);
+        }
       }
     );
   }
@@ -172,31 +174,32 @@ export class PostCardComponent implements OnInit, OnDestroy {
 
   items : MenuItem[] = [
     {
-      label: 'Edit', 
-      icon: 'pi pi-fw pi-pencil', 
+      label: 'Edit',
+      icon: 'pi pi-fw pi-pencil',
       command: () => {
         this.displayDialog = true;
       }
     },
     {
-      label: 'Delete', 
+      label: 'Delete',
       icon: 'pi pi-fw pi-trash',
       command: () => {
         this.postService.deletePost(this.post.id).subscribe(
           response => {
-            
+
           }
         );
       }
     },
     {
-      label: 'Set as profile picture', 
+      label: 'Set as profile picture',
       icon: 'pi pi-fw pi-user',
       command: () => {
         const setProfile = {
           url: this.post.file.url
         }
-          this.profileService.setProfilePhoto(setProfile).subscribe( 
+          this.profileService.setProfilePhoto(setProfile).subscribe(
+            // this.post.appUser.profilePhotoUrl
         );
       }
     }
@@ -220,7 +223,7 @@ export class PostCardComponent implements OnInit, OnDestroy {
   isItemVisible(): boolean {
     if (this.post.file === null || this.post.file.isPhoto === false) {
       return false;
-    } 
+    }
     return true;
   }
 
@@ -245,7 +248,7 @@ export class PostCardComponent implements OnInit, OnDestroy {
 
   faTimes = faTimes;
   faGrinAlt = faGrinAlt;
-  
+
   inputForm: FormGroup;
 
   group() {
@@ -253,7 +256,7 @@ export class PostCardComponent implements OnInit, OnDestroy {
       description: this.description
     })
   }
-  
+
   emojiExpanded: boolean = false;
 
   expandEmoji() {
@@ -276,7 +279,7 @@ export class PostCardComponent implements OnInit, OnDestroy {
       if (!data)  data = '';
       this.commentForm.patchValue({"content": data + $event.native});
     }
-    
+
   }
 
 }

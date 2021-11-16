@@ -98,20 +98,6 @@ export class NotificationService {
     );
   }
 
-  readOne(id: Guid) {
-    return this.apiCaller.post(this.baseUrl + 'read/one?id=' + id.toString(), {}).pipe(
-      map(response => {
-        console.log(response)
-        var currentValue = this.notificationsSource.value;
-        var index = currentValue.findIndex(n => n.id === id);
-        if (index) {
-          currentValue[index].seen = true;
-          this.notificationsSource.next(currentValue);
-        }
-      })
-    );
-  }
-
   clearAll(predicate: string) {
     return this.apiCaller.delete(this.baseUrl + "?predicate=" + predicate).pipe(
       map(response => {

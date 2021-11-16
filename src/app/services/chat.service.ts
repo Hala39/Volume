@@ -46,10 +46,7 @@ export class ChatService {
     this.hubConnection.start()
       .catch(error => console.log(error));
 
-    this.getMessageThread(contactId).subscribe(
-      res => console.log(res)
-    );
-      // .finally(() => this.busyService.idle());
+    this.getMessageThread(contactId).subscribe();
 
     this.hubConnection.on('NewMessage', message => {
       this.thread$.pipe(take(1)).subscribe(messages => {

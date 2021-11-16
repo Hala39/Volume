@@ -1,0 +1,10 @@
+
+.pi-times {
+    cursor: pointer;
+}
+
+:host ::ng-deep {
+    .p-toolbar {
+        padding: 2%;
+    }
+}

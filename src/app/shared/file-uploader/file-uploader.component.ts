@@ -12,7 +12,6 @@ export class FileUploaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  @Input() accept = "image/*";
   @Output() fileSelectedEmitter = new EventEmitter<File>();
 
   fileSelected(event: any) {

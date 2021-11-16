@@ -92,7 +92,7 @@ export class IdentityComponent implements OnInit {
         response => {
           this.dataSavedEmitter.emit(false);
           this.pending = false;
-        }
+        }, error => this.pending = false
       );
     } else {
       this.switch()

@@ -52,14 +52,8 @@ body {
     color: rgba(255, 255, 255, 0.87);
 }
 
-
 .pi-ellipsis-v {
     cursor: pointer;
 }
 
-:host ::ng-deep {
-    .p-overlaypanel .p-overlaypanel-content {
-        max-width: 100% !important;
-    }
-}
 

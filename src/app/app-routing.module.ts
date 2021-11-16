@@ -1,3 +1,6 @@
+import { SearchPageComponent } from './shared/search-page/search-page.component';
+import { ContactsPageComponent } from './shared/contacts-page/contacts-page.component';
+import { NotificationsPageComponent } from './shared/notifications-page/notifications-page.component';
 import { CanActivateGuard } from './guards/can-activate.guard';
 import { PostComponent } from './shared/post/post.component';
 import { CanLoadGuard } from './guards/can-load.guard';
@@ -22,6 +25,15 @@ const routes: Routes = [
   },
   {
     path: 'post/:id', component: PostComponent, canActivate: [CanActivateGuard]
+  },
+  {
+    path: 'notifications', component: NotificationsPageComponent, canActivate: [CanActivateGuard]
+  }, 
+  {
+    path: 'contacts', component: ContactsPageComponent, canActivate: [CanActivateGuard]
+  },
+  {
+    path: 'search', component: SearchPageComponent, canActivate: [CanActivateGuard]
   }
 ];
 

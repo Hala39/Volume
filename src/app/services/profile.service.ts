@@ -53,16 +53,22 @@ export class ProfileService {
     if (setProfile.url !== undefined) {
       formData.append("Url", setProfile.url);
     }
-    return this.apiCaller.post(this.baseUrl + 'photo', formData).pipe(
+    return this.apiCaller.post<any>(this.baseUrl + 'photo', formData).pipe(
       map(response => {
-        this.getProfileForUser(this.userService.userSource.value.id).subscribe(
-          response => {
-            var userCard = JSON.parse(localStorage.getItem("userCard"));
-            userCard.profilePhotoUrl = this.profileSource.value.profilePhotoUrl;
-            localStorage.setItem("userCard", JSON.stringify(userCard));
-            this.userService.userSource.next(userCard);
-          }
-        );
+        var userCard = JSON.parse(localStorage.getItem("userCard"));
+        userCard.profilePhotoUrl = response.url;
+        this.userService.userSource.next(userCard);
+        localStorage.setItem("userCard", JSON.stringify(userCard));
+        
+        var currentProfileValue = this.profileSource.value;
+        currentProfileValue.profilePhotoUrl = response.url;
+        this.profileSource.next(currentProfileValue);
+
+        var currentPostsSource = this.postsSource.value;
+        currentPostsSource.forEach(element => {
+           element.appUser.profilePhotoUrl = response.url;
+        })
+        this.postsSource.next(currentPostsSource);
         
       })
     );

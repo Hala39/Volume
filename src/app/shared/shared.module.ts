@@ -45,6 +45,9 @@ import { NotificationComponent } from './notification/notification.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { LoaderComponent } from './loader/loader.component';
 import { BookmarkComponent } from './bookmark/bookmark.component';
+import { NotificationsPageComponent } from './notifications-page/notifications-page.component';
+import { ContactsPageComponent } from './contacts-page/contacts-page.component';
+import { SearchPageComponent } from './search-page/search-page.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +66,9 @@ import { BookmarkComponent } from './bookmark/bookmark.component';
     NotificationComponent,
     LoaderComponent,
     BookmarkComponent,
+    NotificationsPageComponent,
+    ContactsPageComponent,
+    SearchPageComponent,
   ],
   imports: [
     CommonModule,

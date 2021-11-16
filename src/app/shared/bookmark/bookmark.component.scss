@@ -1,6 +1,12 @@
 :host ::ng-deep {
     .p-card {
+        padding: 0%;
         border: 1px solid #304562;
         cursor: pointer;
     }
+}
+
+img {
+    height: 100px;
+    width: calc(height);
 }

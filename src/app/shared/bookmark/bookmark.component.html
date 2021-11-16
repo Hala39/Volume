@@ -5,7 +5,7 @@
         </div>
         <img alt="Card" *ngIf="post?.file" [src]="post?.file?.url">
     </ng-template>
-    <ng-template pTemplate="content">
-    <p [innerHtml]="post.description"></p>
+    <ng-template pTemplate="content" *ngIf="post?.description" >
+    <p *ngIf="!post?.file" [innerHtml]="post.description"></p>
     </ng-template>
 </p-card>

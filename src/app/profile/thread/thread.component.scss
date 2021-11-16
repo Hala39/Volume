@@ -13,11 +13,14 @@ fa-icon {
     font-size: 1.5rem;
 }
 
-.frame {
-    height: 90%;
-    width: 90%;
-    z-index: 100;
-    top: 0;
-    overflow: scroll;
-}
+@media screen and (max-width: 430px) {
+    fa-icon {
+        font-size: 1rem;
+    }
 
+    :host ::ng-deep {
+        .p-inputtext {
+            width: 85%;
+        }
+    }
+}

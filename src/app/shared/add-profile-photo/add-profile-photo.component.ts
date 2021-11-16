@@ -33,6 +33,8 @@ export class AddProfilePhotoComponent implements OnInit {
         response => {
           this.pending = false;
           this.photoUploadedEmitter.emit(true)
+        }, error => {
+          this.pending = false;
         }
       )
         

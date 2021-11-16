@@ -1,0 +1,40 @@
+<app-navbar *ngIf="!overlay"></app-navbar>
+<p-card header="Search">
+    <p-chips [(ngModel)]="keyword" [style]="{width: '100%'}" 
+        placeholder="Type here .."
+        (onAdd)="search()" (onRemove)="exit()"></p-chips>
+    <div *ngIf="!hideRecent">
+        <p-toolbar [style]="{border: 'none'}">
+            <div class="p-toolbar-group-left">
+                <h6 class="mt-4" >Recent searches</h6>
+            </div>
+            <div class="p-toolbar-group-right" *ngIf="(searchOperations$ | async)?.length > 0">
+                <a class="primary-link" (click)="clearAll()">Clear All</a>
+            </div>
+        </p-toolbar>
+        <div class="p-pl-3" *ngIf="(searchOperations$ | async)?.length === 0">
+            <p>Nothing to show.</p>
+        </div>
+        <p-scrollPanel [style]="!overlay? {height: '80vh'} : {height: '300px'}">
+            <div *ngFor="let searchOperation of (searchOperations$ | async)">
+                <p-toolbar [style]="{border: 'none', cursor: 'pointer'}">
+                    <div class="p-toolbar-group-left"  (click)="search(searchOperation.keyword)">
+                        {{ searchOperation.keyword }}
+                    </div>
+                    <div class="p-toolbar-group-right">
+                        <i class="pi pi-times" (click)="removeOneOperation(searchOperation.id)" ></i>
+                    </div>
+                </p-toolbar>
+                <app-loader *ngIf="(searchOperations$ | async)?.length >= 10" (click)="onKeywordsLoad()" [noMore]="noMoreKeywords"></app-loader>
+            </div>
+        </p-scrollPanel>
+    </div>
+    <div *ngIf="(searchResults$ | async)?.length === 0" class="mt-4">
+        No results found. Try with other keywords.
+    </div>
+    <p-scrollPanel *ngIf="hideRecent" [style]="!overlay? {height: '80vh'} : {height: '300px'}">
+        <div *ngFor="let result of (searchResults$ | async)" class="mt-4">
+            <app-user-card [user]="result" [search]="true"></app-user-card>
+        </div>
+    </p-scrollPanel>
+</p-card>

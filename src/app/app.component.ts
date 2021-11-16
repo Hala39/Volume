@@ -33,11 +33,9 @@ export class AppComponent {
 
   navigateToPost(data: any) {
     this.router.navigateByUrl("/post/" + data.postId);
-    this.notificationService.readOne(data.notificationId).subscribe();
   }
 
   navigateToProfile(data: any) {
     this.router.navigateByUrl("/profile/" + data.observerId);
-    this.notificationService.readOne(data.notificationId).subscribe();
   }
 }

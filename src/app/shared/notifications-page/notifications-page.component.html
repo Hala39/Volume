@@ -1,0 +1,20 @@
+<app-navbar *ngIf="!overlay"></app-navbar>
+<p-card header="Notifications">
+    <div *ngIf="(notifications$ | async)?.length === 0">
+        Nothing to show.
+    </div>
+    <p-scrollPanel  [style]="!overlay? {height: '80vh'} : {height: '300px'}">
+        <p-toolbar *ngIf="(notifications$ | async)?.length > 0" [style]="{border: 'none'}">
+            <div class="p-toolbar-group-left">
+                <h6 class="mt-4" ></h6>
+            </div>
+            <div class="p-toolbar-group-right">
+                <a class="primary-link" (click)="clearAllNotifications()">Clear All</a>
+            </div>
+        </p-toolbar>
+        <div  *ngFor="let notification of (notifications$ | async)" class="p-mb-1">
+            <app-notification [notification]="notification" (hideOverlayEmitter)="hideOverlay()"></app-notification>
+        </div>
+        <app-loader *ngIf="(notifications$ | async)?.length >= 10" [noMore]="noMoreNotifications" (click)="onNotificationsLoad()"></app-loader>
+    </p-scrollPanel>
+</p-card>

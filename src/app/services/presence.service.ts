@@ -68,20 +68,20 @@ export class PresenceService {
     })
 
     this.hubConnection.on("NewComment", ({postId, displayName, notificationId}) => {
-      this.messageService.add({severity: 'info', key: 'new-comment', summary: 'New Comment', data: {postId, notificationId},
+      this.messageService.add({key: 'new-comment', summary: 'New Comment', data: {postId, notificationId},
        detail: displayName + ' has commented on your post'});
        this.notificationAlertSource.next(true);
     })
 
     this.hubConnection.on("NewFollower", ({observerId, displayName, notificationId}) => {
-      this.messageService.add({severity: 'info', key: 'new-follower', summary: 'New Follower', data: {observerId, notificationId},
+      this.messageService.add({key: 'new-follower', summary: 'New Follower', data: {observerId, notificationId},
        detail: displayName + ' has followed you'});
        this.notificationAlertSource.next(true);
        this.followService.stopHubConnection();
     })
 
     this.hubConnection.on("NewLike", ({postId, displayName, notificationId}) => {
-      this.messageService.add({severity: 'info', key: 'new-comment', summary: 'New Like', data: {postId, notificationId},
+      this.messageService.add({key: 'new-comment', summary: 'New Like', data: {postId, notificationId},
        detail: displayName + ' has liked your post'});
        this.notificationAlertSource.next(true);
        this.likeService.stopHubConnection();

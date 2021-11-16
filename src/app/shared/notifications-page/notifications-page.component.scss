@@ -1,0 +1,13 @@
+.read {
+    cursor: pointer;
+    border: 1px solid #304562;
+    margin-bottom: 1rem;
+}
+
+.unread {
+    margin-bottom: 1rem;
+    cursor: pointer;
+    border: 1px solid #304562;
+    color: rgba(255, 255, 255, 0.87);
+    background: rgba(255, 255, 255, 0.03);
+}

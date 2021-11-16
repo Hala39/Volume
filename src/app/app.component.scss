@@ -6,15 +6,22 @@
 
     .p-toast {
         cursor: pointer;
+        max-width: 90%;
     }
 
-    .p-overlaypanel .p-overlaypanel-content {
-        max-width: 100% !important;
-    }
+
 }
 
 @media screen and (max-width: 300px) {
     body {
         font-size: small;
     }
+
+    :host ::ng-deep {
+        .p-overlaypanel .p-overlaypanel-content {
+            width: 250px !important;
+        }
+    }
+
+
 }

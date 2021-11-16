@@ -46,6 +46,11 @@ fa-icon {
     font-size: xx-large;
 }
 
+img {
+    max-width: 90%;
+    margin-left: 5%;
+}
+
 :host ::ng-deep { 
     .p-inputtext {
         width: 90% !important;
@@ -67,5 +72,9 @@ fa-icon {
 @media screen and (max-width: 300px) {
     .follow {
         display: none;
+    }
+
+    h6 {
+        font-size: 1rem;
     }
 }

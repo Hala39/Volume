@@ -22,9 +22,6 @@ export class NotificationComponent implements OnInit {
 
   navigate(id: Guid) {
     this.hideOverlayEmitter.emit();
-    if (this.predicate === 'notification') {
-      this.notificationService.readOne(id).subscribe();
-    }
     switch (this.notification.stimulation) {
       case 0:
         this.router.navigateByUrl('/post/' + this.notification.path);

@@ -1,125 +1,20 @@
 <div class="container-fluid px-0 mx-0" >
     <p-toolbar>
-        <div class="p-toolbar-group-left">
-            <img src="assets/images/volume-light.png" height="30" [routerLink]="['/home']">
+        <div class="p-toolbar-group-left" [routerLink]="['/home']">
+            <img src="assets/images/volume-light.png" height="30">
             <h5 class="primary pt-1">Volume</h5>
         </div>
 
         <div class="p-toolbar-group-right">
-            <i class="right-icons pi pi-link pi-search p-mr-4" (click)="op.toggle($event)"></i>
-            <i class="right-icons pi pi-link pi-bell p-mr-4" (click)="op3.toggle($event)" pBadge severity="danger" *ngIf="(presenceService.alert$ | async)"></i>
-            <i class="right-icons pi pi-link pi-bell p-mr-4"  (click)="op3.toggle($event)" *ngIf="!(presenceService.alert$ | async)" ></i>
-            <i class="right-icons pi pi-envelope p-mr-4" (click)="op2.toggle($event)" pBadge severity="danger" *ngIf="(presenceService.inbox$ | async)"></i>
-            <i class="right-icons pi pi-envelope p-mr-4" (click)="op2.toggle($event)" *ngIf="!(presenceService.inbox$ | async)"></i>
+            <i class="right-icons pi pi-link pi-search p-mr-4" [routerLink]="['/search']"></i>
+            <i class="right-icons pi pi-link pi-bell p-mr-4" [routerLink]="['/notifications']"  pBadge severity="danger" *ngIf="(presenceService.alert$ | async)"></i>
+            <i class="right-icons pi pi-link pi-bell p-mr-4" [routerLink]="['/notifications']" *ngIf="!(presenceService.alert$ | async)" ></i>
+            <i class="right-icons pi pi-envelope p-mr-4" [routerLink]="['/contacts']" pBadge severity="danger" *ngIf="(presenceService.inbox$ | async)"></i>
+            <i class="right-icons pi pi-envelope p-mr-4" [routerLink]="['/contacts']" *ngIf="!(presenceService.inbox$ | async)"></i>
             <p-avatar [image]="(user$ | async)?.profilePhotoUrl? (user$ | async)?.profilePhotoUrl : ''"
             [icon]="(user$ | async)?.profilePhotoUrl? '' : 'pi pi-user'" 
-            (click)="goToProfile()"
+            [routerLink]="['/profile']"
             styleClass="p-mr-2" shape="circle"></p-avatar>
         </div>
     </p-toolbar>
 </div>
-
-<p-overlayPanel #op [dismissable]="false" [showCloseIcon]="true" (onShow)="onShow()">
-    <ng-template pTemplate>
-        <p-card header="Search">
-            <p-chips [(ngModel)]="keyword" [style]="{width: '100%'}" 
-            placeholder="Type here .."
-            (onAdd)="search()" (onRemove)="exit()"></p-chips>
-            <div *ngIf="!hideRecent">
-                <p-toolbar [style]="{border: 'none'}">
-                    <div class="p-toolbar-group-left">
-                        <h6 class="mt-4" >Recent searches</h6>
-                    </div>
-                    <div class="p-toolbar-group-right" *ngIf="(searchOperations$ | async)?.length > 0">
-                        <a class="primary-link" (click)="clearAll()">Clear All</a>
-                    </div>
-                </p-toolbar>
-                    <p-scrollPanel>
-                        <div *ngFor="let searchOperation of (searchOperations$ | async)">
-                            <p-toolbar [style]="{border: 'none', cursor: 'pointer'}">
-                                <div class="p-toolbar-group-left"  (click)="search(searchOperation.keyword)">
-                                    {{ searchOperation.keyword }}
-                                </div>
-                                <div class="p-toolbar-group-right">
-                                    <i class="pi pi-times" (click)="removeOneOperation(searchOperation.id)" ></i>
-                                </div>
-                            </p-toolbar>
-                            <app-loader *ngIf="(searchOperations$ | async)?.length >= 10" (click)="onKeywordsLoad()" [noMore]="noMoreKeywords"></app-loader>
-                        </div>
-                    </p-scrollPanel>
-                <div class="p-pl-3" *ngIf="(searchOperations$ | async)?.length === 0">
-                    <p>Nothing to show.</p>
-                </div>
-            </div>
-            <p-scrollPanel [style]="{height: '250px'}">
-                <div *ngFor="let result of (searchResults$ | async)" class="mt-4">
-                    <app-user-card [user]="result" [search]="true"></app-user-card>
-                </div>
-            </p-scrollPanel>
-            <div *ngIf="(searchResults$ | async)?.length === 0" class="mt-4">
-                No results found. Try with other keywords.
-            </div>
-        </p-card>
-    </ng-template>
-</p-overlayPanel>
-
-
-<p-overlayPanel #op2 [dismissable]="false" [showCloseIcon]="true" (onShow)="onContactsShow()">
-    <ng-template pTemplate>
-    <p-card header="Inbox">
-        <div *ngIf="(contacts$ | async)?.length === 0">
-            Nothing to show.
-        </div>
-        <p-scrollPanel [style]="{height: '300px'}">
-            <div *ngFor="let contact of (contacts$ | async)" (click)="navigateToMessages(contact.id)"
-                [ngClass]="contact.lastMessageReceived?.id > contact.lastMessageSent?.id? contact.lastMessageReceived?.seen? 'read' : 'unread' 
-            : contact.lastMessageSent?.seen? 'read' : 'unread'">
-            <div class="d-flex flex-row p-pt-3 px-3"> 
-                <p-avatar [image]="contact.profilePhotoUrl? contact.profilePhotoUrl : ''" 
-                [icon]="contact.profilePhotoUrl? '' : 'pi pi-user'"
-                styleClass="p-mr-2" size="large" shape="circle"></p-avatar>
-                <div class="ml-2 w-100">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="d-flex flex-row align-items-center"> 
-                            <span class="name">
-                                <h6 [innerText]="contact.displayName"></h6> 
-                            </span> 
-                            <small class="text-muted p-pl-2">{{(contact.lastMessageReceived?.id > contact.lastMessageSent?.id? 
-                                contact.lastMessageReceived?.sentAt : contact.lastMessageSent?.sentAt) | date: "shortTime"}}</small>
-                        </div> 
-                    </div>
-                    <p class="text-justify"><span>{{contact.lastMessageReceived?.id > contact.lastMessageSent?.id? 
-                        contact.lastMessageReceived?.senderDisplayName : contact.lastMessageSent?.senderDisplayName}}</span>
-                        : {{contact.lastMessageReceived?.id > contact.lastMessageSent?.id? contact.lastMessageReceived?.content : contact.lastMessageSent?.content}}</p>
-                </div>
-            </div>
-        </div>
-        </p-scrollPanel>
-    </p-card>
-    </ng-template>
-</p-overlayPanel>
-
-<p-overlayPanel #op3 [dismissable]="false" [showCloseIcon]="true" 
-(onShow)="onNotificationsShow()" (onHide)="onNotificationsHide()">
-    <ng-template pTemplate>
-        <p-card header="Notifications">
-            <p-scrollPanel [style]="{height: '300px'}">
-                <div *ngIf="(notifications$ | async)?.length === 0">
-                    Nothing to show.
-                </div>
-                <p-toolbar *ngIf="(notifications$ | async)?.length > 0" [style]="{border: 'none'}">
-                    <div class="p-toolbar-group-left">
-                        <h6 class="mt-4" ></h6>
-                    </div>
-                    <div class="p-toolbar-group-right">
-                        <a class="primary-link" (click)="clearAllNotifications()">Clear All</a>
-                    </div>
-                </p-toolbar>
-                <div  *ngFor="let notification of (notifications$ | async)" class="p-mb-1">
-                    <app-notification [notification]="notification" (hideOverlayEmitter)="op3.hide()"></app-notification>
-                </div>
-                <app-loader *ngIf="(notifications$ | async)?.length >= 10" [noMore]="noMoreNotifications" (click)="onNotificationsLoad()"></app-loader>
-            </p-scrollPanel>
-        </p-card>
-    </ng-template>
-</p-overlayPanel>
