@@ -23,8 +23,9 @@
                         <b>OR</b>
                     </p-divider>
                </div>
-               <div class="d-flex justify-content-center">
-                  <p-button label="sign in with Facebook" icon="pi pi-facebook" styleClass="p-button-success"></p-button>
+               <div class="d-flex justify-content-center mt-3 mb-5">
+                <i class="pi pi-facebook" (click)="signInWithFB()"></i>
+                <i class="pi pi-google p-ml-2" (click)="signInWithGoogle()"></i>
                </div>
             </p-card>
         </div>

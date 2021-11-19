@@ -29,7 +29,6 @@ export class AddPostComponent implements OnInit {
   faTimes = faTimes;
 
   file: File = null;
-  isPhoto: boolean = false;
   user$: Observable<UserCard>;
   
 
@@ -70,9 +69,8 @@ export class AddPostComponent implements OnInit {
 
   pending = false;
 
-  addPost(isPhoto: boolean) {
+  addPost() {
     const post = {
-      isPhoto: isPhoto, 
       fileToUpload: this.file,
       description: this.description.value || ''
     };

@@ -23,15 +23,13 @@ export class RegisterComponent implements OnInit {
   @Output() activeIndexEmitter = new EventEmitter<number>();
   @Output() emailEmitter = new EventEmitter<string>();
 
-  switch() {
-    this.activeIndexEmitter.emit(1);
+  switch(index: number) {
+    this.activeIndexEmitter.emit(index);
   }
 
   checkbox: boolean = true;
 
   registrationForm: FormGroup;
-
-  displayDialog: boolean = false;
 
 
   displayName = new FormControl("", {
@@ -69,7 +67,7 @@ export class RegisterComponent implements OnInit {
       this.userService.signup(userRegister).subscribe(
         res => {
           this.emailEmitter.emit(this.email.value);
-          this.switch();
+          this.switch(1);
         }
       );
     } 
@@ -90,6 +88,23 @@ export class RegisterComponent implements OnInit {
 
   togglePassword() {
     this.passwordOn = !this.passwordOn;
+  }
+
+  //sign up with facebook
+  signInWithFB(): void {
+    this.userService.signInWithFB();
+    if (this.userService.loggedIn) {
+      this.emailEmitter.emit(this.email.value);
+      this.switch(2);
+    }
+  }
+
+  signInWithGoogle() {
+    this.userService.signInWithGoogle();
+    if (this.userService.loggedIn) {
+      this.emailEmitter.emit(this.email.value);
+      this.switch(2);
+    }
   }
 
 }

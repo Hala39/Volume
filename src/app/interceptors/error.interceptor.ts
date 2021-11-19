@@ -3,7 +3,8 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
+  HttpResponse
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { Router, NavigationExtras } from '@angular/router';
@@ -39,6 +40,11 @@ export class ErrorInterceptor implements HttpInterceptor {
             case 401:
               if (!request.url.includes("login")) {
                 this.userService.logout();
+              }
+              if (request.headers.get('www-authenticate')?.startsWith('Bearer error="invalid_token"')) 
+              {
+                this.userService.logout();
+                this.messageService.add({severity: 'error', summary: 'SessionExpired', detail: 'Please login agin.'});
               }
               this.messageService.add({severity: 'error', summary: 'Unauthorized', detail: error.error || 'Please login first!'});
               break;

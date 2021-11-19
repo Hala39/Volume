@@ -11,13 +11,13 @@
     <div>
         <p-toolbar [style]="{'margin-top': '15px'}">   
 
-            <button pButton pRipple type="button" styleClass="p-button-lg" label="Photo" 
+            <button pButton pRipple type="button" label="Photos" 
             [icon]="photoUploadToggle && displayDialog? 'pi pi-times' : 'pi pi-images'" (click)="togglePhotoUploader()"
-            class="p-button-rounded p-button-warning p-button-text"></button>
+            class="p-button-rounded p-button-warning p-button-text p-button-lg"></button>
 
-            <button pButton pRipple type="button" styleClass="p-button-lg" label="Editor" 
+            <button pButton pRipple type="button" label="Editor" 
             [icon]="editorToggle && displayDialog? 'pi pi-times' : 'pi pi-pencil'" (click)="toggleEditor()"
-            class="p-button-rounded p-button-danger p-button-text"></button>
+            class="p-button-rounded p-button-danger p-button-text p-button-lg"></button>
 
         </p-toolbar>
     </div>
@@ -53,7 +53,7 @@
             <app-file-uploader *ngIf="photoUploadToggle" (fileSelectedEmitter)="fileSelected($event)"></app-file-uploader>
         </div>
         <div class="p-field p-mt-3">
-            <p-button label="Post" [icon]="pending? 'pi pi-spinner pi-spin' : ''" [disabled]="pending" *ngIf="photoUploadToggle" (click)="addPost(true)"></p-button>
+            <p-button label="Post" [icon]="pending? 'pi pi-spinner pi-spin' : ''" [disabled]="pending"  (click)="addPost()"></p-button>
         </div>
     </div>
 </p-dialog>

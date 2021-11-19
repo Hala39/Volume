@@ -1,3 +1,4 @@
+import { FbLogin } from './../models/fbLogin';
 import { LikeService } from './like.service';
 import { PresenceService } from './presence.service';
 import { UserRegister } from './../models/userRegister';
@@ -11,26 +12,30 @@ import { AppUser } from '../models/appUser';
 import { map } from 'rxjs/operators';
 import { UserLogin } from '../models/userLogin';
 import { BehaviorSubject } from 'rxjs';
+import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService, SocialUser } from 'angularx-social-login';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private apiCaller: HttpClient, private jwtHelper: JwtHelperService, 
-    private presenceService: PresenceService, private likeService: LikeService,
+  constructor(private apiCaller: HttpClient, private jwtHelper: JwtHelperService,
+    private presenceService: PresenceService, private authService: SocialAuthService,
     private router: Router) { }
-    
+
   baseUrl = environment.apiUrl + 'account/';
 
   userSource = new BehaviorSubject<UserCard>(null);
   user$ = this.userSource.asObservable();
+
+  refreshTokenTimeout: any;
 
   login(userLogin: UserLogin) {
     return this.apiCaller.post<UserCard>(this.baseUrl + 'login', userLogin).pipe(
       map(response => {
         if (response) {
           this.setUserCard(response);
+          this.startRefreshTokenTimer(response);
           this.router.navigateByUrl("/home");
           this.presenceService.createHubConnection();
         }
@@ -42,11 +47,75 @@ export class UserService {
     return this.apiCaller.post<UserCard>(this.baseUrl + 'register', userRegister).pipe(
       map(response => {
         if (response) {
-          this.setUserCard(response);
-          this.presenceService.createHubConnection();
-        } 
+          // this.setUserCard(response);
+          // this.startRefreshTokenTimer(response);
+          // this.presenceService.createHubConnection();
+        }
       })
     );
+  }
+
+  loginWithFacebook(fbLogin: FbLogin) {
+    return this.apiCaller?.post<UserCard>(this.baseUrl + `fbLogin`, fbLogin).pipe(
+      map(response => {
+        console.log(response);
+        if (response) {
+          this.setUserCard(response);
+          if (this.router.url !== 'register') {
+            this.router.navigateByUrl("/home");
+          }
+          this.startRefreshTokenTimer(response);
+          this.presenceService.createHubConnection();
+        }
+      })
+    );
+  }
+
+  signInWithFB(): void {
+    this.authService
+      .signIn(FacebookLoginProvider.PROVIDER_ID)
+      .then((response: SocialUser )=> {
+        if (response) {
+          const fbLogin: FbLogin = {
+            name: response.name,
+            email: response.email,
+            authToken: response.authToken,
+            photoUrl: response.photoUrl
+          }
+          if (fbLogin) {
+            this.loginWithFacebook(fbLogin).subscribe();
+          }  
+        }
+      }
+    )
+  }
+
+  signInWithGoogle(): void {
+    this.authService
+      .signIn(GoogleLoginProvider.PROVIDER_ID)
+      .then((response: SocialUser) => {
+        if (response) {
+          const fbLogin: FbLogin = {
+            name: response.name,
+            email: response.email,
+            authToken: response.authToken,
+            photoUrl: response.photoUrl
+          }
+          if (fbLogin) {
+            this.loginWithFacebook(fbLogin).subscribe();
+          }  
+        }
+    });
+  }
+
+  refreshToken() {
+    return this.apiCaller.post<UserCard>(this.baseUrl + 'refreshToken', {}).pipe(
+      map(response => {
+        this.setUserCard(response);
+        this.startRefreshTokenTimer(response);
+        this.presenceService.createHubConnection();
+      })
+    )
   }
 
   setUserCard(userCard: UserCard) {
@@ -54,8 +123,6 @@ export class UserService {
     this.userSource.next(userCard);
     localStorage.setItem('userCard', JSON.stringify(userCard));
     localStorage.setItem('access_token', userCard.token);
-    localStorage.setItem('expirationDate', 
-    JSON.stringify(this.jwtHelper.getTokenExpirationDate(userCard.token)));
   }
 
 
@@ -63,24 +130,41 @@ export class UserService {
     return localStorage.getItem('access_token') !==  null;
   }
 
+  verifyEmail(email: string, token: string) {
+    return this.apiCaller.post(this.baseUrl + `verifyEmail?token=${token}&email=${email}`, {});      
+  }
+
+  resendEmailConfirmation(email: string) {
+    return this.apiCaller.get(this.baseUrl + `resendEmailConfirmation?email=${email}`);
+  }
+
   logout() {
     localStorage.clear();
+    this.authService.signOut();
     this.router.navigateByUrl("/");
     this.presenceService.stopHubConnection();
   }
-  
-  getExpiration() : Date {
-    return JSON.parse(localStorage.getItem("expirationDate"));
-  } 
 
   public get isExpired() : boolean {
-    return JSON.parse(localStorage.getItem("expirationDate")) > Date.now;
+    const token = localStorage.getItem("access_token");
+    const expiration = this.jwtHelper.getTokenExpirationDate(token);
+
+    if (expiration.getTime() < Date.now()) {
+      return true;
+    }
+
+    return false;
+
   }
 
-  refreshPage() {
-    var currentRoute: string = this.router.url;
-    this.router.navigateByUrl('/', {skipLocationChange: true})
-      .then(()=>this.router.navigateByUrl(currentRoute));
+  private startRefreshTokenTimer(user: UserCard) {
+    this.stopRefreshTokenTimer();
+    const expires = this.jwtHelper.getTokenExpirationDate(user.token);
+    const timeout = expires.getTime() - Date.now() - (60 * 1000);
+    this.refreshTokenTimeout = setTimeout(() => this.refreshToken().subscribe(), timeout);
   }
 
+  private stopRefreshTokenTimer() {
+    clearTimeout(this.refreshTokenTimeout);
+  }
 }

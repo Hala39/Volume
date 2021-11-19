@@ -31,13 +31,20 @@ import { ToastModule } from 'primeng/toast';
 import { BusyInterceptor } from './interceptors/busy.interceptor';
 import { TimeagoModule } from 'ngx-timeago';
 
+import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider } from 'angularx-social-login';
+import {
+  FacebookLoginProvider
+} from 'angularx-social-login';
+import { TestComponent } from './test/test.component';
+
 export function tokenGetter() {
   return localStorage.getItem("access_token");
 }
 // import { BusyInterceptor } from './interceptors/busy.interceptor';
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,
@@ -61,12 +68,12 @@ export function tokenGetter() {
     WebcamModule,
     EmojiModule,
     PickerModule,
+    SocialLoginModule,
     TimeagoModule.forRoot(),
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ["example.com"],
-        disallowedRoutes: ["http://example.com/examplebadroute/"],
+        allowedDomains: ["volume-network.herokuapp.com"]
       },
     }),
   ],
@@ -80,7 +87,23 @@ export function tokenGetter() {
     CanLoadGuard,
     CanActivateGuard,
     MessageService,
-    {provide: HTTP_INTERCEPTORS, useClass: BusyInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: BusyInterceptor, multi: true},
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider('591000955489166')
+          },
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider('190411128931-lhuro6m2sapcjuvkppb4ohu8fgleefru.apps.googleusercontent.com')
+          }
+        ]
+      } as SocialAuthServiceConfig,
+    }
   ],
   bootstrap: [AppComponent]
 })

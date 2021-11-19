@@ -14,7 +14,7 @@ export class AppComponent {
   title = 'Volume';
   
   constructor(private primengConfig: PrimeNGConfig, private userService: UserService, 
-    private router: Router, private notificationService: NotificationService,
+    private router: Router,
     private presenceService: PresenceService) {
     this.userService.userSource.next(JSON.parse(localStorage.getItem("userCard")));
     if (this.userService.loggedIn && !this.userService.isExpired) {

@@ -221,7 +221,7 @@ export class PostCardComponent implements OnInit, OnDestroy {
   }
 
   isItemVisible(): boolean {
-    if (this.post.file === null || this.post.file.isPhoto === false) {
+    if (this.post.file === null) {
       return false;
     }
     return true;

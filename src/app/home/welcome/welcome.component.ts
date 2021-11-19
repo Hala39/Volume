@@ -1,3 +1,4 @@
+import { UserService } from 'src/app/services/user.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WelcomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+  }
+
+  signInWithFB(): void {
+    this.userService.signInWithFB();
+  }
+
+  signInWithGoogle() {
+    this.userService.signInWithGoogle();
   }
 
 }

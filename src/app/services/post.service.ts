@@ -34,7 +34,6 @@ export class PostService {
     var formData: any = new FormData();
     formData.append("Description", post.description);
     formData.append("File", post.fileToUpload);
-    formData.append("IsPhoto", post.isPhoto);
     return this.apiCaller.post(this.baseUrl, formData).pipe(
       map(response => {
         if (response) {

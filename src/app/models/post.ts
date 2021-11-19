@@ -13,5 +13,4 @@ export interface Post {
     isLikedByUser?: boolean;
     isFollowing?: boolean;
     isSavedByUser?: boolean;
-    isPhoto: boolean;
 }

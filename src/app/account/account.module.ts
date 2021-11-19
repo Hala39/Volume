@@ -17,7 +17,6 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { FileUploadModule } from 'primeng/fileupload';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { InputTextareaModule } from 'primeng/inputtextarea';
 import { AvatarModule } from 'primeng/avatar';
 import {TooltipModule} from 'primeng/tooltip';
 import {CalendarModule} from 'primeng/calendar';
@@ -33,7 +32,8 @@ import { SharedModule } from '../shared/shared.module';
 import { NetworkComponent } from './network/network.component';
 
 const routes: Routes = [
-  {path: '', component: AccountComponent}
+  {path: '', component: AccountComponent},
+  {path: 'verifyEmail/:token/:email', component: VerifyEmailComponent}
 ]
 
 @NgModule({
