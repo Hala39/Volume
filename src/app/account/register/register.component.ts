@@ -68,6 +68,8 @@ export class RegisterComponent implements OnInit {
         res => {
           this.emailEmitter.emit(this.email.value);
           this.switch(1);
+        }, error => {
+          console.log(error)
         }
       );
     } 

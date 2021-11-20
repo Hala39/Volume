@@ -30,10 +30,11 @@ import {CheckboxModule} from 'primeng/checkbox';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../shared/shared.module';
 import { NetworkComponent } from './network/network.component';
+import { VerifiedComponent } from './verified/verified.component';
 
 const routes: Routes = [
   {path: '', component: AccountComponent},
-  {path: 'verifyEmail/:token/:email', component: VerifyEmailComponent}
+  {path: ':index', component: AccountComponent}
 ]
 
 @NgModule({
@@ -43,7 +44,8 @@ const routes: Routes = [
     EditProfileComponent,
     SuccessComponent,
     AccountComponent,
-    NetworkComponent
+    NetworkComponent,
+    VerifiedComponent
   ],
   imports: [
     CommonModule,

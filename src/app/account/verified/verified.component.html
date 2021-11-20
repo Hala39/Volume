@@ -1,0 +1,11 @@
+<p-dialog  [(visible)]="visible" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}"
+    [dismissableMask]="false" [resizable]="false" [closable]="false">
+    <div class="d-flex justify-content-center py-5">
+        <h5 *ngIf="pending"> <i class="pi pi-spinner pi-spin  p-mr-2"></i> Verifying.. </h5>
+        <h5 *ngIf="!pending && !failed"><i class="pi pi-check p-mr-2"></i> Verified</h5>
+        <div *ngIf="!pending && failed">
+            <h5>Something went wrong, please try again later.</h5>
+            <p><a class="primary-link" [routerLink]="['/']">Back to home</a></p>
+        </div>
+    </div>
+</p-dialog>

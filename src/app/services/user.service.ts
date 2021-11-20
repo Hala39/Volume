@@ -44,15 +44,7 @@ export class UserService {
   }
 
   signup(userRegister: UserRegister) {
-    return this.apiCaller.post<UserCard>(this.baseUrl + 'register', userRegister).pipe(
-      map(response => {
-        if (response) {
-          // this.setUserCard(response);
-          // this.startRefreshTokenTimer(response);
-          // this.presenceService.createHubConnection();
-        }
-      })
-    );
+    return this.apiCaller.post<UserCard>(this.baseUrl + 'register', userRegister);
   }
 
   loginWithFacebook(fbLogin: FbLogin) {
@@ -130,8 +122,16 @@ export class UserService {
     return localStorage.getItem('access_token') !==  null;
   }
 
-  verifyEmail(email: string, token: string) {
-    return this.apiCaller.post(this.baseUrl + `verifyEmail?token=${token}&email=${email}`, {});      
+  verifyEmail(token: string, email: string) {
+    return this.apiCaller.post<UserCard>(this.baseUrl + `verifyEmail?token=${token}&email=${email}`, {}).pipe(
+      map(response => {
+        if (response) {
+          this.setUserCard(response);
+          this.startRefreshTokenTimer(response);
+          this.presenceService.createHubConnection();
+        }
+      })
+    );      
   }
 
   resendEmailConfirmation(email: string) {

@@ -1,3 +1,4 @@
+import { VerifyEmailComponent } from './account/verify-email/verify-email.component';
 import { TestComponent } from './test/test.component';
 import { SearchPageComponent } from './shared/search-page/search-page.component';
 import { ContactsPageComponent } from './shared/contacts-page/contacts-page.component';
@@ -8,6 +9,7 @@ import { CanLoadGuard } from './guards/can-load.guard';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { WelcomeComponent } from './home/welcome/welcome.component';
+import { VerifiedComponent } from './account/verified/verified.component';
 
 const routes: Routes = [
   {path: '', component: WelcomeComponent},
@@ -15,12 +17,15 @@ const routes: Routes = [
     .then(m => m.AccountModule)
   },
   {
+    path: 'account/verifyEmail', component: VerifiedComponent,
+  },
+  {
     path: 'home', loadChildren: () => import('../app/home/home.module')
     .then(m => m.HomeModule),
     canLoad: [CanLoadGuard]
   },
   {
-    path: 'profile', loadChildren: () => import('../app/profile/profile.module')
+    path: 'profile', loadChildren: () => import('../app/profile/profile.module') 
       .then(m => m.ProfileModule),
       canLoad: [CanLoadGuard]
   },

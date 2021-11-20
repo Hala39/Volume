@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { PrimeIcons } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 export enum PageNames {
@@ -14,7 +15,13 @@ export enum PageNames {
 })
 export class AccountComponent implements OnInit {
 
-  constructor() { }
+  constructor(private activatedRoute: ActivatedRoute) {
+    var index = +this.activatedRoute.snapshot.paramMap.get('index')
+    if (index) {
+      this.events[1].isChecked = true;
+      this.setActiveIndex(index);
+    }
+  }
 
   ngOnInit(): void {
   }
