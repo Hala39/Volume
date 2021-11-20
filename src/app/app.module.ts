@@ -28,23 +28,19 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { JwtModule } from '@auth0/angular-jwt';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-import { BusyInterceptor } from './interceptors/busy.interceptor';
 import { TimeagoModule } from 'ngx-timeago';
 
 import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider } from 'angularx-social-login';
 import {
   FacebookLoginProvider
 } from 'angularx-social-login';
-import { TestComponent } from './test/test.component';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
 }
-// import { BusyInterceptor } from './interceptors/busy.interceptor';
 @NgModule({
   declarations: [
-    AppComponent,
-    TestComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -87,7 +83,6 @@ export function tokenGetter() {
     CanLoadGuard,
     CanActivateGuard,
     MessageService,
-    {provide: HTTP_INTERCEPTORS, useClass: BusyInterceptor, multi: true},
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {

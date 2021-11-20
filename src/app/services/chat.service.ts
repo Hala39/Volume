@@ -157,4 +157,9 @@ export class ChatService {
     )
   }
 
+  clearChat(contactId: string) {
+    return this.apiCaller.delete(this.baseUrl + `clear/${contactId}`).pipe(
+      map(response => this.threadSource.next([]))
+    )
+  }
 }

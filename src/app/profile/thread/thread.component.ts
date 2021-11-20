@@ -146,6 +146,14 @@ export class ThreadComponent implements OnInit, OnDestroy {
     }}
   ] 
 
+  item: MenuItem[] = [
+    {
+      label: 'Clear chat', icon: PrimeIcons.TRASH, command: () => {
+        this.chatService.clearChat(this.contactId).subscribe();
+      }
+    }
+  ]
+
 
   @ViewChild('menu') menu: any;
 

@@ -17,7 +17,7 @@
         </div>
     </div>
     <div class="p-toolbar-group-right">
-        <i class="pi pi-ellipsis-h"></i>
+        <i class="pi pi-ellipsis-h" (click)="topMenu.toggle($event)"></i>
     </div>
 </p-toolbar>
 <p-scrollPanel [style]="{height: '600px', border: '1px solid #304562'}" class="frame" (scroll)="scrolled($event)" #scrollframe>
@@ -67,3 +67,4 @@
 </p-overlayPanel>
 
 <p-menu [model]="items" #menu [popup]="true"></p-menu>
+<p-menu [model]="item" #topMenu [popup]="true"></p-menu>
