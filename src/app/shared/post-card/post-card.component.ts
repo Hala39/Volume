@@ -1,7 +1,6 @@
 import { Guid } from 'guid-typescript';
 import { faGrinAlt } from '@fortawesome/free-regular-svg-icons';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { PresenceService } from './../../services/presence.service';
 import { UserService } from './../../services/user.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { PostService } from './../../services/post.service';
@@ -12,7 +11,7 @@ import { Observable } from 'rxjs';
 import { CommentService } from './../../services/comment.service';
 import { Comment } from './../../models/comment';
 import { Post } from './../../models/post';
-import { Component, Input, OnInit, Output, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { AppUser } from 'src/app/models/appUser';
 import { MenuItem } from 'primeng/api';
 import { Router } from '@angular/router';
@@ -110,6 +109,8 @@ export class PostCardComponent implements OnInit, OnDestroy {
   followToggle() {
     this.followService.followToggle(this.post.appUser.id).subscribe(
       response => {
+        // this.post.isFollowing = !this.post.isFollowing;
+        this.post.appUser.isFollowing = !this.post.appUser.isFollowing;
         var currentValue = this.postService.postsSource.value;
         currentValue.forEach(element => {
           if (element.appUser.id === this.post.appUser.id) {
@@ -117,6 +118,12 @@ export class PostCardComponent implements OnInit, OnDestroy {
           }
         });
         this.postService.postsSource.next(currentValue);
+
+        var currentUserPosts = this.profileService.postsSource.value;
+        currentUserPosts.forEach(post => {
+          post.isFollowing = !post.isFollowing
+        })
+        this.profileService.postsSource.next(currentUserPosts);
       }
     );
   }
@@ -198,9 +205,7 @@ export class PostCardComponent implements OnInit, OnDestroy {
         const setProfile = {
           url: this.post.file.url
         }
-          this.profileService.setProfilePhoto(setProfile).subscribe(
-            // this.post.appUser.profilePhotoUrl
-        );
+          this.profileService.setProfilePhoto(setProfile).subscribe();
       }
     }
   ]

@@ -1,8 +1,8 @@
 <form [formGroup]="form">
     <div class="row" *ngIf="registration">
         <div class="col-6">
-            <p-avatar [image]="(profile$ | async)?.profilePhotoUrl? (profile$ | async)?.profilePhotoUrl : ''" 
-            [icon]="(profile$ | async)?.profilePhotoUrl? '' : 'pi pi-user'" 
+            <p-avatar [image]="currentUser?.profilePhotoUrl || (profile$ | async)?.profilePhotoUrl? (profile$ | async)?.profilePhotoUrl : ''" 
+            [icon]="currentUser?.profilePhotoUrl || (profile$ | async)?.profilePhotoUrl? '' : 'pi pi-user'" 
             size="xlarge" shape="circle" pTooltip="Add a profile photo" (click)="show()"></p-avatar>
         </div>
     </div>

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { UserRegister } from './../../models/userRegister';
 import { UserService } from './../../services/user.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
@@ -13,7 +14,7 @@ import { TitleCasePipe } from '@angular/common';
 
 export class RegisterComponent implements OnInit {
   constructor(private userService: UserService, private fb: FormBuilder, 
-    private titleCasePipe: TitleCasePipe,
+    private titleCasePipe: TitleCasePipe, private router: Router,
     private messageService: MessageService) { }
 
   ngOnInit(): void {
@@ -68,8 +69,6 @@ export class RegisterComponent implements OnInit {
         res => {
           this.emailEmitter.emit(this.email.value);
           this.switch(1);
-        }, error => {
-          console.log(error)
         }
       );
     } 

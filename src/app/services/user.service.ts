@@ -50,10 +50,9 @@ export class UserService {
   loginWithFacebook(fbLogin: FbLogin) {
     return this.apiCaller?.post<UserCard>(this.baseUrl + `fbLogin`, fbLogin).pipe(
       map(response => {
-        console.log(response);
         if (response) {
           this.setUserCard(response);
-          if (this.router.url !== 'register') {
+          if (!this.router.url.includes('register')) {
             this.router.navigateByUrl("/home");
           }
           this.startRefreshTokenTimer(response);
@@ -160,7 +159,7 @@ export class UserService {
   private startRefreshTokenTimer(user: UserCard) {
     this.stopRefreshTokenTimer();
     const expires = this.jwtHelper.getTokenExpirationDate(user.token);
-    const timeout = expires.getTime() - Date.now() - (60 * 1000);
+    const timeout = expires.getTime() - Date.now() - (120 * 1000);
     this.refreshTokenTimeout = setTimeout(() => this.refreshToken().subscribe(), timeout);
   }
 

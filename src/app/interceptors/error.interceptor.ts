@@ -33,7 +33,8 @@ export class ErrorInterceptor implements HttpInterceptor {
                 throw modalStateErrors.flat();
               } else if (typeof(error.error) === 'object') {
                 this.messageService.add({severity: 'error', summary: 'Bad Request!', detail: error.statusText});
-              } else {
+              } 
+              else {
                 this.messageService.add({severity: 'error', summary: 'Bad Request!', detail: error.error});
               }
               break;

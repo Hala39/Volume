@@ -2,6 +2,10 @@
     .p-inputtext {
         width: 90%;
     }
+
+    .p-toolbar {
+        padding: 4%;
+    }
 }
 
 i {
@@ -15,12 +19,12 @@ fa-icon {
 
 @media screen and (max-width: 430px) {
     fa-icon {
-        font-size: 1rem;
+        font-size: 1.25rem;
     }
 
     :host ::ng-deep {
         .p-inputtext {
-            width: 85%;
+            width: 90%;
         }
     }
 }

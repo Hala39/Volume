@@ -1,9 +1,9 @@
-.container {
+.container-fluid {
     padding: 5% 10%;
 }
 
-@media screen and (max-width: 300px) {
-    .container {
-        padding: 1%;
+@media screen and (max-width: 500px) {
+    .container-fluid {
+        padding: 2%;
     }
 }

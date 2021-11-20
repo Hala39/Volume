@@ -62,6 +62,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   this.activatedRoute.snapshot.paramMap.get('id') : this.userService.userSource.value.id;
 
 
+  chattingMode = false;
+
   followToggle() {
     this.followService.followToggle(this.userId).subscribe(
       response => {
@@ -127,6 +129,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
   index = this.activatedRoute.toString().includes('messages')? 4 : 0;
 
   indexChanged(index: number) {
+    if (index !== 4) {
+      this.chattingMode = false;
+    }
     this.index++;
     switch (index) {
       case 1:
@@ -147,15 +152,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
       case 4:
         if (this.userService.userSource.value.id === this.userId) {
           this.getSavedPosts();
-          this.stopHub();
+          this.chattingMode = false;
         } else {
           this.loadThread();
+          this.chattingMode = true;
         }
         break;  
 
       case 5:
         this.getActivities();
-        
         break;
 
       default:
