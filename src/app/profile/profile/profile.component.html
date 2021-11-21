@@ -161,7 +161,7 @@
 
 <p-menu #menu [popup]="true" [model]="items"></p-menu>
 
-<p-dialog header="Add profile picture" [(visible)]="displayDialog" [breakpoints]="{'960px': '90vw'}" [style]="{width: '50vw'}"
+<p-dialog header="Add profile picture" [(visible)]="displayDialog" [breakpoints]="{'960px': '95vw'}" [style]="{width: '50vw'}"
     [dismissableMask]="true" [resizable]="false">
         
     <app-add-profile-photo (hideDialogEmitter)="displayDialog=false" (photoUploadedEmitter)="photoUploaded($event)"></app-add-profile-photo>

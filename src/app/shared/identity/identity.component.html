@@ -52,7 +52,7 @@
         <button pRipple pButton label="Cancel" class="p-button-outlined" (click)="close()"></button>
     </div>
 
-<p-dialog header="Add profile picture" [(visible)]="displayDialog" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}"
+<p-dialog header="Add profile picture" [(visible)]="displayDialog" [breakpoints]="{'960px': '95vw'}" [style]="{width: '50vw'}"
     [dismissableMask]="true" [resizable]="false">
         
     <app-add-profile-photo (hideDialogEmitter)="displayDialog=false" (photoUploadedEmitter)="photoUploaded($event)"></app-add-profile-photo>

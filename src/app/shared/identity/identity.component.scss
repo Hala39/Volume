@@ -22,6 +22,10 @@
         box-shadow: none;
     }
 
+    .p-inputtext::placeholder {
+        font-size: smaller;
+    }
+
     .p-calendar-w-btn .p-datepicker-trigger {
         color:rgba(255, 255, 255, 0.6);
     }

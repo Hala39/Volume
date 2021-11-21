@@ -29,6 +29,7 @@ export class UserService {
   user$ = this.userSource.asObservable();
 
   refreshTokenTimeout: any;
+  done = false;
 
   login(userLogin: UserLogin) {
     return this.apiCaller.post<UserCard>(this.baseUrl + 'login', userLogin).pipe(
@@ -74,7 +75,9 @@ export class UserService {
             photoUrl: response.photoUrl
           }
           if (fbLogin) {
-            this.loginWithFacebook(fbLogin).subscribe();
+            this.loginWithFacebook(fbLogin).subscribe(
+              response => this.done = true
+            );
           }  
         }
       }
@@ -93,7 +96,9 @@ export class UserService {
             photoUrl: response.photoUrl
           }
           if (fbLogin) {
-            this.loginWithFacebook(fbLogin).subscribe();
+            this.loginWithFacebook(fbLogin).subscribe(
+              response => this.done = true
+            );
           }  
         }
     });

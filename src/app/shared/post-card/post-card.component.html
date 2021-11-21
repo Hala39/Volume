@@ -26,7 +26,7 @@
                 <div class="mt-5">
 
                     <!-- Post Body -->
-                    <p [innerHtml]="post?.description"></p>
+                    <p [innerHtml]="post?.description" class="ml-3"></p>
                     <div class="mt-3">
                         <img *ngIf="post?.file" [src]="post?.file.url" alt="" class="postImage">
                         <div class="mt-3"> 
@@ -98,7 +98,7 @@
 </div>
 
 <p-dialog header="Title" [(visible)]="displayLikers" (onShow)="getLikers()"
-[breakpoints]="{'960px': '75vw', '640px': '90vw'}" [style]="{width: '50vw'}">
+[breakpoints]="{'960px': '95vw', '640px': '90vw'}" [style]="{width: '50vw'}">
     <ng-template pTemplate="header">
         People who likes this
     </ng-template>
@@ -115,7 +115,7 @@
 
 <p-menu #menu [popup]="true"  [model]="items" (onShow)="onMenuShow()"></p-menu>
 
-<p-dialog header="Edit post" [(visible)]="displayDialog" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}"
+<p-dialog header="Edit post" [(visible)]="displayDialog" [breakpoints]="{'960px': '95vw'}" [style]="{width: '50vw'}"
     [draggable]="false" [resizable]="false" (onShow)="onDialogSHow()">
     <form [formGroup]="inputForm">
         <textarea [rows]="3" pInputTextarea placeholder="Post description" required formControlName="description"></textarea>

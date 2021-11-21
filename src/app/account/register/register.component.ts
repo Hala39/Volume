@@ -94,7 +94,7 @@ export class RegisterComponent implements OnInit {
   //sign up with facebook
   signInWithFB(): void {
     this.userService.signInWithFB();
-    if (this.userService.loggedIn) {
+    if (this.userService.loggedIn && this.userService.done) {
       this.emailEmitter.emit(this.email.value);
       this.switch(2);
     }
@@ -102,7 +102,7 @@ export class RegisterComponent implements OnInit {
 
   signInWithGoogle() {
     this.userService.signInWithGoogle();
-    if (this.userService.loggedIn) {
+    if (this.userService.loggedIn && this.userService.done) {
       this.emailEmitter.emit(this.email.value);
       this.switch(2);
     }
