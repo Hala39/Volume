@@ -1,15 +1,11 @@
-import { MessageService } from 'primeng/api';
-import { PresenceService } from './presence.service';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
-import { UserService } from './user.service';
 import { PaginatedResult } from './../models/paginatedResult';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject} from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { AppUser } from '../models/appUser';
 import { finalize, map } from 'rxjs/operators';
-import { UserCard } from '../models/userCard';
 
 @Injectable({
   providedIn: 'root'

@@ -109,21 +109,7 @@ export class PostCardComponent implements OnInit, OnDestroy {
   followToggle() {
     this.followService.followToggle(this.post.appUser.id).subscribe(
       response => {
-        // this.post.isFollowing = !this.post.isFollowing;
         this.post.appUser.isFollowing = !this.post.appUser.isFollowing;
-        var currentValue = this.postService.postsSource.value;
-        currentValue.forEach(element => {
-          if (element.appUser.id === this.post.appUser.id) {
-            element.isFollowing = !element.isFollowing
-          }
-        });
-        this.postService.postsSource.next(currentValue);
-
-        var currentUserPosts = this.profileService.postsSource.value;
-        currentUserPosts.forEach(post => {
-          post.isFollowing = !post.isFollowing
-        })
-        this.profileService.postsSource.next(currentUserPosts);
       }
     );
   }

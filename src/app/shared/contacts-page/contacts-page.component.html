@@ -5,7 +5,7 @@
     </div>
     <p-scrollPanel [style]="!overlay? {height: '80vh'} : {height: '300px'}">
         <div *ngFor="let contact of (contacts$ | async)" (click)="navigateToMessages(contact.id)"
-            [ngClass]="contact.lastMessageReceived?.id > contact.lastMessageSent?.id? contact.lastMessageReceived?.seen? 'read' : 'unread' 
+            [ngClass]="contact.lastMessageReceived?.sentAt > contact.lastMessageSent?.sentAt? contact.lastMessageReceived?.seen? 'read' : 'unread' 
         : contact.lastMessageSent?.seen? 'read' : 'unread'">
         <div class="d-flex flex-row p-pt-3 px-3"> 
             <p-avatar [image]="contact.profilePhotoUrl? contact.profilePhotoUrl : ''" 
@@ -17,13 +17,13 @@
                         <span class="name">
                             <h6 [innerText]="contact.displayName"></h6> 
                         </span> 
-                        <small class="text-muted p-pl-2">{{(contact.lastMessageReceived?.id > contact.lastMessageSent?.id? 
+                        <small class="text-muted p-pl-2">{{(contact.lastMessageReceived?.sentAt > contact.lastMessageSent?.sentAt? 
                             contact.lastMessageReceived?.sentAt : contact.lastMessageSent?.sentAt) | date: "shortTime"}}</small>
                     </div> 
                 </div>
-                <p class="text-justify"><span>{{contact.lastMessageReceived?.id > contact.lastMessageSent?.id? 
-                    contact.lastMessageReceived?.senderDisplayName : contact.lastMessageSent?.senderDisplayName}}</span>
-                    : {{contact.lastMessageReceived?.id > contact.lastMessageSent?.id? contact.lastMessageReceived?.content : contact.lastMessageSent?.content}}</p>
+                <p class="text-justify"><span>{{contact?.lastMessageReceived?.sentAt > contact?.lastMessageSent?.sentAt? 
+                    contact?.lastMessageReceived?.senderDisplayName : contact?.lastMessageSent?.senderDisplayName}}</span>
+                    : {{contact?.lastMessageReceived?.sentAt > contact.lastMessageSent?.sentAt? contact.lastMessageReceived?.content : contact.lastMessageSent?.content}}</p>
             </div>
         </div>
     </div>

@@ -6,7 +6,8 @@
                     <div class="d-flex flex-row align-items-center"> 
                         <span class="name" *ngIf="contact">
                             <h6>{{contact?.displayName}}</h6> 
-                            <small *ngIf="(presenceService.onlineUsers$ | async).includes(contact.id)">Active now</small>
+                            <small *ngIf="(presenceService.onlineUsers$ | async).includes(contact.id) && !(isTyping$ | async)">Active now</small>
+                            <small *ngIf="(isTyping$ | async)"><em>Typing ..</em></small>
                         </span> 
                         <span class="name" *ngIf="!contact">
                             <h6>Start a new conversation</h6> 
@@ -54,13 +55,13 @@
 </p-scrollPanel>
 <form [formGroup]="form" style="padding: 2%; border: 1px solid #304562; border-top: none">
     <input type="text" pInputText placeholder='Press "Enter" to send message' formControlName="message" 
-    required (keyup.enter)="sendMessage()" class="p-mr-2">
+    required (keyup.enter)="sendMessage()"  (keyup)="onType($event)" class="p-mr-2">
     <fa-icon *ngIf="!emojiExpanded" [icon]="faGrinAlt" (click)="op.show($event)"></fa-icon>
     <fa-icon *ngIf="emojiExpanded" [icon]="faTimes"></fa-icon>
 </form>
 
 <p-overlayPanel #op (onShow)="expandEmoji()" (onHide)="hideEmoji()" 
-[dismissable]="true" [showCloseIcon]="true" appendTo="body" (keyup)="onType($event)">
+[dismissable]="true" [showCloseIcon]="true" appendTo="body">
     <ng-template pTemplate>
         <app-emoji (emojiEmitter)="select($event)" (emojiClickEmitter)="op.hide()"></app-emoji>
     </ng-template>

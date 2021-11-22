@@ -2,8 +2,7 @@ import { Guid } from 'guid-typescript';
 import { PresenceService } from '../../services/presence.service';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { faCheckCircle, faGrinAlt, faImage } from '@fortawesome/free-regular-svg-icons';
-import { faCheckCircle as farCheckCircle} from '@fortawesome/free-regular-svg-icons';
+import { faGrinAlt } from '@fortawesome/free-regular-svg-icons';
 import { faCheck, faCheckDouble, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { AppUser } from 'src/app/models/appUser';
@@ -28,11 +27,13 @@ export class ThreadComponent implements OnInit, OnDestroy {
     private fb: FormBuilder, public presenceService: PresenceService, private cdr: ChangeDetectorRef) {
     this.messages$ = this.chatService.thread$;
     this.user$ = this.userService.user$;
+    this.isTyping$ = this.chatService.isTyping$
   }
   
   loadMode: boolean = false;
   seen = faCheckDouble;
   sent = faCheck;
+  isTyping$: Observable<boolean>;
 
   @ViewChild('scrollframe', {static: false}) scrollFrame: ElementRef;
   @ViewChildren('item') itemElements: QueryList<any>;
@@ -184,7 +185,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
   onType(event: any) {
     clearTimeout(this.timeout);
     console.log("typing")
-    // this.chatService.IsContactTyping(true, this.contactId);
+    this.chatService.IsContactTyping(true, this.contactId);
     var $this = this;
     this.timeout = setTimeout(function () {
       if (event.keyCode != 13) {
@@ -195,7 +196,6 @@ export class ThreadComponent implements OnInit, OnDestroy {
 
   private executeListing(value: string) {
     console.log("stop")
-
-    // this.chatService.IsContactTyping(false, this.contactId);
+    this.chatService.IsContactTyping(false, this.contactId);
   }
 }

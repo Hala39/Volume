@@ -29,7 +29,6 @@ import { EmojiComponent } from './emoji/emoji.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { DialogModule } from 'primeng/dialog';
-import { WebcamModule } from 'ngx-webcam';
 
 import { NavbarComponent } from './navbar/navbar.component';
 import { GalleriaComponent } from './galleria/galleria.component';
@@ -76,7 +75,6 @@ import { SearchPageComponent } from './search-page/search-page.component';
     ReactiveFormsModule,
     OverlayPanelModule,
     ChipsModule,
-    WebcamModule,
     InputTextModule,
     InputTextareaModule,
     InputMaskModule,

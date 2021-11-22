@@ -1,3 +1,5 @@
+import { PostService } from 'src/app/services/post.service';
+import { ProfileService } from 'src/app/services/profile.service';
 import { PaginatedResult } from './../models/paginatedResult';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from './../../environments/environment';
@@ -5,7 +7,6 @@ import { Injectable } from '@angular/core';
 import { delay, finalize, map } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { AppUser } from '../models/appUser';
-import { identifierModuleUrl } from '@angular/compiler';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 
 @Injectable({
@@ -13,7 +14,7 @@ import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 })
 export class FollowService {
 
-  constructor(private apiCaller: HttpClient) { }
+  constructor(private apiCaller: HttpClient, private profileService: ProfileService, private postService: PostService) { }
 
   baseUrl = environment.apiUrl + 'follow/';
   hubUrl = environment.hubUrl + 'follow';
@@ -51,6 +52,19 @@ export class FollowService {
   followToggle(id: string)  {
     return this.apiCaller.post<boolean>(this.baseUrl + id, {}).pipe(
       map(response => {
+        var currentValue = this.postService.postsSource.value;
+        currentValue.forEach(element => {
+          if (element.appUser.id === id) {
+            element.isFollowing = !element.isFollowing
+          }
+        });
+        this.postService.postsSource.next(currentValue);
+
+        var currentUserPosts = this.profileService.postsSource.value;
+        currentUserPosts.forEach(post => {
+          post.isFollowing = !post.isFollowing
+        })
+        this.profileService.postsSource.next(currentUserPosts);
         if (response) {
           this.createHubConnection(id);
         }

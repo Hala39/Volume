@@ -11,11 +11,11 @@
     <div>
         <p-toolbar [style]="{'margin-top': '15px'}">   
 
-            <p-button pButton pRipple type="button" label="Photos" 
+            <p-button pRipple type="button" label="Photos" 
             [icon]="photoUploadToggle && displayDialog? 'pi pi-times' : 'pi pi-images'" (click)="togglePhotoUploader()"
             styleClass="p-button-rounded p-button-warning p-button-text p-button-lg"></p-button>
 
-            <p-button pButton pRipple type="button" label="Editor" 
+            <p-button pRipple type="button" label="Editor" 
             [icon]="editorToggle && displayDialog? 'pi pi-times' : 'pi pi-pencil'" (click)="toggleEditor()"
             styleClass="p-button-rounded p-button-danger p-button-text p-button-lg"></p-button>
         </p-toolbar>
