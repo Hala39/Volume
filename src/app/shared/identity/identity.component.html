@@ -1,19 +1,19 @@
 <form [formGroup]="form">
     <div class="row" *ngIf="registration">
-        <div class="col-6">
+        <div class="col-12 col-sm-6">
             <p-avatar [image]="currentUser?.profilePhotoUrl || (profile$ | async)?.profilePhotoUrl? (profile$ | async)?.profilePhotoUrl : ''" 
             [icon]="currentUser?.profilePhotoUrl || (profile$ | async)?.profilePhotoUrl? '' : 'pi pi-user'" 
             size="xlarge" shape="circle" pTooltip="Add a profile photo" (click)="show()"></p-avatar>
         </div>
     </div>
     <div class="row pt-5">
-        <div class="col-6">
+        <div class="col-12 col-sm-6">
             <span class="p-input-icon-right">
                 <i class="pi pi-pencil"></i>
                 <input type="text" pInputText placeholder="Name" formControlName="displayName">
             </span>
         </div>
-        <div class="col-6">
+        <div class="col-12 col-sm-6">
             <span class="p-input-icon-right">
                 <i class="pi pi-pencil"></i>
                 <input type="text" pInputText placeholder="Title" formControlName="title">
@@ -21,13 +21,13 @@
         </div>
     </div>
     <div class="row pt-5">
-        <div class="col-6">
+        <div class="col-12 col-sm-6">
             <span class="p-input-icon-right">
                 <i class="pi pi-pencil"></i>
                 <input type="text" pInputText placeholder="Hometown" formControlName="hometown">
             </span>
         </div>
-        <div class="col-6">
+        <div class="col-12 col-sm-6">
             <span class="p-input-icon-right">
                 <i class="pi pi-pencil"></i>
                 <input type="text" pInputText placeholder="Phone Number" pKeyFilter="num" formControlName="phoneNumber">
@@ -35,13 +35,13 @@
         </div>
     </div>
     <div class="row pt-5 calendar">
-        <div class="col-6">
+        <div class="col-12 col-sm-6">
             <span class="p-input-icon-right">
                 <i class="pi pi-pencil"></i>
             <p-inputMask mask="99/99/9999" formControlName="dob" placeholder="99/99/9999" slotChar="mm/dd/yyyy"></p-inputMask>
             </span>
         </div>
-        <div class="col-6">
+        <div class="col-12 col-sm-6">
             <p-dropdown [options]="genders" formControlName="gender" optionLabel="name" placeholder="Gender"></p-dropdown>
         </div>
     </div>

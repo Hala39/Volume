@@ -29,7 +29,6 @@ export class UserService {
   user$ = this.userSource.asObservable();
 
   refreshTokenTimeout: any;
-  done = false;
 
   login(userLogin: UserLogin) {
     return this.apiCaller.post<UserCard>(this.baseUrl + 'login', userLogin).pipe(
@@ -48,14 +47,12 @@ export class UserService {
     return this.apiCaller.post<UserCard>(this.baseUrl + 'register', userRegister);
   }
 
-  loginWithFacebook(fbLogin: FbLogin) {
+  socialLogin(fbLogin: FbLogin) {
     return this.apiCaller?.post<UserCard>(this.baseUrl + `fbLogin`, fbLogin).pipe(
       map(response => {
         if (response) {
           this.setUserCard(response);
-          if (!this.router.url.includes('register')) {
-            this.router.navigateByUrl("/home");
-          }
+          this.router.navigateByUrl("/home");
           this.startRefreshTokenTimer(response);
           this.presenceService.createHubConnection();
         }
@@ -66,7 +63,7 @@ export class UserService {
   signInWithFB(): void {
     this.authService
       .signIn(FacebookLoginProvider.PROVIDER_ID)
-      .then((response: SocialUser )=> {
+      .then((response: SocialUser) => {
         if (response) {
           const fbLogin: FbLogin = {
             name: response.name,
@@ -75,9 +72,7 @@ export class UserService {
             photoUrl: response.photoUrl
           }
           if (fbLogin) {
-            this.loginWithFacebook(fbLogin).subscribe(
-              response => this.done = true
-            );
+            this.socialLogin(fbLogin).subscribe();
           }  
         }
       }
@@ -96,9 +91,7 @@ export class UserService {
             photoUrl: response.photoUrl
           }
           if (fbLogin) {
-            this.loginWithFacebook(fbLogin).subscribe(
-              response => this.done = true
-            );
+            this.socialLogin(fbLogin).subscribe();
           }  
         }
     });

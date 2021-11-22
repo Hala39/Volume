@@ -34,6 +34,10 @@
               <input pInputText class="p-inputtext-sm" placeholder="Password" [type]="passwordOn? 'password' : 'text'" formControlName="password"/>
           </span>
             <small *ngIf="password.dirty && password.hasError('required')" class="p-error">This field is required.</small>
+            <small *ngIf="password.dirty && password.hasError('minlength')" class="p-error">
+              Your password should contains at least 8 characters.
+            </small>
+
           </div>
         </form>
         <div class="p-field">  

@@ -32,7 +32,12 @@ export class NotificationComponent implements OnInit {
       break;
 
       case 2: 
+      if (this.notification.stimulatorId !== (null || undefined)) {
         this.router.navigateByUrl('/profile/' + this.notification.stimulatorId);
+      } else {
+        this.router.navigateByUrl('/profile/' + this.notification.targetId);
+      }
+        
         break;
 
       default:

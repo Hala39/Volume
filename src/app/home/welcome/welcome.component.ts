@@ -11,6 +11,8 @@ export class WelcomeComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+    localStorage.clear();
+    sessionStorage.clear();
   }
 
   signInWithFB(): void {

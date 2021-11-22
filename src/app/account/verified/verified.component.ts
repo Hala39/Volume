@@ -22,8 +22,10 @@ export class VerifiedComponent implements OnInit {
         this.pending = false;
         this.router.navigateByUrl('/register/2');
       }, error => {
-        this.pending = false;
-        this.failed = true;
+        if (error) {
+          this.pending = false;
+          this.failed = true;
+        }
       }
       )
     })

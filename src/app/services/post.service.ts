@@ -37,7 +37,8 @@ export class PostService {
     return this.apiCaller.post(this.baseUrl, formData).pipe(
       map(response => {
         if (response) {
-          this.profileService.getPostsForUser(this.currentUser.id).subscribe()
+          this.profileService.getPostsForUser(this.currentUser.id).subscribe();
+          this.getPosts().subscribe();
         }
       })
     );
@@ -55,9 +56,11 @@ export class PostService {
   }
 
 
-  getPosts(pageNumber: number, scroll: boolean) {
+  getPosts(pageNumber?: number, scroll?: boolean) {
     let params = new HttpParams();
-    params = params.append("pageNumber", pageNumber.toString())
+    if (pageNumber) {
+      params = params.append("pageNumber", pageNumber.toString())
+    }
     return this.apiCaller.get<Post[]>(this.baseUrl, {observe: 'response', params}).pipe(
       map(response => {
           if (scroll === true)

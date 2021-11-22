@@ -19,6 +19,8 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildForm();
+    localStorage.clear();
+    sessionStorage.clear();
   }
 
   @Output() activeIndexEmitter = new EventEmitter<number>();
@@ -52,7 +54,7 @@ export class RegisterComponent implements OnInit {
   password = new FormControl("", {
     validators: [
       Validators.required, 
-      Validators.minLength(6)
+      Validators.minLength(8)
     ],
       updateOn: 'blur'
   });
@@ -94,18 +96,10 @@ export class RegisterComponent implements OnInit {
   //sign up with facebook
   signInWithFB(): void {
     this.userService.signInWithFB();
-    if (this.userService.loggedIn && this.userService.done) {
-      this.emailEmitter.emit(this.email.value);
-      this.switch(2);
-    }
   }
 
   signInWithGoogle() {
     this.userService.signInWithGoogle();
-    if (this.userService.loggedIn && this.userService.done) {
-      this.emailEmitter.emit(this.email.value);
-      this.switch(2);
-    }
   }
 
 }
