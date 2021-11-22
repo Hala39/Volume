@@ -33,7 +33,8 @@ export class ChatService {
   contactsSource = new BehaviorSubject<AppUser[]>([]);
   contacts$ = this.contactsSource.asObservable();
 
-  groupSource = new BehaviorSubject<Group>(null);
+  isTypingSource = new BehaviorSubject<boolean>(false);
+  isTyping$ = this.isTypingSource.asObservable();
 
   createHubConnection(contactId: string) {
     this.hubConnection = new HubConnectionBuilder()
@@ -64,6 +65,11 @@ export class ChatService {
       }
       
     })
+
+    this.hubConnection.on('Typing', (isTyping: boolean) => {
+      this.isTypingSource.next(isTyping);
+    })
+
   }
 
   stopHubConnection() {
@@ -75,6 +81,11 @@ export class ChatService {
 
   async addMessage(recipientId: string, content: string) {
     this.hubConnection.invoke("SendMessage", {RecipientId: recipientId, content})
+    .catch(error => console.log(error))
+  }
+
+  async IsContactTyping(isTyping: boolean, contactId: string) {
+    this.hubConnection.invoke("IsContactTyping", {IsTyping: isTyping, ContactId: contactId})
     .catch(error => console.log(error))
   }
 

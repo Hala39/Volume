@@ -179,6 +179,23 @@ export class ThreadComponent implements OnInit, OnDestroy {
     )
   }
 
-  scrollToTop() {
+  timeout: any = null;
+
+  onType(event: any) {
+    clearTimeout(this.timeout);
+    console.log("typing")
+    // this.chatService.IsContactTyping(true, this.contactId);
+    var $this = this;
+    this.timeout = setTimeout(function () {
+      if (event.keyCode != 13) {
+        $this.executeListing(event.target.value);
+      }
+    }, 3000);
+  }
+
+  private executeListing(value: string) {
+    console.log("stop")
+
+    // this.chatService.IsContactTyping(false, this.contactId);
   }
 }
