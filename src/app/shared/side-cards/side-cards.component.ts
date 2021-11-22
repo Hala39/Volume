@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { ProfileService } from 'src/app/services/profile.service';
-import { AppUser } from './../../models/appUser';
-import { UserCard } from './../../models/userCard';
+import { AppUser } from '../../models/appUser';
+import { UserCard } from '../../models/userCard';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

@@ -13,16 +13,9 @@ import { SuccessComponent } from './success/success.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { DividerModule } from 'primeng/divider';
 import { AccountComponent } from './account/account.component';
-import { InputSwitchModule } from 'primeng/inputswitch';
-import { FileUploadModule } from 'primeng/fileupload';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { InputNumberModule } from 'primeng/inputnumber';
 import { AvatarModule } from 'primeng/avatar';
 import {TooltipModule} from 'primeng/tooltip';
-import {CalendarModule} from 'primeng/calendar';
 import {KeyFilterModule} from 'primeng/keyfilter';
-import {DropdownModule} from 'primeng/dropdown';
-import { ListboxModule } from 'primeng/listbox';
 import {BadgeModule} from 'primeng/badge';
 import {ToolbarModule} from 'primeng/toolbar';
 import {CheckboxModule} from 'primeng/checkbox';
@@ -50,22 +43,15 @@ const routes: Routes = [
   imports: [
     CommonModule,
     SharedModule,
-    DropdownModule,
     CheckboxModule,
     ToolbarModule,
     BadgeModule,
-    ListboxModule,
     CardModule,
-    CalendarModule,
     KeyFilterModule,
     DialogModule,
     AvatarModule,
-    RadioButtonModule,
-    InputNumberModule,
     TooltipModule,
     InputTextModule,
-    InputSwitchModule,
-    FileUploadModule,
     HttpClientModule,
     ButtonModule,
     DividerModule,

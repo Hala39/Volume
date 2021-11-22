@@ -40,11 +40,12 @@
                         </div>
 
                         <!-- Action buttons -->
-                        <p-toolbar [style]="{'margin-top': '15px'}">   
-                            <button  pRipple type="button" pButton [label]="post?.isLikedByUser? 'Liked' : 'Like'" 
-                            [icon]="post?.isLikedByUser? 'pi pi-heart-fill' : 'pi pi-heart'" (ckick)="likeToggle()"
-                            class="p-button-rounded p-button-danger p-button-text"></button>
-                            <button  pRipple type="button" pButton label="Comment" 
+                        <p-toolbar [style]="{'margin-top': '15px'}"> 
+
+                            <p-button  pRipple type="button" [label]="post?.isLikedByUser? 'Liked' : 'Like'" 
+                            [icon]="post?.isLikedByUser? 'pi pi-heart-fill' : 'pi pi-heart'" (click)="likeToggle()"
+                            styleClass="p-button-rounded p-button-danger p-button-text"></p-button>
+                            <p-button  pRipple type="button" label="Comment" 
                             [icon]="commentsExpanded? 'pi pi-times' : 'pi pi-comment'" (click)="expandComments(post?.id)"
                             class="p-button-rounded p-button-warning p-button-text"></button>
                             <button  pRipple type="button" pButton [label]="post?.isSavedByUser? 'Saved' : 'Save'" 
