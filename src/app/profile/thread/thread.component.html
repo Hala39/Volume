@@ -60,7 +60,7 @@
 </form>
 
 <p-overlayPanel #op (onShow)="expandEmoji()" (onHide)="hideEmoji()" 
-[dismissable]="true" [showCloseIcon]="true" appendTo="body">
+[dismissable]="true" [showCloseIcon]="true" appendTo="body" (keyup)="onType($event)">
     <ng-template pTemplate>
         <app-emoji (emojiEmitter)="select($event)" (emojiClickEmitter)="op.hide()"></app-emoji>
     </ng-template>

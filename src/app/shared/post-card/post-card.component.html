@@ -41,15 +41,16 @@
 
                         <!-- Action buttons -->
                         <p-toolbar [style]="{'margin-top': '15px'}">   
-                            <button pButton pRipple type="button" [label]="post?.isLikedByUser? 'Unlike' : 'Like'" 
-                            [icon]="post?.isLikedByUser? 'pi pi-heart-fill' : 'pi pi-heart'" (click)="likeToggle()"
-                            class="p-button-rounded p-button-danger p-button-text"></button>
-                            <button pButton pRipple type="button" label="Comment" 
+
+                            <p-button  pRipple type="button" [label]="post?.isLikedByUser? 'Liked' : 'Like'" 
+                            [icon]="post?.isLikedByUser? 'pi pi-heart-fill' : 'pi pi-heart'" 
+                            styleClass="p-button-rounded p-button-danger p-button-text"></p-button>
+                            <p-button  pRipple type="button" label="Comment" 
                             [icon]="commentsExpanded? 'pi pi-times' : 'pi pi-comment'" (click)="expandComments(post?.id)"
-                            class="p-button-rounded p-button-warning p-button-text"></button>
-                            <button pButton pRipple type="button" [label]="post?.isSavedByUser? 'Saved' : 'Save'" 
+                            styleClass="p-button-rounded p-button-warning p-button-text"></p-button>
+                            <p-button  pRipple type="button" [label]="post?.isSavedByUser? 'Saved' : 'Save'" 
                             [icon]="post?.isSavedByUser? 'pi pi-bookmark-fill': 'pi pi-bookmark'"
-                            class="p-button-rounded p-button-help p-button-text" (click)="saveToggle(post?.id)"></button>
+                            styleClass="p-button-rounded p-button-help p-button-text" (click)="saveToggle(post?.id)"></p-button>
                         </p-toolbar>
 
                         <!-- Comments -->
