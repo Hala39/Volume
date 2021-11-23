@@ -19,8 +19,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildForm();
-    localStorage.clear();
-    sessionStorage.clear();
+    this.userService.logout();
   }
 
   @Output() activeIndexEmitter = new EventEmitter<number>();

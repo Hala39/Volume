@@ -43,7 +43,6 @@ export class PostCardComponent implements OnInit, OnDestroy {
     this.commentService.stopHubConnection();
   }
 
-
   displayDialog = false;
 
   @Input() commentsExpanded: boolean = false;
@@ -191,7 +190,12 @@ export class PostCardComponent implements OnInit, OnDestroy {
         const setProfile = {
           url: this.post.file.url
         }
-          this.profileService.setProfilePhoto(setProfile).subscribe();
+          this.profileService.setProfilePhoto(setProfile).subscribe(
+            response => {
+              const userCard: UserCard = JSON.parse(localStorage.getItem("userCard"));
+              this.userService.userSource.next(userCard);
+            }
+          );
       }
     }
   ]

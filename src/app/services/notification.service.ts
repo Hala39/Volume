@@ -1,6 +1,4 @@
-import { Guid } from 'guid-typescript';
 import { Notification } from 'src/app/models/notification';
-import { PresenceService } from './presence.service';
 import { PaginatedResult } from './../models/paginatedResult';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -13,7 +11,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class NotificationService {
 
-  constructor(private apiCaller: HttpClient, private presenceService: PresenceService) { }
+  constructor(private apiCaller: HttpClient) { }
 
   baseUrl = environment.apiUrl + 'notification/';
 

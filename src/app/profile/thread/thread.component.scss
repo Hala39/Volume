@@ -17,6 +17,16 @@ fa-icon {
     font-size: 1.5rem;
 }
 
+.pi-send {
+    font-size: x-large;
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.comment-icon {
+    font-size: x-large;
+}
+
 @media screen and (max-width: 430px) {
     fa-icon {
         font-size: 1.25rem;

@@ -1,4 +1,6 @@
+import { UserService } from './../../services/user.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { UserCard } from 'src/app/models/userCard';
 import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
@@ -8,7 +10,7 @@ import { ProfileService } from 'src/app/services/profile.service';
 })
 export class AddProfilePhotoComponent implements OnInit {
 
-  constructor(private profileService: ProfileService) { }
+  constructor(private profileService: ProfileService, private userService: UserService) { }
 
   ngOnInit(): void {
   }
@@ -32,7 +34,9 @@ export class AddProfilePhotoComponent implements OnInit {
       this.profileService.setProfilePhoto(setProfile).subscribe(
         response => {
           this.pending = false;
-          this.photoUploadedEmitter.emit(true)
+          this.photoUploadedEmitter.emit(true);
+          const userCard: UserCard = JSON.parse(localStorage.getItem("userCard"));
+          this.userService.userSource.next(userCard);
         }, error => {
           this.pending = false;
         }

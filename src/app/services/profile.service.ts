@@ -13,12 +13,13 @@ import { File } from '../models/file';
 import { Profile } from '../models/userProfile';
 import { Post } from '../models/post';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
 
-  constructor(private apiCaller: HttpClient, private userService: UserService, 
+  constructor(private apiCaller: HttpClient, 
     private searchService: SearchService) { 
 
   }
@@ -57,7 +58,6 @@ export class ProfileService {
       map(response => {
         var userCard = JSON.parse(localStorage.getItem("userCard"));
         userCard.profilePhotoUrl = response.url;
-        this.userService.userSource.next(userCard);
         localStorage.setItem("userCard", JSON.stringify(userCard));
         
         var currentProfileValue = this.profileSource.value;
@@ -97,7 +97,7 @@ export class ProfileService {
           var userCard = JSON.parse(localStorage.getItem("userCard"));
           userCard.profilePhotoUrl = response.profilePhotoUrl;
           localStorage.setItem('userCard', JSON.stringify(userCard));
-          this.userService.userSource.next(userCard);
+          // this.userService.userSource.next(userCard);
         }
       })
     );

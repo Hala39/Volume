@@ -46,16 +46,24 @@ fa-icon {
     font-size: xx-large;
 }
 
+.comment-icon {
+    font-size: x-large;
+}
+
 img {
     width: 100%;
 }
 
+.pi-send {
+    font-size: x-large;
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
 :host ::ng-deep { 
     .p-inputtext {
-        width: 90% !important;
+        width: 70% !important;
         padding-left: 15px;
-        padding-right: 30px;
-        margin-right: 10px;
     }
 
     .p-toolbar {

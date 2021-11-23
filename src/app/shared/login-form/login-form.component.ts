@@ -18,6 +18,8 @@ export class LoginFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildForm();
+    this.userService.logout();
+
   }
 
   loginForm: FormGroup;

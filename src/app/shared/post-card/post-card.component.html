@@ -47,10 +47,10 @@
                             styleClass="p-button-rounded p-button-danger p-button-text"></p-button>
                             <p-button  pRipple type="button" label="Comment" 
                             [icon]="commentsExpanded? 'pi pi-times' : 'pi pi-comment'" (click)="expandComments(post?.id)"
-                            class="p-button-rounded p-button-warning p-button-text"></button>
-                            <button  pRipple type="button" pButton [label]="post?.isSavedByUser? 'Saved' : 'Save'" 
+                            styleClass="p-button-rounded p-button-warning p-button-text"></p-button>
+                            <p-button  pRipple type="button" [label]="post?.isSavedByUser? 'Saved' : 'Save'" 
                             [icon]="post?.isSavedByUser? 'pi pi-bookmark-fill': 'pi pi-bookmark'"
-                            class="p-button-rounded p-button-help p-button-text" (click)="saveToggle(post?.id)"></button>
+                            styleClass="p-button-rounded p-button-help p-button-text" (click)="saveToggle(post?.id)"></p-button>
                         </p-toolbar>
 
                         <!-- Comments -->
@@ -85,8 +85,10 @@
                                 [icon]="(user$ | async)?.profilePhotoUrl? '' : 'pi pi-user'" styleClass="p-mr-2" 
                                 size="large" shape="circle"></p-avatar>
                                 <input type="text" placeholder="Your comment .." pInputText formControlName="content" (keyup.enter)="addComment();"/>
-                                <fa-icon *ngIf="!emojiExpanded" [icon]="faGrinAlt" (click)="op1.show($event)"></fa-icon>
-                                <fa-icon *ngIf="emojiExpanded" [icon]="faTimes"></fa-icon>
+                                <fa-icon class="comment-icon p-mt-1 p-ml-2 p-mr-1" *ngIf="!emojiExpanded" [icon]="faGrinAlt" (click)="op1.show($event)"></fa-icon>
+                                <fa-icon class="comment-icon p-mt-1 p-ml-2 p-mr-1" *ngIf="emojiExpanded" [icon]="faTimes"></fa-icon>
+                                <span class="pi pi-send p-mt-2 p-mx-0" (click)="addComment()"></span>
+
                             </form>    
                             
                         </div>

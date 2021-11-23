@@ -15,7 +15,7 @@ import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 })
 export class CommentService {
 
-  constructor(private apiCaller: HttpClient, private messageService: MessageService, private userService: UserService) { }
+  constructor(private apiCaller: HttpClient, private messageService: MessageService) { }
 
   baseUrl = environment.apiUrl + 'comment/';
   paginatedResult = new PaginatedResult<Comment[]>();

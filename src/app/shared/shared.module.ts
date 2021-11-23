@@ -42,7 +42,7 @@ import { BookmarkComponent } from './bookmark/bookmark.component';
 import { NotificationsPageComponent } from './notifications-page/notifications-page.component';
 import { ContactsPageComponent } from './contacts-page/contacts-page.component';
 import { SearchPageComponent } from './search-page/search-page.component';
-
+import { InputMaskModule } from 'primeng/inputmask';
 @NgModule({
   declarations: [
     PostCardComponent,
@@ -66,6 +66,7 @@ import { SearchPageComponent } from './search-page/search-page.component';
   ],
   imports: [
     CommonModule,
+    InputMaskModule,
     ReactiveFormsModule,
     OverlayPanelModule,
     ChipsModule,

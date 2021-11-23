@@ -1,7 +1,10 @@
+import { ProfileModule } from './profile/profile.module';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { HomeModule } from './home/home.module';
 import { CanActivateGuard } from './guards/can-activate.guard';
 import { CanLoadGuard } from './guards/can-load.guard';
 import { SharedModule } from './shared/shared.module';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
@@ -22,6 +25,8 @@ import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider } from 
 import {
   FacebookLoginProvider
 } from 'angularx-social-login';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { BusyInterceptor } from './interceptors/busy.interceptor';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -37,12 +42,16 @@ export function tokenGetter() {
     ToastModule,
     HttpClientModule,
     SharedModule,
+    HomeModule,
+    InfiniteScrollModule,
+    ProfileModule,
     RippleModule,
     AvatarModule,
     ButtonModule,
     EmojiModule,
     PickerModule,
     SocialLoginModule,
+    NgxSpinnerModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -56,6 +65,7 @@ export function tokenGetter() {
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: BusyInterceptor, multi: true},
     CanLoadGuard,
     CanActivateGuard,
     MessageService,
@@ -76,6 +86,7 @@ export function tokenGetter() {
       } as SocialAuthServiceConfig,
     }
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,11 @@
 <div class="container-fluid px-0">
     <router-outlet></router-outlet>
+    
+<ngx-spinner>
+    <img src="assets/images/volume.png" alt="Loading .." class="rotate-center">
+</ngx-spinner>
 </div>    
+
 <p-toast></p-toast>
 
 <p-toast key="new-message" [baseZIndex]="5000">
