@@ -10,7 +10,7 @@
 
 <p-toast key="new-message" [baseZIndex]="5000">
     <ng-template let-message pTemplate="message">
-        <div class="p-flex p-flex-column" style="flex: 1"   (click)="navigateToMessage(message.data)">
+        <div class="p-flex p-flex-column" style="flex: 1" [routerLink]="['/thread']" [queryParams]="{previous: '/', contactId: message.data.id}">
             <h5>{{message.summary}}</h5>
             <p>{{message.detail}}</p>
         </div>

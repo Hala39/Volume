@@ -27,10 +27,6 @@ export class AppComponent {
     this.primengConfig.ripple = true;
   }
 
-  navigateToMessage(id: string) {
-    this.router.navigateByUrl("/profile/messages/" + id);
-  }
-
   navigateToPost(data: any) {
     this.router.navigateByUrl("/post/" + data.postId);
   }

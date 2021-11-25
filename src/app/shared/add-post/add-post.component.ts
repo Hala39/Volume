@@ -63,6 +63,7 @@ export class AddPostComponent implements OnInit {
 
   onHide() {
     this.inputForm.reset();
+    this.file = null;
   }
 
   displayDialog = false;

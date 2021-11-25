@@ -9,7 +9,9 @@
                 <span class="name">
                     <h6 [innerText]="contact.displayName"></h6> 
                 </span> 
-                <small class="text-muted p-pl-2">{{(contact.lastMessageReceived?.sentAt > contact.lastMessageSent?.sentAt? 
+                <small class="text-muted p-pl-2">{{(contact.lastMessageReceived === null? contact.lastMessageSent.sentAt : 
+                    contact.lastMessageSent === null? contact.lastMessageReceived.sentAt : 
+                    contact.lastMessageReceived?.sentAt > contact.lastMessageSent?.sentAt? 
                     contact.lastMessageReceived?.sentAt : contact.lastMessageSent?.sentAt) | date: "shortTime"}}</small>
             </div> 
         </div>

@@ -19,6 +19,7 @@ export class ContactsPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.getContacts();
+    this.presenceService.inboxNotificationSource.next(false);
   }
 
   contacts$: Observable<AppUser[]>;

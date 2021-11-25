@@ -2,34 +2,33 @@
     cursor: pointer;
 }
 
-:host ::ng-deep {
-    .p-toolbar {
-        padding: 2%;
-    }
+p {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
 
+:host ::ng-deep {
     .p-card {
-        background-color: #17212f;
+      background-color: #17212f;
     }
 
     .p-inputtext {
-        border: none;
-        display: inline;
-        background-color: #17212f;
-        width: 80% !important;
-        font-size: large;
+      border: none;
+      display: inline;
+      background-color: #17212f;
+      width: 80% !important;
+      font-size: large;
     }
 
     .p-inputtext:focus {
-        box-shadow: none;
+      box-shadow: none;
     }
 
     .p-inputtext::placeholder {
-        font-size: large;
+      font-size: large;
     }
 
-    .p-card-header {
-        padding: 3%;
-    }
 }
 
 .read { 

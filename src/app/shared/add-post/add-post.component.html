@@ -26,9 +26,9 @@
             <div class="d-flex flex-row">
                 <p-avatar [image]="(user$ | async)?.profilePhotoUrl? (user$ | async)?.profilePhotoUrl : ''" 
                     [icon]="(user$ | async)?.profilePhotoUrl? '' : 'pi pi-user'"
-                    styleClass="p-mr-1" size="large" shape="circle">
+                    styleClass="p-mr-2" size="large" shape="circle">
                 </p-avatar>
-                <h6 class="p-mt-1">{{(user$ | async)?.displayName}}</h6>
+                <h6 class="p-mt-3">{{(user$ | async)?.displayName}}</h6>
             </div>
         </div>
         <div class="p-field p-mt-3">

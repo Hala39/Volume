@@ -8,7 +8,7 @@
                         <span class="name" *ngIf="contact">
                             <i class="pi pi-arrow-left p-mr-3" (click)="back()"></i>
                             <h6 style="display: inline;">{{contact?.displayName}}</h6> 
-                            <small *ngIf="(presenceService.onlineUsers$ | async).includes(contact.id)">Active now</small>
+                            <small style="display: block;" *ngIf="(presenceService.onlineUsers$ | async).includes(contact.id)">Active now</small>
                         </span> 
                     </div> 
                 </div>
@@ -19,7 +19,7 @@
         <i class="pi pi-ellipsis-h" (click)="topMenu.toggle($event)"></i>
     </div>
 </p-toolbar>
-<p-scrollPanel [style]="{height: '500px', border: '1px solid #304562', borderBottom: 'none'}" class="frame" (scroll)="scrolled($event)" #scrollframe>
+<p-scrollPanel [style]="{height: '50vh', border: '1px solid #304562', borderBottom: 'none'}" class="frame" (scroll)="scrolled($event)" #scrollframe>
     <div *ngIf="(messages$ | async).length === 0">
         <div class="col-12 d-flex justify-content-center pt-5">
             <small>Say "Hello" to start a conversation.</small>
