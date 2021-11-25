@@ -28,7 +28,7 @@
                     <!-- Post Body -->
                     <p [innerHtml]="post?.description"></p>
                     <div class="mt-3">
-                        <img *ngIf="post?.file" [src]="post?.file.url" alt="" class="postImage">
+                        <img *ngIf="post?.file" [src]="post?.file.url" alt="loading.." class="postImage">
                         <div class="mt-3"> 
                             <span class="text1" (click)="showLikers()">liked by {{ post?.likesCount}}, </span>
                             <span class="text2" *ngIf="post?.commentsCount === 1 || post?.commentsCount === 0"  

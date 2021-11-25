@@ -1,6 +1,3 @@
-import { ProfileModule } from './profile/profile.module';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { HomeModule } from './home/home.module';
 import { CanActivateGuard } from './guards/can-activate.guard';
 import { CanLoadGuard } from './guards/can-load.guard';
 import { SharedModule } from './shared/shared.module';
@@ -11,10 +8,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { RippleModule } from 'primeng/ripple';
-import { ButtonModule } from 'primeng/button';
-import { AvatarModule } from 'primeng/avatar';
-import { PickerModule } from '@ctrl/ngx-emoji-mart';
-import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { JwtModule } from '@auth0/angular-jwt';
@@ -27,6 +20,8 @@ import {
 } from 'angularx-social-login';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { BusyInterceptor } from './interceptors/busy.interceptor';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -42,14 +37,10 @@ export function tokenGetter() {
     ToastModule,
     HttpClientModule,
     SharedModule,
-    HomeModule,
-    InfiniteScrollModule,
-    ProfileModule,
+    // HomeModule,
+    // InfiniteScrollModule,
+    // ProfileModule,
     RippleModule,
-    AvatarModule,
-    ButtonModule,
-    EmojiModule,
-    PickerModule,
     SocialLoginModule,
     NgxSpinnerModule,
     JwtModule.forRoot({
@@ -57,6 +48,12 @@ export function tokenGetter() {
         tokenGetter: tokenGetter,
         allowedDomains: ["volume-network.herokuapp.com"]
       },
+    }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
     }),
   ],
   exports: [

@@ -27,7 +27,6 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 const routes : Routes = [
   { path: ':id', component: ProfileComponent, canActivate: [CanActivateGuard]},
   { path: '', component: ProfileComponent, canActivate: [CanActivateGuard]},
-  { path: 'messages/:id', component: ProfileComponent, canActivate: [CanActivateGuard]}
 ]
 
 @NgModule({
