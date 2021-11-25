@@ -1,8 +1,8 @@
 {
   "name": "Volume",
   "short_name": "Volume",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "theme_color": "rgba(255, 255, 255, 0.87)",
+  "background_color": "#17212f",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
