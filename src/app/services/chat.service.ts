@@ -1,17 +1,12 @@
-import { PresenceService } from './presence.service';
-import { ProfileService } from 'src/app/services/profile.service';
 import { Message } from './../models/message';
 import { PaginatedResult } from './../models/paginatedResult';
 import { BehaviorSubject } from 'rxjs';
-import { UserService } from './user.service';
 import { environment } from './../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AppUser } from '../models/appUser';
 import { map, take } from 'rxjs/operators';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
-import { UserCard } from '../models/userCard';
-import { MessageService } from 'primeng/api';
 import { Group } from '../models/group';
 import { Guid } from 'guid-typescript';
 
@@ -32,9 +27,11 @@ export class ChatService {
 
   contactsSource = new BehaviorSubject<AppUser[]>([]);
   contacts$ = this.contactsSource.asObservable();
+  paginatedResult = new PaginatedResult<AppUser[]>();
 
-  isTypingSource = new BehaviorSubject<boolean>(false);
-  isTyping$ = this.isTypingSource.asObservable();
+  filteredContactsSource = new BehaviorSubject<AppUser[]>([]);
+  filteredContacts$ = this.filteredContactsSource.asObservable();
+  filteredContactsPagination = new PaginatedResult<AppUser[]>();
 
   createHubConnection(contactId: string) {
     this.hubConnection = new HubConnectionBuilder()
@@ -66,10 +63,6 @@ export class ChatService {
       
     })
 
-    this.hubConnection.on('Typing', (isTyping: boolean) => {
-      this.isTypingSource.next(isTyping);
-    })
-
   }
 
   stopHubConnection() {
@@ -84,11 +77,6 @@ export class ChatService {
     .catch(error => console.log(error))
   }
 
-  async IsContactTyping(isTyping: boolean, contactId: string) {
-    this.hubConnection.invoke("IsContactTyping", {IsTyping: isTyping, ContactId: contactId})
-    .catch(error => console.log(error))
-  }
-
   deleteMessage(id: Guid) {
     return this.apiCaller.delete(this.baseUrl + id.toString()).pipe(
       map(response => {
@@ -99,12 +87,12 @@ export class ChatService {
     );
   }
 
-  paginatedResult = new PaginatedResult<AppUser[]>();
 
   getContacts(pageNumber?: number, scroll?: boolean) {
     let params = new HttpParams();
     if (pageNumber) {
       params = params.append("pageNumber", pageNumber.toString());
+
     }
     return this.apiCaller.get<AppUser[]>(this.baseUrl + 'contact', {observe: 'response', params}).pipe(
       map(response => {
@@ -123,6 +111,36 @@ export class ChatService {
         
         if (response.headers.get("Pagination") !== null) {
           this.paginatedResult.pagination = JSON.parse(response.headers.get("Pagination"));
+        }
+
+        return response.body;
+      })
+    )
+  }
+
+  filterContacts(keyword: string, pageNumber?: number, scroll?: boolean) {
+    let params = new HttpParams();
+    params = params.append("keyword", keyword);
+    if (pageNumber) {
+      params = params.append("pageNumber", pageNumber.toString());
+    }
+    return this.apiCaller.get<AppUser[]>(this.baseUrl + 'contact', {observe: 'response', params}).pipe(
+      map(response => {
+        if (scroll === true)
+          {
+            var initialValue = this.filteredContactsSource.value;
+            initialValue = initialValue.concat(response.body);
+            this.filteredContactsSource.next(initialValue);
+          }
+          else 
+          {
+            this.filteredContactsSource.next(response.body);
+          }
+          
+          this.filteredContactsPagination.result = response.body;
+        
+        if (response.headers.get("Pagination") !== null) {
+          this.filteredContactsPagination.pagination = JSON.parse(response.headers.get("Pagination"));
         }
 
         return response.body;

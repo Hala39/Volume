@@ -15,7 +15,7 @@ export class BusyInterceptor implements HttpInterceptor {
   constructor(private busyService: BusyService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    if (request.url.includes("post")) {
+    if (request.url.includes("post") || request.url.includes('account')) {
       this.busyService.busy();
     }
     return next.handle(request).pipe(

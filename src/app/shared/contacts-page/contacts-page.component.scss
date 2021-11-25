@@ -1,4 +1,4 @@
-.pi-times {
+.pi {
     cursor: pointer;
 }
 
@@ -6,9 +6,33 @@
     .p-toolbar {
         padding: 2%;
     }
+
+    .p-card {
+        background-color: #17212f;
+    }
+
+    .p-inputtext {
+        border: none;
+        display: inline;
+        background-color: #17212f;
+        width: 80% !important;
+        font-size: large;
+    }
+
+    .p-inputtext:focus {
+        box-shadow: none;
+    }
+
+    .p-inputtext::placeholder {
+        font-size: large;
+    }
+
+    .p-card-header {
+        padding: 3%;
+    }
 }
 
-.read {
+.read { 
     cursor: pointer;
     border: 1px solid #304562;
     margin-bottom: 1rem;
@@ -21,3 +45,70 @@
     color: rgba(255, 255, 255, 0.87);
     background: rgba(255, 255, 255, 0.03);
 }
+
+.pi-search {
+    font-size: larger;
+    font-weight: 800;
+}
+
+.fade-in-right {
+	-webkit-animation: fade-in-right 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	animation: fade-in-right 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+@-webkit-keyframes fade-in-right {
+    0% {
+      -webkit-transform: translateX(50px);
+              transform: translateX(50px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateX(0);
+              transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  @keyframes fade-in-right {
+    0% {
+      -webkit-transform: translateX(50px);
+        transform: translateX(50px);
+        opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateX(0);
+              transform: translateX(0);
+      opacity: 1;
+    }
+}
+
+.fade-in-left {
+	-webkit-animation: fade-in-left 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	 animation: fade-in-left 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+@-webkit-keyframes fade-in-left {
+    100% {
+      -webkit-transform: translateX(-50px);
+        transform: translateX(-50px);
+        opacity: 0;
+    }
+    0% {
+      -webkit-transform: translateX(0);
+        transform: translateX(0);
+      opacity: 1;
+    }
+}
+  @keyframes fade-in-left {
+    0% {
+      -webkit-transform: translateX(-50px);
+              transform: translateX(-50px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateX(0);
+              transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  

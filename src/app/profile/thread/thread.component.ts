@@ -1,6 +1,7 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { Guid } from 'guid-typescript';
 import { PresenceService } from '../../services/presence.service';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef,  OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { faGrinAlt } from '@fortawesome/free-regular-svg-icons';
 import { faCheck, faCheckDouble, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -23,12 +24,31 @@ import { DatePipe } from '@angular/common';
 })
 export class ThreadComponent implements OnInit, OnDestroy {
   constructor(private chatService: ChatService, private userService: UserService,
-    private profileService: ProfileService,
+    private profileService: ProfileService, private activatedRoute: ActivatedRoute,
+    private router: Router,
     private fb: FormBuilder, public presenceService: PresenceService, private cdr: ChangeDetectorRef) {
     this.messages$ = this.chatService.thread$;
     this.user$ = this.userService.user$;
-    this.isTyping$ = this.chatService.isTyping$
   }
+  
+  ngOnInit(): void {
+    this.getContactId();
+    this.chatService.createHubConnection(this.contactId);   
+    this.getContact();
+    this.build();
+  }
+
+  ngOnDestroy() {
+    this.chatService.stopHubConnection();
+  }
+
+  getContactId() {
+    this.activatedRoute.queryParams.subscribe(queryParams => {
+      this.contactId = queryParams.contactId,
+      this.previousPage = queryParams.previous
+    })
+  }
+  
   
   loadMode: boolean = false;
   seen = faCheckDouble;
@@ -43,7 +63,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
   } 
   
   contentViewChild: any;
-  private scrollContainer: any;
+  public scrollContainer: any;
   private isNearBottom = true;
 
   ngAfterViewInit() {
@@ -75,16 +95,6 @@ export class ThreadComponent implements OnInit, OnDestroy {
   scrolled(event: any): void {
     this.isNearBottom = this.isUserNearBottom();
   }
-  
-  
-  ngOnInit(): void {
-    this.getContact();
-    this.build();
-  }
-
-  ngOnDestroy() {
-    this.chatService.stopHubConnection();
-  }
 
   messages$: Observable<Message[]>;
   user$: Observable<AppUser>;
@@ -92,8 +102,9 @@ export class ThreadComponent implements OnInit, OnDestroy {
   faGrinAlt = faGrinAlt;
   faTimes = faTimes;
 
-  @Input() contactId: string;
+  contactId: string;
   contact: AppUser;
+  previousPage: string;
 
   form: FormGroup;
   message = new FormControl();
@@ -102,6 +113,10 @@ export class ThreadComponent implements OnInit, OnDestroy {
     this.form = this.fb.group({
       message: this.message
     })
+  } 
+
+  back() {
+    this.router.navigateByUrl(this.previousPage)
   }
 
   sendMessage() {
@@ -180,22 +195,5 @@ export class ThreadComponent implements OnInit, OnDestroy {
     )
   }
 
-  timeout: any = null;
 
-  onType(event: any) {
-    clearTimeout(this.timeout);
-    console.log("typing")
-    this.chatService.IsContactTyping(true, this.contactId);
-    var $this = this;
-    this.timeout = setTimeout(function () {
-      if (event.keyCode != 13) {
-        $this.executeListing(event.target.value);
-      }
-    }, 3000);
-  }
-
-  private executeListing(value: string) {
-    console.log("stop")
-    this.chatService.IsContactTyping(false, this.contactId);
-  }
 }

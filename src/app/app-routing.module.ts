@@ -1,3 +1,4 @@
+import { ThreadComponent } from './profile/thread/thread.component';
 import { SearchPageComponent } from './shared/search-page/search-page.component';
 import { ContactsPageComponent } from './shared/contacts-page/contacts-page.component';
 import { NotificationsPageComponent } from './shared/notifications-page/notifications-page.component';
@@ -38,6 +39,9 @@ const routes: Routes = [
   },
   {
     path: 'search', component: SearchPageComponent, canActivate: [CanActivateGuard]
+  },
+  {
+    path: 'thread', component: ThreadComponent, canActivate: [CanActivateGuard]
   }
 ];
 

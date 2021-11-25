@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 
 <div class="container-fluid mt-4 mx-0 px-0">
-    <p-card *ngIf="(profile$ | async) as profile"  #myDiv>
+    <p-card *ngIf="(profile$ | async) as profile">
         <div class="d-flex flex-row"> 
             <p-avatar 
             shape="circle" styleClass="profile"
@@ -17,21 +17,23 @@
                         </span>  
                     </div> 
                 </div>
-                <small style="font-size: smaller;" 
+                <small
                 *ngIf="(presenceService.onlineUsers$ | async).includes(profile.id)">Active now</small>
-                <small style="font-size: smaller;" 
+                <small 
                 *ngIf="!(presenceService.onlineUsers$ | async).includes(profile.id)">Active {{ profile.lastActive |  timeago }}</small>
             </div>
-            <p-button
+            <i
                 *ngIf="(user$ | async)?.id !== userId"
-                [icon]="(profile$ | async).isFollowing? 'pi pi-check' : 'pi pi-plus'" 
-                [label]="(profile$ | async).isFollowing? 'following' :'follow'"
-                (click)="followToggle()"
-                styleClass="p-button-rounded p-button-warning p-button-text p-button-sm">
-            </p-button>
+                [routerLink]="['/thread']" [queryParams]="{previous: 'profile/' + userId, contactId: userId}"
+                class="pi pi-send p-mr-2">
+            </i>
+            <i class="pi pi-ellipsis-v"
+            *ngIf="(user$ | async)?.id !== userId"
+            (click)="followMenu.toggle($event)"
+            >
+            </i>
             <i class="pi pi-ellipsis-v"
                 *ngIf="(user$ | async)?.id === userId"
-                #followButton
                 (click)="menu.toggle($event)">
             </i>
         </div>
@@ -93,7 +95,7 @@
                 <ng-template pTemplate="content">
                     <p-scrollPanel  [style]="{height: '300px'}">
                         <div class="row">
-                            <div class="col-12 col-sm-4 col-md-3 col-lg-2 pt-1" *ngFor="let post of (saved$ | async)">
+                            <div class="col-8 col-sm-4 col-md-3 col-lg-2 pt-1" *ngFor="let post of (saved$ | async)">
                                 <app-bookmark [post]="post"></app-bookmark>
                             </div>
                         </div>
@@ -119,11 +121,6 @@
                         </div>
                         <app-loader (click)="onActivitiesLoad()" *ngIf="(activities$ | async)?.length >= 10" [noMore]="noMoreActivities"></app-loader>
                     </p-scrollPanel>
-                </ng-template>
-            </p-tabPanel>
-            <p-tabPanel class="messaging" header="Messaging" *ngIf="(user$ | async)?.id !== userId">
-                <ng-template pTemplate="content">
-                    <app-thread [contactId]="userId"></app-thread>
                 </ng-template>
             </p-tabPanel>
         </p-tabView>
@@ -158,6 +155,8 @@
 </div>
 
 <p-menu #menu [popup]="true" [model]="items"></p-menu>
+<p-menu #followMenu [popup]="true" [model]="followMenuItems" (onShow)="isFollowing()"></p-menu>
+
 
 <p-dialog header="Add profile picture" [(visible)]="displayDialog" [breakpoints]="{'960px': '95vw'}" [style]="{width: '50vw'}"
     [dismissableMask]="true" [resizable]="false">

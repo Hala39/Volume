@@ -1,3 +1,4 @@
+<app-navbar></app-navbar>
 <p-toolbar>
     <div class="p-toolbar-group-left">
         <div class="d-flex flex-row"> 
@@ -5,12 +6,9 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex flex-row align-items-center"> 
                         <span class="name" *ngIf="contact">
-                            <h6>{{contact?.displayName}}</h6> 
-                            <small *ngIf="(presenceService.onlineUsers$ | async).includes(contact.id) && !(isTyping$ | async)">Active now</small>
-                            <small *ngIf="(isTyping$ | async)"><em>Typing ..</em></small>
-                        </span> 
-                        <span class="name" *ngIf="!contact">
-                            <h6>Start a new conversation</h6> 
+                            <i class="pi pi-arrow-left p-mr-3" (click)="back()"></i>
+                            <h6 style="display: inline;">{{contact?.displayName}}</h6> 
+                            <small *ngIf="(presenceService.onlineUsers$ | async).includes(contact.id)">Active now</small>
                         </span> 
                     </div> 
                 </div>
@@ -21,10 +19,10 @@
         <i class="pi pi-ellipsis-h" (click)="topMenu.toggle($event)"></i>
     </div>
 </p-toolbar>
-<p-scrollPanel [style]="{height: '600px', border: '1px solid #304562'}" class="frame" (scroll)="scrolled($event)" #scrollframe>
+<p-scrollPanel [style]="{height: '500px', border: '1px solid #304562', borderBottom: 'none'}" class="frame" (scroll)="scrolled($event)" #scrollframe>
     <div *ngIf="(messages$ | async).length === 0">
         <div class="col-12 d-flex justify-content-center pt-5">
-            No messages yet. Say "Hello" to begin.
+            <small>Say "Hello" to start a conversation.</small>
         </div>
     </div>
     <app-loader *ngIf="(messages$ | async).length >= 10" [noMore]="noMoreMessages" (click)="loadMore();"></app-loader>
@@ -53,12 +51,20 @@
         </div>
     </div>
 </p-scrollPanel>
-<form [formGroup]="form" style="padding: 2%; border: 1px solid #304562; border-top: none">
-    <input type="text" pInputText placeholder='Press "Enter" to send message' formControlName="message" 
-    required (keyup.enter)="sendMessage()"  (keyup)="onType($event)" class="p-mr-2">
-    <fa-icon class="comment-icon p-mt-1 p-ml-2 p-mr-1" *ngIf="!emojiExpanded" [icon]="faGrinAlt" (click)="op.show($event)"></fa-icon>
-    <fa-icon class="comment-icon p-mt-1 p-ml-2 p-mr-1" *ngIf="emojiExpanded" [icon]="faTimes"></fa-icon>
-    <span class="pi pi-send p-mt-2 p-mx-0" (click)="sendMessage()"></span>
+<form class="fixed-bottom" [formGroup]="form" style="padding: 2%; border: 1px solid #304562; border-top: none">
+    <div class="row">
+        <div class="p-inputgroup"> 
+            <input type="text" pInputText placeholder='Press "Enter" to send message' formControlName="message" 
+            (keyup.enter)="sendMessage()">
+            <span class="p-inputgroup-addon">
+                <fa-icon style="font-size: large;" *ngIf="!emojiExpanded" [icon]="faGrinAlt" (click)="op.show($event)"></fa-icon>
+                <fa-icon style="font-size: large;" *ngIf="emojiExpanded" [icon]="faTimes"></fa-icon> 
+            </span> 
+            <span class="p-inputgroup-addon">
+                <i class="pi pi-send" (click)="sendMessage()"></i>
+            </span>       
+        </div>
+    </div>
 </form>
 
 <p-overlayPanel #op (onShow)="expandEmoji()" (onHide)="hideEmoji()" 

@@ -1,3 +1,4 @@
+import { ThreadComponent } from './../profile/thread/thread.component';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { PostComponent } from './post/post.component';
 import { BadgeModule } from 'primeng/badge';
@@ -34,7 +35,7 @@ import { IdentityComponent } from './identity/identity.component';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { UserCardComponent } from './user-card/user-card.component';
 import { FileUploaderComponent } from './file-uploader/file-uploader.component';
-import {ChipsModule} from 'primeng/chips';
+import { ChipsModule } from 'primeng/chips';
 import { AddProfilePhotoComponent } from './add-profile-photo/add-profile-photo.component';
 import { NotificationComponent } from './notification/notification.component';
 import { LoaderComponent } from './loader/loader.component';
@@ -43,6 +44,7 @@ import { NotificationsPageComponent } from './notifications-page/notifications-p
 import { ContactsPageComponent } from './contacts-page/contacts-page.component';
 import { SearchPageComponent } from './search-page/search-page.component';
 import { InputMaskModule } from 'primeng/inputmask';
+import { ContactComponent } from './contact/contact.component';
 @NgModule({
   declarations: [
     PostCardComponent,
@@ -63,9 +65,12 @@ import { InputMaskModule } from 'primeng/inputmask';
     NotificationsPageComponent,
     ContactsPageComponent,
     SearchPageComponent,
+    ThreadComponent,
+    ContactComponent
   ],
   imports: [
     CommonModule,
+    KeyFilterModule,
     InputMaskModule,
     ReactiveFormsModule,
     OverlayPanelModule,
@@ -91,9 +96,8 @@ import { InputMaskModule } from 'primeng/inputmask';
     RouterModule,
     KeyFilterModule,
     EditorModule,
-    InputTextareaModule,
     BadgeModule,
-    ScrollPanelModule
+    ScrollPanelModule,
   ],
   exports: [
     PostCardComponent,
@@ -108,7 +112,8 @@ import { InputMaskModule } from 'primeng/inputmask';
     AddProfilePhotoComponent,
     NotificationComponent,
     LoaderComponent,
-    BookmarkComponent
+    BookmarkComponent,
+    ThreadComponent
   ]
 })
 export class SharedModule { }

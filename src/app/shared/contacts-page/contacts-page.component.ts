@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { PresenceService } from './../../services/presence.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppUser } from 'src/app/models/appUser';
 import { ChatService } from 'src/app/services/chat.service';
@@ -21,11 +21,11 @@ export class ContactsPageComponent implements OnInit {
     this.getContacts();
   }
 
-  @Input() overlay = false;
   contacts$: Observable<AppUser[]>;
+  filteredContacts$: Observable<AppUser[]>;
+
   pageNumber = 2;
-
-
+  contactId: string;
   noMoreContacts = false;
 
   onContactsLoad() {
@@ -41,11 +41,25 @@ export class ContactsPageComponent implements OnInit {
   }
 
   getContacts() {
-    this.chatService.getContacts().subscribe();
+    this.chatService.getContacts().subscribe(
+     
+    );
   }
 
   navigateToMessages(id: string) {
     this.presenceService.inboxNotificationSource.next(false);
     this.router.navigateByUrl("/profile/messages/" + id);
+  }
+
+  searchMode : boolean = false;
+
+  keyword: string;
+
+  filterContacts() {
+    this.chatService.filterContacts(this.keyword).subscribe(
+      response => {
+        this.filteredContacts$ = this.chatService.filteredContacts$; 
+      }
+    );
   }
 }

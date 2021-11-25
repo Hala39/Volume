@@ -1,3 +1,4 @@
+import { take } from 'rxjs/operators';
 import { PostService } from 'src/app/services/post.service';
 import { NotificationService } from './../../services/notification.service';
 import { ChatService } from './../../services/chat.service';
@@ -22,12 +23,12 @@ import { SavedPost } from 'src/app/models/savedPost';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit, OnDestroy {
+export class ProfileComponent implements OnInit {
 
   constructor(private profileService: ProfileService, private followService: FollowService, private router: Router,
-    private userService: UserService, public presenceService: PresenceService, private chatService: ChatService,
+    private userService: UserService, public presenceService: PresenceService,
     private notificationService: NotificationService, private postService: PostService,
-    private activatedRoute : ActivatedRoute, private cdr: ChangeDetectorRef) {
+    public activatedRoute : ActivatedRoute, private cdr: ChangeDetectorRef) {
       this.user$ = this.userService.user$;
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     }
@@ -37,15 +38,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.getPosts();
   }
 
-  ngOnDestroy() {
-    this.stopHub();
-  }
-
   ngAfterViewInit() {
     this.cdr.detectChanges();
-    if (this.activatedRoute.toString().includes('messages')) {
-      this.loadThread();
-    }
   }
 
   profile$: Observable<Profile>;
@@ -105,10 +99,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     )
   }
 
-  loadThread() {
-    this.chatService.createHubConnection(this.userId);    
-  }
-
   getActivities() {
     this.notificationService.getActivities().subscribe(
       response => this.activities$ = this.notificationService.activities$
@@ -126,7 +116,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   // TabView
-  index = this.activatedRoute.toString().includes('messages')? 4 : 0;
+  index = 0;
 
   indexChanged(index: number) {
     if (index !== 4) {
@@ -136,27 +126,18 @@ export class ProfileComponent implements OnInit, OnDestroy {
     switch (index) {
       case 1:
         this.getPhotos();
-        this.stopHub();
         break;
 
       case 2:
         this.getFollowings();
-        this.stopHub();
         break;
 
       case 3:
         this.getFollowers();
-        this.stopHub();
         break;
 
       case 4:
-        if (this.userService.userSource.value.id === this.userId) {
           this.getSavedPosts();
-          this.chattingMode = false;
-        } else {
-          this.loadThread();
-          this.chattingMode = true;
-        }
         break;  
 
       case 5:
@@ -168,10 +149,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
   }
 
-  stopHub() {
-    this.chatService.stopHubConnection();
-  }
-
   //Menu
   items : MenuItem[] = [
     { label: 'Sign out', icon: PrimeIcons.SIGN_OUT, command: () => {
@@ -179,6 +156,20 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }}
   ]
 
+  followMenuItems : MenuItem[] = [
+    {command: () => {
+      this.followToggle();
+    }}]
+
+  isFollowing() {
+    if (this.profileService.profileSource?.value?.isFollowing) {
+      this.followMenuItems[0].label = 'UnFollow';
+    }
+    else {
+      this.followMenuItems[0].label = 'Follow';
+    }
+  }
+  
   //Profile photo dialog
   displayDialog: boolean = false;
 

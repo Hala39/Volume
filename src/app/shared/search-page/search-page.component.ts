@@ -17,8 +17,6 @@ export class SearchPageComponent implements OnInit {
   ngOnInit(): void {
     this.onShow();
   }
-
-  @Input() overlay = false;
   
   searchOperations$: Observable<SearchOperation[]>;
 

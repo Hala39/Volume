@@ -4,29 +4,9 @@
         height: 6rem;
         font-size: 3rem;
     }
-    
-    .p-card.joined {
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-    }
 
     .p-card.no-post {
         border-radius: 10px;
-    }
-
-    .p-card-body.tabs {
-        padding-left: 1%;
-        padding-right: 1%;
-    }
-
-    .p-tab-panel.messaging {
-        padding-left: 0%;
-        padding-right: 0%;
-    }
-
-    .p-tabview-panels {
-        padding-left: 0%;
-        padding-right: 0%;
     }
     
 }
@@ -37,6 +17,10 @@
 
 .name {
     font-size: 1rem;
+}
+
+small {
+    font-size: smaller;
 }
 
 @media screen and (max-width: 400px) {
@@ -51,10 +35,6 @@
 }
 
 @media screen and (max-width: 350px) {
-    .name {
-        font-size: small;
-    }
-
     small {
         display: none;
     }

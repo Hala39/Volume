@@ -55,17 +55,11 @@ img {
 }
 
 .pi-send {
-    font-size: x-large;
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
 }
 
 :host ::ng-deep { 
-    .p-inputtext {
-        width: 70% !important;
-        padding-left: 15px;
-    }
-
     .p-toolbar {
         border: none;
         padding: 0%;

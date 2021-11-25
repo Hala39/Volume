@@ -1,10 +1,22 @@
 :host ::ng-deep {
     .p-inputtext {
-        width: 90%;
+        width: 100% !important;
     }
 
-    .p-toolbar {
-        padding: 4%;
+    .p-inputtext.search {
+        border: none;
+        display: inline;
+        background-color: #1f2d40;
+        width: 80% !important;
+        font-size: large;
+    }
+
+    .p-inputtext:focus {
+        box-shadow: none;
+    }
+
+    .p-inputtext::placeholder {
+        font-size: large;
     }
 }
 
@@ -18,23 +30,12 @@ fa-icon {
 }
 
 .pi-send {
-    font-size: x-large;
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
-}
-
-.comment-icon {
-    font-size: x-large;
 }
 
 @media screen and (max-width: 430px) {
     fa-icon {
         font-size: 1.25rem;
-    }
-
-    :host ::ng-deep {
-        .p-inputtext {
-            width: 90%;
-        }
     }
 }

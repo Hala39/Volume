@@ -81,13 +81,23 @@
                             <app-loader (click)="loadMoreComments()" [noMore]="noMoreComments" *ngIf="(comments$ | async )?.length >= 10"></app-loader>
                             </p-scrollPanel>
                             <form [formGroup]="commentForm" class="d-flex flex-row mt-4">
-                                <p-avatar [image]="(user$ | async)?.profilePhotoUrl? (user$ | async)?.profilePhotoUrl : ''" 
+                                <div class="p-inputgroup"> 
+                                    <input type="text" placeholder="Your comment .." pInputText formControlName="content" (keyup.enter)="addComment();"/> 
+                                    <span class="p-inputgroup-addon">
+                                        <fa-icon style="font-size: large;" *ngIf="!emojiExpanded" [icon]="faGrinAlt" (click)="op1.show($event)"></fa-icon>
+                                        <fa-icon style="font-size: large;" *ngIf="emojiExpanded" [icon]="faTimes"></fa-icon> 
+                                    </span> 
+                                    <span class="p-inputgroup-addon">
+                                        <i class="pi pi-send" (click)="addComment()"></i>
+                                    </span>      
+                                </div>
+                                <!-- <p-avatar [image]="(user$ | async)?.profilePhotoUrl? (user$ | async)?.profilePhotoUrl : ''" 
                                 [icon]="(user$ | async)?.profilePhotoUrl? '' : 'pi pi-user'" styleClass="p-mr-2" 
                                 size="large" shape="circle"></p-avatar>
                                 <input type="text" placeholder="Your comment .." pInputText formControlName="content" (keyup.enter)="addComment();"/>
                                 <fa-icon class="comment-icon p-mt-1 p-ml-2 p-mr-1" *ngIf="!emojiExpanded" [icon]="faGrinAlt" (click)="op1.show($event)"></fa-icon>
                                 <fa-icon class="comment-icon p-mt-1 p-ml-2 p-mr-1" *ngIf="emojiExpanded" [icon]="faTimes"></fa-icon>
-                                <span class="pi pi-send p-mt-2 p-mx-0" (click)="addComment()"></span>
+                                <span class="pi pi-send p-mt-2 p-mx-0" (click)="addComment()"></span> -->
 
                             </form>    
                             
