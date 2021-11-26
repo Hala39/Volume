@@ -1,6 +1,4 @@
-import { Router } from '@angular/router';
 import { UserLogin } from '../../models/userLogin';
-import { AppUser } from '../../models/appUser';
 import { UserService } from '../../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
@@ -14,11 +12,11 @@ import { MessageService } from 'primeng/api';
 export class LoginFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private userService: UserService,
-    private messageService: MessageService, private router: Router) { }
+    private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.buildForm();
-    this.userService.logout();
+    localStorage.clear();
 
   }
 

@@ -1,7 +1,6 @@
 import { MessageService } from 'primeng/api';
 import { UserService } from 'src/app/services/user.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-verify-email',
@@ -13,9 +12,7 @@ export class VerifyEmailComponent implements OnInit {
   constructor(private messageService: MessageService,
     private userService: UserService) { }
 
-  ngOnInit(): void {
-   
-  }
+  ngOnInit(): void {}
 
   @Output() activeIndexEmitter = new EventEmitter<number>();
   @Input() email: string;

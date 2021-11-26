@@ -1,3 +1,5 @@
+import { GalleriaModule } from 'primeng/galleria';
+import { BookmarkComponent } from './bookmark/bookmark.component';
 import { CanActivateGuard } from './../guards/can-activate.guard';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -19,9 +21,9 @@ import { SharedModule } from '../shared/shared.module';
 import { UserAboutComponent } from './user-about/user-about.component';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { TimeagoModule } from 'ngx-timeago';
-import { ThreadComponent } from './thread/thread.component';
 import { SlideMenuModule } from 'primeng/slidemenu';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { GalleriaComponent } from './galleria/galleria.component';
 
 
 const routes : Routes = [
@@ -33,10 +35,13 @@ const routes : Routes = [
   declarations: [
     ProfileComponent,
     UserAboutComponent,
+    BookmarkComponent,
+    GalleriaComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
+    GalleriaModule,
     FontAwesomeModule,
     InfiniteScrollModule,
     OverlayPanelModule,

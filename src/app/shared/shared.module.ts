@@ -9,7 +9,6 @@ import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
 import { GalleriaModule } from 'primeng/galleria';
 import { RouterModule } from '@angular/router';
-import { LoginFormComponent } from './login-form/login-form.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
@@ -19,9 +18,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PostCardComponent } from './post-card/post-card.component';
 import { InputTextModule } from 'primeng/inputtext';
-import { SideCardsComponent } from './side-cards/side-cards.component';
 import { CardModule } from 'primeng/card';
-import { TagModule } from 'primeng/tag';
 import { MenuModule } from 'primeng/menu';
 import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
@@ -30,7 +27,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { DialogModule } from 'primeng/dialog';
 import { NavbarComponent } from './navbar/navbar.component';
-import { GalleriaComponent } from './galleria/galleria.component';
 import { IdentityComponent } from './identity/identity.component';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { UserCardComponent } from './user-card/user-card.component';
@@ -39,20 +35,17 @@ import { ChipsModule } from 'primeng/chips';
 import { AddProfilePhotoComponent } from './add-profile-photo/add-profile-photo.component';
 import { NotificationComponent } from './notification/notification.component';
 import { LoaderComponent } from './loader/loader.component';
-import { BookmarkComponent } from './bookmark/bookmark.component';
 import { NotificationsPageComponent } from './notifications-page/notifications-page.component';
 import { ContactsPageComponent } from './contacts-page/contacts-page.component';
 import { SearchPageComponent } from './search-page/search-page.component';
 import { InputMaskModule } from 'primeng/inputmask';
 import { ContactComponent } from './contact/contact.component';
+import { ModuleWithProviders } from '@angular/compiler/src/core';
 @NgModule({
   declarations: [
     PostCardComponent,
-    SideCardsComponent,
     EmojiComponent,
     NavbarComponent,
-    LoginFormComponent,
-    GalleriaComponent,
     IdentityComponent,
     UserCardComponent,
     AddPostComponent,
@@ -61,7 +54,6 @@ import { ContactComponent } from './contact/contact.component';
     PostComponent,
     NotificationComponent,
     LoaderComponent,
-    BookmarkComponent,
     NotificationsPageComponent,
     ContactsPageComponent,
     SearchPageComponent,
@@ -79,7 +71,6 @@ import { ContactComponent } from './contact/contact.component';
     InputTextareaModule,
     MenuModule,
     CardModule,
-    TagModule,
     ToolbarModule,
     ButtonModule,
     AvatarModule,
@@ -101,19 +92,21 @@ import { ContactComponent } from './contact/contact.component';
   ],
   exports: [
     PostCardComponent,
-    SideCardsComponent,
-    GalleriaComponent,
     NavbarComponent,
     EmojiComponent,
-    LoginFormComponent,
     IdentityComponent,
     UserCardComponent,
     AddPostComponent,
     AddProfilePhotoComponent,
     NotificationComponent,
     LoaderComponent,
-    BookmarkComponent,
     ThreadComponent
   ]
 })
-export class SharedModule { }
+export class SharedModule { 
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: SharedModule
+    };
+  }
+}

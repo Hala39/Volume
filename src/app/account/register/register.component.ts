@@ -1,4 +1,3 @@
-import { Router } from '@angular/router';
 import { UserRegister } from './../../models/userRegister';
 import { UserService } from './../../services/user.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
@@ -14,7 +13,7 @@ import { TitleCasePipe } from '@angular/common';
 
 export class RegisterComponent implements OnInit {
   constructor(private userService: UserService, private fb: FormBuilder, 
-    private titleCasePipe: TitleCasePipe, private router: Router,
+    private titleCasePipe: TitleCasePipe,
     private messageService: MessageService) { }
 
   ngOnInit(): void {
@@ -30,10 +29,7 @@ export class RegisterComponent implements OnInit {
   }
 
   checkbox: boolean = true;
-
   registrationForm: FormGroup;
-
-
   displayName = new FormControl("", {
     validators: [
       Validators.required,
@@ -87,10 +83,6 @@ export class RegisterComponent implements OnInit {
   }
 
   passwordOn = true;
-
-  togglePassword() {
-    this.passwordOn = !this.passwordOn;
-  }
 
   //sign up with facebook
   signInWithFB(): void {

@@ -11,14 +11,13 @@
         </div>
         <div class="p-field">
             <span class="p-input-icon-right">
-                <i (click)="togglePassword()" [class]="passwordOn? 'pi pi-lock' : 'pi pi-lock-open'" style="cursor: pointer;"></i>
+                <i (click)="passwordOn = !passwordOn" [class]="passwordOn? 'pi pi-lock' : 'pi pi-lock-open'" style="cursor: pointer;"></i>
                 <input pInputText class="p-inputtext-sm" placeholder="Password" [type]="passwordOn? 'password' : 'text'" formControlName="password"/>
             </span>
             <small *ngIf="password.dirty && password.hasError('required')" class="p-error">This field is required.</small>
         </div>
         <div class="p-filed">
-            <p-button label="Login" [icon]="pending? 'pi pi-spinner pi-spin': ''" (click)="login()"></p-button>
-            <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
+            <p-button label="Login" [icon]="pending? 'pi pi-spinner pi-spin': 'pi'" (click)="login()"></p-button>
         </div>
     </form>
 </div>

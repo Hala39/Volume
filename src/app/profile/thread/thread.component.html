@@ -41,8 +41,7 @@
                     </div> 
                 </div>
                 <p class="text-justify">
-                    <fa-icon [icon]="seen" class="p-mr-1"  style="font-size: smaller;" *ngIf="message.senderId !== contactId && message.seen"></fa-icon>
-                    <fa-icon [icon]="sent" class="p-mr-1"  style="font-size: smaller;" *ngIf="message.senderId !== contactId && !message.seen"></fa-icon>
+                    <fa-icon [icon]="message.seen? seen : sent" class="p-mr-1"  style="font-size: smaller;" *ngIf="message.senderId !== contactId"></fa-icon>
                     {{message.content}}
                 </p>
             </div>

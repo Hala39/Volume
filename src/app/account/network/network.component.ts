@@ -31,7 +31,7 @@ export class NetworkComponent implements OnInit {
     )
   }
 
-  remove($event: string) {
-    this.profileService.getSuggestedUsersList(this.pageSize).subscribe()
+  remove() {
+    this.profileService.getSuggestedUsersList(this.pageSize).subscribe();
   }
 }

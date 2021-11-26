@@ -1,13 +1,11 @@
-import { take } from 'rxjs/operators';
 import { PostService } from 'src/app/services/post.service';
 import { NotificationService } from './../../services/notification.service';
-import { ChatService } from './../../services/chat.service';
 import { PresenceService } from './../../services/presence.service';
 import { UserService } from './../../services/user.service';
 import { FollowService } from './../../services/follow.service';
 import { Observable } from 'rxjs';
 import { UserCard } from 'src/app/models/userCard';
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ProfileService } from 'src/app/services/profile.service';
 import { Profile } from 'src/app/models/userProfile';
 import { AppUser } from 'src/app/models/appUser';

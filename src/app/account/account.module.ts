@@ -38,7 +38,7 @@ const routes: Routes = [
     SuccessComponent,
     AccountComponent,
     NetworkComponent,
-    VerifiedComponent
+    VerifiedComponent,
   ],
   imports: [
     CommonModule,

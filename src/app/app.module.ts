@@ -1,6 +1,6 @@
+import { SharedModule } from './shared/shared.module';
 import { CanActivateGuard } from './guards/can-activate.guard';
 import { CanLoadGuard } from './guards/can-load.guard';
-import { SharedModule } from './shared/shared.module';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
@@ -22,6 +22,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { BusyInterceptor } from './interceptors/busy.interceptor';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { Button, ButtonModule } from 'primeng/button';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -36,10 +37,7 @@ export function tokenGetter() {
     BrowserAnimationsModule,
     ToastModule,
     HttpClientModule,
-    SharedModule,
-    // HomeModule,
-    // InfiniteScrollModule,
-    // ProfileModule,
+    ButtonModule,
     RippleModule,
     SocialLoginModule,
     NgxSpinnerModule,
@@ -51,14 +49,9 @@ export function tokenGetter() {
     }),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
-      // Register the ServiceWorker as soon as the app is stable
-      // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
   ],
-  exports: [
-    SharedModule
-    ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
@@ -83,6 +76,7 @@ export function tokenGetter() {
       } as SocialAuthServiceConfig,
     }
   ],
+  exports: [SharedModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })

@@ -12,11 +12,6 @@
 
 @import '~@ctrl/ngx-emoji-mart/picker';
 
-@font-face {
-    font-family: 'Montserrat', sans-serif;
-    src: local("ZenTokyoZoo"), url(./assets/fonts/Montserrat-Bold.ttf) format("truetype");
-}
-
 body {
     background-color: #17212f;
     color: rgba(255, 255, 255, 0.87);

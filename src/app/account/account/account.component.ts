@@ -44,8 +44,8 @@ export class AccountComponent implements OnInit {
     this.events[$event].isChecked = true;
   }
 
-
   email: string;
+
   getEmail($event: string) {
     this.email = $event;
   }
