@@ -1,4 +1,4 @@
-import { ThreadComponent } from './../profile/thread/thread.component';
+import { ThreadComponent } from './thread/thread.component';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { PostComponent } from './post/post.component';
 import { BadgeModule } from 'primeng/badge';
@@ -58,13 +58,13 @@ import { ModuleWithProviders } from '@angular/compiler/src/core';
     ContactsPageComponent,
     SearchPageComponent,
     ThreadComponent,
-    ContactComponent
+    ContactComponent,
+    ReactiveFormsModule
   ],
   imports: [
     CommonModule,
     KeyFilterModule,
     InputMaskModule,
-    ReactiveFormsModule,
     OverlayPanelModule,
     ChipsModule,
     InputTextModule,
@@ -104,9 +104,9 @@ import { ModuleWithProviders } from '@angular/compiler/src/core';
   ]
 })
 export class SharedModule { 
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: SharedModule
-    };
-  }
+  // static forRoot(): ModuleWithProviders {
+  //   return {
+  //     ngModule: SharedModule      
+  //   };
+  // }
 }

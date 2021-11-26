@@ -41,6 +41,7 @@ const routes : Routes = [
   imports: [
     CommonModule,
     SharedModule,
+    AvatarModule,
     GalleriaModule,
     FontAwesomeModule,
     InfiniteScrollModule,
@@ -53,7 +54,6 @@ const routes : Routes = [
     FontAwesomeModule,
     ReactiveFormsModule,
     TabViewModule,
-    AvatarModule,
     TooltipModule,
     MenuModule,
     CardModule,

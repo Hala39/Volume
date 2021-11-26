@@ -22,7 +22,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { BusyInterceptor } from './interceptors/busy.interceptor';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { Button, ButtonModule } from 'primeng/button';
+import { ButtonModule } from 'primeng/button';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -76,7 +76,7 @@ export function tokenGetter() {
       } as SocialAuthServiceConfig,
     }
   ],
-  exports: [SharedModule],
+    exports: [SharedModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
